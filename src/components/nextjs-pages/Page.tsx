@@ -40,11 +40,11 @@ export const Page: React.FC<PageProps> = ({
 }) => {
 	const { asPath } = useRouter();
 	const metaTitle = onlyText(title);
-	const fullTitle = `${metaTitle} - ${openGraphConfig.siteName}`;
+	const fullTitle = `${metaTitle} - ${openGraphConfig.siteName ?? ''}`;
 	const metaDescription = onlyText(description);
 	const metaThumbnail = thumbnailData.thumbnail;
-	const ogImage = metaThumbnail.startsWith('/')
-		? `${openGraphConfig.siteUrl}${metaThumbnail}`
+	const ogImage = (metaThumbnail ?? '').startsWith('/')
+		? `${openGraphConfig.siteUrl ?? ''}${metaThumbnail ?? ''}`
 		: metaThumbnail;
 	const metaThumbnailAlt = thumbnailData.thumbnailAlt;
 	const metaThumbnailHeight = thumbnailData.thumbnailHeight;
@@ -84,7 +84,7 @@ export const Page: React.FC<PageProps> = ({
 				<meta property='og:type' content='website' />
 				<meta
 					property='og:url'
-					content={`${openGraphConfig.siteUrl}${asPath}`}
+					content={`${openGraphConfig.siteUrl ?? ''}${asPath}`}
 				/>
 			</Head>
 			{children}
