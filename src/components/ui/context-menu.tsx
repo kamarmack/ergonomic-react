@@ -8,7 +8,7 @@ import {
 	FiCircle as Circle,
 } from 'react-icons/fi';
 
-import { default as cn } from '@/lib/cn';
+import { default as cn } from 'ergonomic-react/src/lib/cn';
 
 const ContextMenu = ContextMenuPrimitive.Root;
 

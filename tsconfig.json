@@ -34,7 +34,7 @@
 		// Start -- TypeScript Path Aliases
 		"baseUrl": ".",
 		"paths": {
-			"@/*": ["src/*"]
+			"ergonomic-react/src/*": ["src/*"]
 		}
 		// End -- TypeScript Path Aliases
 	}

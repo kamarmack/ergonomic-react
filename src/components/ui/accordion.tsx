@@ -4,7 +4,7 @@ import * as React from 'react';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import { FiChevronDown as ChevronDown } from 'react-icons/fi';
 
-import { default as cn } from '@/lib/cn';
+import { default as cn } from 'ergonomic-react/src/lib/cn';
 
 const Accordion = AccordionPrimitive.Root;
 

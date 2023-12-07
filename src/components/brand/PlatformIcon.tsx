@@ -1,7 +1,10 @@
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
-import { BaseComponent, BaseComponentTheme } from '@/types/BaseComponentTypes';
-import { default as cn } from '@/lib/cn';
+import {
+	BaseComponent,
+	BaseComponentTheme,
+} from 'ergonomic-react/src/types/BaseComponentTypes';
+import { default as cn } from 'ergonomic-react/src/lib/cn';
 
 const PLATFORM_ICON_SIZE = {
 	sm: 'w-6',

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { BaseComponentWithChildren } from '@/types/BaseComponentTypes';
+import { BaseComponentWithChildren } from 'ergonomic-react/src/types/BaseComponentTypes';
 
 export type ExternalLinkProps = BaseComponentWithChildren & {
 	href: string;

@@ -4,7 +4,7 @@ import * as React from 'react';
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
 import { FiCircle as Circle } from 'react-icons/fi';
 
-import { default as cn } from '@/lib/cn';
+import { default as cn } from 'ergonomic-react/src/lib/cn';
 
 const RadioGroup = React.forwardRef<
 	React.ElementRef<typeof RadioGroupPrimitive.Root>,

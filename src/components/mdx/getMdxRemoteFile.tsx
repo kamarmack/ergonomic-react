@@ -1,5 +1,5 @@
 import matter from 'gray-matter';
-import { MDXFrontMatter } from '@/types/MdxTypes';
+import { MDXFrontMatter } from 'ergonomic-react/src/types/MdxTypes';
 
 export const getMdxRemoteFile = ({ mdxString }: { mdxString: string }) => {
 	const { content } = matter(mdxString);

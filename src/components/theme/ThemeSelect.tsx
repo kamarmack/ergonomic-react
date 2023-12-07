@@ -7,8 +7,8 @@ import {
 	FiCode as Code,
 } from 'react-icons/fi';
 import { default as cn } from 'clsx';
-import { Label } from '@/components/ui/label';
-import { BaseComponent } from '@/types/BaseComponentTypes';
+import { Label } from 'ergonomic-react/src/components/ui/label';
+import { BaseComponent } from 'ergonomic-react/src/types/BaseComponentTypes';
 
 const THEME_MAP: { [key: string]: { label: string; icon: React.ReactNode } } = {
 	system: {

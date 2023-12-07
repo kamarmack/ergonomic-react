@@ -1,4 +1,4 @@
-import { default as cn } from '@/lib/cn';
+import { default as cn } from 'ergonomic-react/src/lib/cn';
 
 function Skeleton({
 	className,
