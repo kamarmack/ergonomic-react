@@ -3,8 +3,8 @@ import { useTheme } from 'next-themes';
 import {
 	BaseComponent,
 	BaseComponentTheme,
-} from 'ergonomic-react/src/types/BaseComponentTypes';
-import { default as cn } from 'ergonomic-react/src/lib/cn';
+} from '../../types/BaseComponentTypes';
+import { default as cn } from '../../lib/cn';
 
 const PLATFORM_LOGO_SIZE = {
 	sm: 'w-16',

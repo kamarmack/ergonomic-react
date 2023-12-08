@@ -28,14 +28,7 @@
 		"moduleResolution": "node",
 		"noEmit": true,
 		"skipLibCheck": true,
-		"target": "esnext",
+		"target": "esnext"
 		// End -- Base TypeScript Configurations for a Next.js environment
-
-		// Start -- TypeScript Path Aliases
-		"baseUrl": ".",
-		"paths": {
-			"ergonomic-react/src/*": ["src/*"]
-		}
-		// End -- TypeScript Path Aliases
 	}
 }

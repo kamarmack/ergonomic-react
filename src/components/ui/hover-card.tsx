@@ -3,7 +3,7 @@
 import * as React from 'react';
 import * as HoverCardPrimitive from '@radix-ui/react-hover-card';
 
-import { default as cn } from 'ergonomic-react/src/lib/cn';
+import { default as cn } from '../../lib/cn';
 
 const HoverCard = HoverCardPrimitive.Root;
 

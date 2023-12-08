@@ -3,7 +3,7 @@
 import * as React from 'react';
 import * as ProgressPrimitive from '@radix-ui/react-progress';
 
-import { default as cn } from 'ergonomic-react/src/lib/cn';
+import { default as cn } from '../../lib/cn';
 
 const Progress = React.forwardRef<
 	React.ElementRef<typeof ProgressPrimitive.Root>,

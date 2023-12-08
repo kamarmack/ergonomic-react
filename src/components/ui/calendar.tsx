@@ -7,8 +7,8 @@ import {
 } from 'react-icons/fi';
 import { DayPicker } from 'react-day-picker';
 
-import { default as cn } from 'ergonomic-react/src/lib/cn';
-import { buttonVariants } from 'ergonomic-react/src/components/ui/button';
+import { default as cn } from '../../lib/cn';
+import { buttonVariants } from '../../components/ui/button';
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 

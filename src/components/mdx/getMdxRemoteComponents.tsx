@@ -1,7 +1,7 @@
 import Image from 'next/image';
-import { ExLink } from 'ergonomic-react/src/components/ui/external-link';
-import { getFootnoteComponents } from 'ergonomic-react/src/components/mdx/footnote';
-import { MDXFrontMatter } from 'ergonomic-react/src/types/MdxTypes';
+import { ExLink } from '../../components/ui/external-link';
+import { getFootnoteComponents } from '../../components/mdx/footnote';
+import { MDXFrontMatter } from '../../types/MdxTypes';
 import { Mermaid } from 'mdx-mermaid/lib/Mermaid';
 import { InlineMath, BlockMath } from 'react-katex';
 

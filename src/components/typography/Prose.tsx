@@ -1,5 +1,5 @@
-import cn from 'ergonomic-react/src/lib/cn';
-import { BaseComponentWithChildren } from 'ergonomic-react/src/types/BaseComponentTypes';
+import cn from '../../lib/cn';
+import { BaseComponentWithChildren } from '../../types/BaseComponentTypes';
 
 export const Prose: React.FC<BaseComponentWithChildren> = ({ children }) => {
 	return (

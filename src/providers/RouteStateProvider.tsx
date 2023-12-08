@@ -1,5 +1,5 @@
 import { createContext, useState } from 'react';
-import { BaseComponentWithChildren } from 'ergonomic-react/src/types/BaseComponentTypes';
+import { BaseComponentWithChildren } from '../types/BaseComponentTypes';
 
 export type RouteState = {
 	currentRouteId: string | null;

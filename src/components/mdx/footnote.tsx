@@ -1,4 +1,4 @@
-import { MDXFrontMatter } from 'ergonomic-react/src/types/MdxTypes';
+import { MDXFrontMatter } from '../../types/MdxTypes';
 
 export type GetFootnoteComponentsProps = {
 	footnoteIds: Required<MDXFrontMatter>['footnote_ids'];

@@ -4,7 +4,7 @@ import * as React from 'react';
 import * as SelectPrimitive from '@radix-ui/react-select';
 import { FiCheck as Check, FiChevronDown as ChevronDown } from 'react-icons/fi';
 
-import { default as cn } from 'ergonomic-react/src/lib/cn';
+import { default as cn } from '../../lib/cn';
 
 const Select = SelectPrimitive.Root;
 

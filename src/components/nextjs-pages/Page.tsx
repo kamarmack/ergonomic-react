@@ -1,10 +1,10 @@
 import Head from 'next/head';
 import { onlyText } from 'react-children-utilities';
 import { useRouter } from 'next/router';
-import { BaseComponentWithChildren } from 'ergonomic-react/src/types/BaseComponentTypes';
-import { useRouteStateContext } from 'ergonomic-react/src/hooks/useRouteStateContext';
+import { BaseComponentWithChildren } from '../../types/BaseComponentTypes';
+import { useRouteStateContext } from '../../hooks/useRouteStateContext';
 import { useEffect } from 'react';
-import { openGraphConfig } from 'ergonomic-react/src/config/openGraphConfig';
+import { openGraphConfig } from '../../config/openGraphConfig';
 
 export type PageStaticProps = BaseComponentWithChildren & {
 	description?: string | React.ReactNode;

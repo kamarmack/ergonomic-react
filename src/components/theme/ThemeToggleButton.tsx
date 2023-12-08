@@ -2,7 +2,7 @@ import { useTheme } from 'next-themes';
 import { useState, useEffect } from 'react';
 import { FiSun as Sun, FiMoon as Moon } from 'react-icons/fi';
 import { default as cn } from 'clsx';
-import { BaseComponent } from 'ergonomic-react/src/types/BaseComponentTypes';
+import { BaseComponent } from '../../types/BaseComponentTypes';
 
 export type ThemeToggleButtonProps = BaseComponent;
 export const ThemeToggleButton: React.FC<ThemeToggleButtonProps> = ({

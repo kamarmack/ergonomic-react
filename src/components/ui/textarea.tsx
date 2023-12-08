@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { default as cn } from 'ergonomic-react/src/lib/cn';
+import { default as cn } from '../../lib/cn';
 
 export type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 

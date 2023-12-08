@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { RouteStateContext } from 'ergonomic-react/src/providers/RouteStateProvider';
+import { RouteStateContext } from '../providers/RouteStateProvider';
 
 export const useRouteStateContext = () => {
 	const context = useContext(RouteStateContext);
