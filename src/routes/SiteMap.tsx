@@ -1,4 +1,4 @@
-import { getEnum } from 'ergonomic/dist/typescript-helpers/enum-helpers';
+import { getEnum } from 'ergonomic/typescript-helpers/enum-helpers';
 
 // SSO Web App
 export const SsoWebAppRouteStaticIdEnum = getEnum([
