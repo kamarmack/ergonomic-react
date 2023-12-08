@@ -5,10 +5,11 @@ import {
 	BaseComponentTheme,
 } from '../../types/BaseComponentTypes';
 import { default as cn } from '../../lib/cn';
+import { isDomAvailable } from '../../utils/isDomAvailable';
 
 const PLATFORM_LOGO_SIZE = {
 	sm: 'w-16',
-	md: 'w-24',
+	md: 'w-32',
 	lg: 'w-40',
 };
 export type PlatformLogoProps = BaseComponent & {
@@ -29,7 +30,6 @@ export const PlatformLogo: React.FC<PlatformLogoProps> = ({
 	width,
 }) => {
 	const { resolvedTheme } = useTheme();
-	const isPrimaryMode = logoTheme === 'primary';
 	const isDarkMode = logoTheme === 'dark' || resolvedTheme === 'dark';
 	const logoSize = PLATFORM_LOGO_SIZE[size];
 	const src =
@@ -37,20 +37,7 @@ export const PlatformLogo: React.FC<PlatformLogoProps> = ({
 			logoTheme === 'auto' ? (resolvedTheme as 'dark' | 'light') : logoTheme
 		];
 
-	if (isPrimaryMode) {
-		return (
-			<div className={cn(logoSize, className)}>
-				<Image
-					alt={alt}
-					className={cn('object-contain', logoSize)}
-					height={height}
-					priority
-					src={src}
-					width={width}
-				/>
-			</div>
-		);
-	}
+	if (!isDomAvailable) return null;
 
 	if (isDarkMode) {
 		return (

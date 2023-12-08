@@ -8,4 +8,4 @@ export type BaseComponentWithChildren = BaseComponent & {
 	children?: React.ReactNode;
 };
 
-export type BaseComponentTheme = 'auto' | 'dark' | 'light' | 'primary';
+export type BaseComponentTheme = 'auto' | 'dark' | 'light';

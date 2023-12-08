@@ -5,6 +5,7 @@ import {
 	BaseComponentTheme,
 } from '../../types/BaseComponentTypes';
 import { default as cn } from '../../lib/cn';
+import { isDomAvailable } from '../../utils/isDomAvailable';
 
 const PLATFORM_ICON_SIZE = {
 	sm: 'w-6',
@@ -29,7 +30,6 @@ export const PlatformIcon: React.FC<PlatformIconProps> = ({
 	width,
 }) => {
 	const { resolvedTheme } = useTheme();
-	const isPrimaryMode = iconTheme === 'primary';
 	const isDarkMode = iconTheme === 'dark' || resolvedTheme === 'dark';
 	const iconSize = PLATFORM_ICON_SIZE[size];
 	const src =
@@ -37,20 +37,7 @@ export const PlatformIcon: React.FC<PlatformIconProps> = ({
 			iconTheme === 'auto' ? (resolvedTheme as 'dark' | 'light') : iconTheme
 		];
 
-	if (isPrimaryMode) {
-		return (
-			<div className={cn(iconSize, className)}>
-				<Image
-					alt={alt}
-					className={cn('object-contain', iconSize)}
-					height={height}
-					priority
-					src={src}
-					width={width}
-				/>
-			</div>
-		);
-	}
+	if (!isDomAvailable) return null;
 
 	if (isDarkMode) {
 		return (

@@ -1,9 +1,9 @@
 import Head from 'next/head';
+import { useEffect } from 'react';
 import { onlyText } from 'react-children-utilities';
 import { useRouter } from 'next/router';
 import { BaseComponentWithChildren } from '../../types/BaseComponentTypes';
 import { useRouteStateContext } from '../../hooks/useRouteStateContext';
-import { useEffect } from 'react';
 import { openGraphConfig } from '../../config/openGraphConfig';
 
 export type PageStaticProps = BaseComponentWithChildren & {
