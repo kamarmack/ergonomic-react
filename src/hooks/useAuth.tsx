@@ -5,9 +5,19 @@ import { FIREBASE_AUTH_INSTANCE } from '../lib/firebase';
 import { AuthContext } from '../providers/AuthProvider';
 import { isDomAvailable } from '../utils/isDomAvailable';
 
+const DEFAULT_ALLOW_AUTH_STATES = ['authenticated' as const, 'guest' as const];
+export type UseAuthOptions = {
+	allowAuthStates?: ('authenticated' | 'guest')[];
+	useRedirects?: boolean;
+};
 export const useAuth = (
-	allowAuthStates: ('authenticated' | 'guest')[] = ['authenticated', 'guest'],
+	options: UseAuthOptions = {
+		allowAuthStates: DEFAULT_ALLOW_AUTH_STATES,
+		useRedirects: true,
+	},
 ) => {
+	const { allowAuthStates = DEFAULT_ALLOW_AUTH_STATES, useRedirects = true } =
+		options;
 	const router = useRouter();
 	const authContext = useContext(AuthContext);
 
@@ -28,7 +38,9 @@ export const useAuth = (
 		// Authenticated users
 		if (!allowAuthStates.includes('guest')) {
 			if (!authContext?.user) {
-				redirectToLogin();
+				if (useRedirects) {
+					redirectToLogin();
+				}
 			}
 		}
 
@@ -38,17 +50,8 @@ export const useAuth = (
 		authContext?.user,
 		router.isReady,
 		allowAuthStates?.join(),
+		useRedirects,
 	]);
-
-	const handleLogout = async () => {
-		try {
-			console.log('Signing out...');
-			await FIREBASE_AUTH_INSTANCE.signOut();
-			redirectToLogin();
-		} catch (err) {
-			console.error(err);
-		}
-	};
 
 	const handleLogin = async (email: string, password: string) => {
 		try {
@@ -61,17 +64,32 @@ export const useAuth = (
 			const user = userCredential.user;
 			console.log('Signed in as: ', { user });
 
-			const dest = localStorage.getItem('dest');
-			if (dest) {
-				console.log('Found destination, redirecting to: ', dest);
-				localStorage.removeItem('dest');
-				return void router.replace(dest);
-			} else {
-				console.log('No destination found, redirecting to /');
-				return void router.replace('/');
+			if (useRedirects) {
+				const dest = localStorage.getItem('dest');
+				if (dest) {
+					console.log('Found destination, redirecting to: ', dest);
+					localStorage.removeItem('dest');
+					return void router.replace(dest);
+				} else {
+					console.log('No destination found, redirecting to /');
+					return void router.replace('/');
+				}
 			}
 		} catch (err) {
 			console.error('Error signing in: ', err);
+		}
+	};
+
+	const handleLogout = async () => {
+		try {
+			console.log('Signing out...');
+			await FIREBASE_AUTH_INSTANCE.signOut();
+
+			if (useRedirects) {
+				redirectToLogin();
+			}
+		} catch (err) {
+			console.error(err);
 		}
 	};
 
