@@ -78,6 +78,7 @@ export const useAuth = (
 			return void 0;
 		} catch (err) {
 			console.error('Error signing in: ', err);
+			return void 0;
 		}
 	};
 
