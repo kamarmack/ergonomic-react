@@ -18,15 +18,28 @@ export const PageHeader: React.FC<PageHeaderProps> = ({ className = '' }) => {
 			)}
 		>
 			<Link href='/'>
-				<PlatformLogo
-					height={380}
-					size='md'
-					srcMap={{
-						dark: '/img/brand/logo-orange-white__2048x380.png',
-						light: '/img/brand/logo-orange-black__2048x380.png',
-					}}
-					width={2048}
-				/>
+				{openGraphConfig.siteBrandLogoDarkMode &&
+					openGraphConfig.siteBrandLogoLightMode && (
+						<PlatformLogo
+							height={380}
+							size='md'
+							srcMap={{
+								dark: openGraphConfig.siteBrandLogoDarkMode,
+								light: openGraphConfig.siteBrandLogoLightMode,
+							}}
+							width={2048}
+						/>
+					)}
+				{!(
+					openGraphConfig.siteBrandLogoDarkMode &&
+					openGraphConfig.siteBrandLogoLightMode
+				) && (
+					<div>
+						<p className={cn('text-2xl font-bold', 'lg:text-3xl')}>
+							{openGraphConfig.siteName}
+						</p>
+					</div>
+				)}
 			</Link>
 			<div className='flex items-center space-x-3'>
 				{openGraphConfig.siteSocialMediaTwitter && (
@@ -41,7 +54,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({ className = '' }) => {
 				)}
 				{openGraphConfig.siteSocialMediaYouTube && (
 					<Link href={openGraphConfig.siteSocialMediaYouTube} target='_blank'>
-						<BiLogoYoutube size={24} />
+						<BiLogoYoutube size={20} />
 					</Link>
 				)}
 				<ThemeSelect />

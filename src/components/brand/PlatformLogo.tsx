@@ -37,7 +37,7 @@ export const PlatformLogo: React.FC<PlatformLogoProps> = ({
 			logoTheme === 'auto' ? (resolvedTheme as 'dark' | 'light') : logoTheme
 		];
 
-	if (!isDomAvailable) return null;
+	if (!isDomAvailable()) return null;
 
 	if (isDarkMode) {
 		return (

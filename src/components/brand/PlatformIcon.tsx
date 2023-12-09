@@ -37,7 +37,7 @@ export const PlatformIcon: React.FC<PlatformIconProps> = ({
 			iconTheme === 'auto' ? (resolvedTheme as 'dark' | 'light') : iconTheme
 		];
 
-	if (!isDomAvailable) return null;
+	if (!isDomAvailable()) return null;
 
 	if (isDarkMode) {
 		return (

@@ -1,5 +1,9 @@
 export const openGraphConfig = {
 	author: process.env.NEXT_PUBLIC_SITE_AUTHOR,
+	siteBrandIconDarkMode: process.env.NEXT_PUBLIC_SITE_BRAND_ICON_DARK_MODE,
+	siteBrandIconLightMode: process.env.NEXT_PUBLIC_SITE_BRAND_ICON_LIGHT_MODE,
+	siteBrandLogoDarkMode: process.env.NEXT_PUBLIC_SITE_BRAND_LOGO_DARK_MODE,
+	siteBrandLogoLightMode: process.env.NEXT_PUBLIC_SITE_BRAND_LOGO_LIGHT_MODE,
 	siteName: process.env.NEXT_PUBLIC_SITE_NAME,
 	siteSocialMediaDiscord: process.env.NEXT_PUBLIC_SITE_SOCIAL_MEDIA_DISCORD,
 	siteSocialMediaTwitter: process.env.NEXT_PUBLIC_SITE_SOCIAL_MEDIA_TWITTER,
