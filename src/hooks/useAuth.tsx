@@ -70,11 +70,12 @@ export const useAuth = (
 					console.log('Found destination, redirecting to: ', dest);
 					localStorage.removeItem('dest');
 					return void router.replace(dest);
-				} else {
-					console.log('No destination found, redirecting to /');
-					return void router.replace('/');
 				}
+				console.log('No destination found, redirecting to /');
+				return void router.replace('/');
 			}
+
+			return void 0;
 		} catch (err) {
 			console.error('Error signing in: ', err);
 		}
