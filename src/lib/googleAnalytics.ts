@@ -267,3 +267,21 @@ export const googleAnalytics = {
 	setGlobalScope: gtagSetGlobalScope,
 	setTargetScope: gtagSetTargetScope,
 };
+
+export const getGoogleTagManagerSource = () => {
+	if (ENABLE_GOOGLE_ANALYTICS) {
+		return `https://www.googletagmanager.com/gtag/js?id=${
+			FIREBASE_CONFIG.measurementId as string
+		}`;
+	}
+	return '';
+};
+export const getGoogleAnalyticsInitializationScript = () => {
+	if (ENABLE_GOOGLE_ANALYTICS) {
+		return `window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${FIREBASE_CONFIG.measurementId as string}');`;
+	}
+	return '';
+};
