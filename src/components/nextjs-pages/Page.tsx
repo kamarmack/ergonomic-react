@@ -5,6 +5,11 @@ import { useRouter } from 'next/router';
 import { BaseComponentWithChildren } from '../../types/BaseComponentTypes';
 import { useRouteStateContext } from '../../hooks/useRouteStateContext';
 import { OPEN_GRAPH_CONFIG } from '../../config/openGraphConfig';
+import {
+	GoogleAnalyticsActionParams,
+	googleAnalytics,
+} from '../../lib/googleAnalytics';
+import { ENABLE_GOOGLE_ANALYTICS } from '../../config/enableGoogleAnalytics';
 
 export type PageStaticProps = BaseComponentWithChildren & {
 	description?: string | React.ReactNode;
@@ -50,9 +55,13 @@ export const Page: React.FC<PageProps> = ({
 	const metaThumbnailHeight = thumbnailData.thumbnailHeight;
 	const metaThumbnailType = thumbnailData.thumbnailType;
 	const metaThumbnailWidth = thumbnailData.thumbnailWidth;
+	const metaUrl = `${OPEN_GRAPH_CONFIG.siteUrl ?? ''}${asPath}`.replace(
+		/\/$/,
+		'',
+	);
 
-	const router = useRouter();
 	const { setRouteState } = useRouteStateContext();
+
 	useEffect(() => {
 		setRouteState(() => ({
 			currentRouteId: routeId,
@@ -64,7 +73,18 @@ export const Page: React.FC<PageProps> = ({
 				currentRouteStaticId: null,
 			}));
 		};
-	}, [router?.asPath]);
+	}, [asPath]);
+
+	useEffect(() => {
+		if (!ENABLE_GOOGLE_ANALYTICS) return;
+
+		const pageViewParams: GoogleAnalyticsActionParams['page_view'] = {
+			page_location: metaUrl,
+			page_title: metaTitle,
+		};
+
+		googleAnalytics.event.pageView(pageViewParams);
+	}, [ENABLE_GOOGLE_ANALYTICS, metaUrl, metaTitle]);
 
 	return (
 		<>
@@ -82,10 +102,7 @@ export const Page: React.FC<PageProps> = ({
 				<meta property='og:site_name' content={OPEN_GRAPH_CONFIG.siteName} />
 				<meta property='og:title' content={metaTitle} />
 				<meta property='og:type' content='website' />
-				<meta
-					property='og:url'
-					content={`${OPEN_GRAPH_CONFIG.siteUrl ?? ''}${asPath}`}
-				/>
+				<meta property='og:url' content={metaUrl} />
 			</Head>
 			{children}
 		</>
