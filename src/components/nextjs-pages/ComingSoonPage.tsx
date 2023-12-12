@@ -16,7 +16,7 @@ export const ComingSoonPage: React.FC<ComingSoonPageProps> = ({
 	return (
 		<div className={cn('flex flex-col max-w-3xl mx-auto px-10 relative')}>
 			{/* Centered Logo */}
-			<div className='flex justify-center mb-28 mt-24 w-full'>
+			<div className={cn('flex justify-center mb-20 mt-24 w-full', 'md:mb-28')}>
 				{OPEN_GRAPH_CONFIG.siteBrandLogoDarkMode &&
 					OPEN_GRAPH_CONFIG.siteBrandLogoLightMode && (
 						<PlatformLogo
@@ -42,17 +42,24 @@ export const ComingSoonPage: React.FC<ComingSoonPageProps> = ({
 			</div>
 
 			{/* Big Coming Soon in Gradient */}
-			<div className='flex justify-center mb-20 space-x-3 w-full'>
+			<div
+				className={cn('flex justify-center mb-16 space-x-3 w-full', 'md:mb-20')}
+			>
 				<div>
-					<p className='font-semibold text-7xl text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-800 leading-[6rem]'>
+					<p
+						className={cn(
+							'font-semibold leading-[4rem] text-5xl text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-800',
+							'md:text-7xl md:leading-[6rem]',
+						)}
+					>
 						Coming Soon
 					</p>
 				</div>
-				<div className='mt-5 text-6xl'>⏳</div>
+				<div className={cn('hidden mt-5 text-6xl', 'md:block')}>⏳</div>
 			</div>
 
 			{/* Coming Soon Copy Edit */}
-			<div className='flex justify-center mb-16 w-full'>
+			<div className='flex justify-center mb-20 w-full'>
 				<p className='font-medium text-2xl text-center leading-9'>
 					We're currently working 🧰 hard to bring you something great, and we
 					can't wait to share it with you 📅. Our team is putting the finishing
@@ -61,7 +68,7 @@ export const ComingSoonPage: React.FC<ComingSoonPageProps> = ({
 			</div>
 
 			{/* CTA */}
-			<div className='flex justify-center mb-36 w-full'>
+			<div className={cn('flex justify-center mb-32 w-full', 'md:mb-36')}>
 				<div className='flex flex-col items-center space-y-2'>
 					<div>
 						<p className='font-light text-lg'>
