@@ -1,5 +1,5 @@
+import { ENABLE_GOOGLE_ANALYTICS } from '../config/enableGoogleAnalytics';
 import { FIREBASE_CONFIG } from '../config/firebaseConfig';
-import { isDomAvailable } from '../utils/isDomAvailable';
 
 declare global {
 	interface Window {
@@ -11,8 +11,9 @@ declare global {
 }
 
 const gtagConfig = (config: Record<string, string | number>) => {
-	if (!isDomAvailable()) return;
-	window?.gtag?.('config', FIREBASE_CONFIG.measurementId, config);
+	if (ENABLE_GOOGLE_ANALYTICS) {
+		window?.gtag?.('config', FIREBASE_CONFIG.measurementId, config);
+	}
 };
 
 export type GoogleAnalyticsAction =
@@ -164,11 +165,12 @@ const gtagEvent = (
 	action: GoogleAnalyticsAction,
 	params: Record<string, string | number | GoogleAnalyticsItem[]>,
 ) => {
-	if (!isDomAvailable()) return;
-	window?.gtag?.('event', action, {
-		...params,
-		send_to: FIREBASE_CONFIG.measurementId,
-	});
+	if (ENABLE_GOOGLE_ANALYTICS) {
+		window?.gtag?.('event', action, {
+			...params,
+			send_to: FIREBASE_CONFIG.measurementId,
+		});
+	}
 };
 
 export type GtagConsentParams = {
@@ -179,21 +181,24 @@ export type GtagConsentParams = {
 	wait_for_update?: number;
 };
 const gtagConsent = (params: GtagConsentParams) => {
-	if (!isDomAvailable()) return;
-	window?.gtag?.('consent', params);
+	if (ENABLE_GOOGLE_ANALYTICS) {
+		window?.gtag?.('consent', params);
+	}
 };
 
 const gtagSetGlobalScope = (params: Record<string, string | number>) => {
-	if (!isDomAvailable()) return;
-	window?.gtag?.('set', params);
+	if (ENABLE_GOOGLE_ANALYTICS) {
+		window?.gtag?.('set', params);
+	}
 };
 
 const gtagSetTargetScope = (
 	target: string,
 	params: Record<string, string | number>,
 ) => {
-	if (!isDomAvailable()) return;
-	window?.gtag?.('set', target, params);
+	if (ENABLE_GOOGLE_ANALYTICS) {
+		window?.gtag?.('set', target, params);
+	}
 };
 
 const gtagGet = (
@@ -201,8 +206,9 @@ const gtagGet = (
 	fieldName: string,
 	callback: (field: string) => void,
 ) => {
-	if (!isDomAvailable()) return;
-	window?.gtag?.('get', target, fieldName, callback);
+	if (ENABLE_GOOGLE_ANALYTICS) {
+		window?.gtag?.('get', target, fieldName, callback);
+	}
 };
 
 export const googleAnalytics = {
