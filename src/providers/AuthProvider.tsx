@@ -1,8 +1,8 @@
 import { createContext, useEffect, useState } from 'react';
 import { getAuth, User as FirebaseUser } from 'firebase/auth';
-import { FIREBASE_APP } from '../lib/firebase';
+import { firebaseApp } from '../lib/firebase';
 
-const auth = getAuth(FIREBASE_APP);
+const auth = getAuth(firebaseApp);
 
 export const AuthContext = createContext<{ user: FirebaseUser | null }>({
 	user: null,

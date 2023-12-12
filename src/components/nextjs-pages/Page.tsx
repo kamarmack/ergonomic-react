@@ -4,7 +4,7 @@ import { onlyText } from 'react-children-utilities';
 import { useRouter } from 'next/router';
 import { BaseComponentWithChildren } from '../../types/BaseComponentTypes';
 import { useRouteStateContext } from '../../hooks/useRouteStateContext';
-import { openGraphConfig } from '../../config/openGraphConfig';
+import { OPEN_GRAPH_CONFIG } from '../../config/openGraphConfig';
 
 export type PageStaticProps = BaseComponentWithChildren & {
 	description?: string | React.ReactNode;
@@ -31,20 +31,20 @@ export const Page: React.FC<PageProps> = ({
 	routeStaticId,
 	title,
 	thumbnailData = {
-		thumbnail: openGraphConfig.siteThumbnail,
-		thumbnailAlt: openGraphConfig.siteThumbnailAlt,
-		thumbnailHeight: openGraphConfig.siteThumbnailHeight,
-		thumbnailType: openGraphConfig.siteThumbnailType,
-		thumbnailWidth: openGraphConfig.siteThumbnailWidth,
+		thumbnail: OPEN_GRAPH_CONFIG.siteThumbnail,
+		thumbnailAlt: OPEN_GRAPH_CONFIG.siteThumbnailAlt,
+		thumbnailHeight: OPEN_GRAPH_CONFIG.siteThumbnailHeight,
+		thumbnailType: OPEN_GRAPH_CONFIG.siteThumbnailType,
+		thumbnailWidth: OPEN_GRAPH_CONFIG.siteThumbnailWidth,
 	},
 }) => {
 	const { asPath } = useRouter();
 	const metaTitle = onlyText(title);
-	const fullTitle = `${metaTitle} - ${openGraphConfig.siteName ?? ''}`;
+	const fullTitle = `${metaTitle} - ${OPEN_GRAPH_CONFIG.siteName ?? ''}`;
 	const metaDescription = onlyText(description);
 	const metaThumbnail = thumbnailData.thumbnail;
 	const ogImage = (metaThumbnail ?? '').startsWith('/')
-		? `${openGraphConfig.siteUrl ?? ''}${metaThumbnail ?? ''}`
+		? `${OPEN_GRAPH_CONFIG.siteUrl ?? ''}${metaThumbnail ?? ''}`
 		: metaThumbnail;
 	const metaThumbnailAlt = thumbnailData.thumbnailAlt;
 	const metaThumbnailHeight = thumbnailData.thumbnailHeight;
@@ -71,7 +71,7 @@ export const Page: React.FC<PageProps> = ({
 			<Head>
 				<title>{fullTitle}</title>
 				<meta name='description' content={metaDescription} />
-				<meta name='author' content={openGraphConfig.author} />
+				<meta name='author' content={OPEN_GRAPH_CONFIG.author} />
 				<meta name='og:description' content={metaDescription} />
 				<meta property='og:image' content={ogImage} />
 				<meta property='og:image:alt' content={metaThumbnailAlt} />
@@ -79,12 +79,12 @@ export const Page: React.FC<PageProps> = ({
 				<meta property='og:image:type' content={metaThumbnailType} />
 				<meta property='og:image:width' content={`${metaThumbnailWidth}`} />
 				<meta property='og:locale' content='en_US' />
-				<meta property='og:site_name' content={openGraphConfig.siteName} />
+				<meta property='og:site_name' content={OPEN_GRAPH_CONFIG.siteName} />
 				<meta property='og:title' content={metaTitle} />
 				<meta property='og:type' content='website' />
 				<meta
 					property='og:url'
-					content={`${openGraphConfig.siteUrl ?? ''}${asPath}`}
+					content={`${OPEN_GRAPH_CONFIG.siteUrl ?? ''}${asPath}`}
 				/>
 			</Head>
 			{children}

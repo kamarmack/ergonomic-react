@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { FIREBASE_AUTH_INSTANCE } from '../lib/firebase';
+import { firebaseAuthInstance } from '../lib/firebase';
 import { AuthContext } from '../providers/AuthProvider';
 import { isDomAvailable } from '../utils/isDomAvailable';
 
@@ -57,7 +57,7 @@ export const useAuth = (
 		try {
 			console.log('Signing in...', { email, password });
 			const userCredential = await signInWithEmailAndPassword(
-				FIREBASE_AUTH_INSTANCE,
+				firebaseAuthInstance,
 				email,
 				password,
 			);
@@ -85,7 +85,7 @@ export const useAuth = (
 	const handleLogout = async () => {
 		try {
 			console.log('Signing out...');
-			await FIREBASE_AUTH_INSTANCE.signOut();
+			await firebaseAuthInstance.signOut();
 
 			if (useRedirects) {
 				redirectToLogin();

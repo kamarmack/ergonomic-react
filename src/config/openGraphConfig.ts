@@ -1,4 +1,4 @@
-export const openGraphConfig = {
+export const OPEN_GRAPH_CONFIG = {
 	author: process.env.NEXT_PUBLIC_SITE_AUTHOR,
 	siteBrandIconDarkMode: process.env.NEXT_PUBLIC_SITE_BRAND_ICON_DARK_MODE,
 	siteBrandIconLightMode: process.env.NEXT_PUBLIC_SITE_BRAND_ICON_LIGHT_MODE,
