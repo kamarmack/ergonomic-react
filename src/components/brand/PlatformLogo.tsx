@@ -11,11 +11,15 @@ const PLATFORM_LOGO_SIZE = {
 	sm: 'w-16',
 	md: 'w-32',
 	lg: 'w-40',
+	xl: 'w-48',
+	'2xl': 'w-56',
+	'3xl': 'w-64',
 };
 export type PlatformLogoProps = BaseComponent & {
 	alt?: string;
+	customLogoSizeClassName?: string;
 	height: number;
-	size?: 'sm' | 'md' | 'lg';
+	size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
 	srcMap: Record<Exclude<BaseComponentTheme, 'auto'>, string>;
 	theme?: BaseComponentTheme;
 	width: number;
@@ -23,6 +27,7 @@ export type PlatformLogoProps = BaseComponent & {
 export const PlatformLogo: React.FC<PlatformLogoProps> = ({
 	alt = 'Platform Logo',
 	className = '',
+	customLogoSizeClassName = '',
 	height,
 	size = 'md',
 	srcMap,
@@ -31,7 +36,7 @@ export const PlatformLogo: React.FC<PlatformLogoProps> = ({
 }) => {
 	const { resolvedTheme } = useTheme();
 	const isDarkMode = logoTheme === 'dark' || resolvedTheme === 'dark';
-	const logoSize = PLATFORM_LOGO_SIZE[size];
+	const logoSize = customLogoSizeClassName || PLATFORM_LOGO_SIZE[size];
 	const src =
 		srcMap[
 			logoTheme === 'auto' ? (resolvedTheme as 'dark' | 'light') : logoTheme

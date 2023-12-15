@@ -11,9 +11,13 @@ const PLATFORM_ICON_SIZE = {
 	sm: 'w-6',
 	md: 'w-10',
 	lg: 'w-20',
+	xl: 'w-24',
+	'2xl': 'w-28',
+	'3xl': 'w-32',
 };
 export type PlatformIconProps = BaseComponent & {
 	alt?: string;
+	customIconSizeClassName?: string;
 	height: number;
 	size?: 'sm' | 'md' | 'lg';
 	srcMap: Record<Exclude<BaseComponentTheme, 'auto'>, string>;
@@ -23,6 +27,7 @@ export type PlatformIconProps = BaseComponent & {
 export const PlatformIcon: React.FC<PlatformIconProps> = ({
 	alt = 'Platform Icon',
 	className = '',
+	customIconSizeClassName = '',
 	height,
 	size = 'md',
 	srcMap,
@@ -31,7 +36,7 @@ export const PlatformIcon: React.FC<PlatformIconProps> = ({
 }) => {
 	const { resolvedTheme } = useTheme();
 	const isDarkMode = iconTheme === 'dark' || resolvedTheme === 'dark';
-	const iconSize = PLATFORM_ICON_SIZE[size];
+	const iconSize = customIconSizeClassName || PLATFORM_ICON_SIZE[size];
 	const src =
 		srcMap[
 			iconTheme === 'auto' ? (resolvedTheme as 'dark' | 'light') : iconTheme
