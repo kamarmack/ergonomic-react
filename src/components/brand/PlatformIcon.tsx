@@ -19,7 +19,7 @@ export type PlatformIconProps = BaseComponent & {
 	alt?: string;
 	customIconSizeClassName?: string;
 	height: number;
-	size?: 'sm' | 'md' | 'lg';
+	size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
 	srcMap: Record<Exclude<BaseComponentTheme, 'auto'>, string>;
 	theme?: BaseComponentTheme;
 	width: number;
