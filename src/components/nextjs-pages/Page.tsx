@@ -10,9 +10,12 @@ import {
 	googleAnalytics,
 } from '../../lib/googleAnalytics';
 import { ENABLE_GOOGLE_ANALYTICS } from '../../config/enableGoogleAnalytics';
+import cn from '../../lib/cn';
+import { MobileResponsivePageComingSoon } from './MobileResponsivePageComingSoon';
 
 export type PageStaticProps = BaseComponentWithChildren & {
 	description?: string | React.ReactNode;
+	hideMobileResponsiveVersion?: boolean;
 	routeStaticId: string;
 	routeId?: string;
 	title: string | React.ReactNode;
@@ -32,6 +35,7 @@ export type PageProps = PageStaticProps & {
 export const Page: React.FC<PageProps> = ({
 	children,
 	description,
+	hideMobileResponsiveVersion = false,
 	routeId,
 	routeStaticId,
 	title,
@@ -104,7 +108,20 @@ export const Page: React.FC<PageProps> = ({
 				<meta property='og:type' content='website' />
 				<meta property='og:url' content={metaUrl} />
 			</Head>
-			{children}
+			<MobileResponsivePageComingSoon
+				className={cn(
+					hideMobileResponsiveVersion ? 'hidden' : 'block',
+					'xl:hidden',
+				)}
+			/>
+			<div
+				className={cn(
+					hideMobileResponsiveVersion ? 'block' : 'hidden',
+					'xl:block',
+				)}
+			>
+				{children}
+			</div>
 		</>
 	);
 };
