@@ -110,14 +110,12 @@ export const Page: React.FC<PageProps> = ({
 			</Head>
 			<MobileResponsivePageComingSoon
 				className={cn(
-					hideMobileResponsiveVersion ? 'hidden' : 'block',
-					'xl:hidden',
+					hideMobileResponsiveVersion ? 'block xl:hidden' : 'hidden',
 				)}
 			/>
 			<div
 				className={cn(
-					hideMobileResponsiveVersion ? 'block' : 'hidden',
-					'xl:block',
+					hideMobileResponsiveVersion ? 'hidden xl:block' : 'block',
 				)}
 			>
 				{children}
