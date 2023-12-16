@@ -6,6 +6,7 @@ export const OPEN_GRAPH_CONFIG = {
 	siteBrandLogoLightMode: process.env.NEXT_PUBLIC_SITE_BRAND_LOGO_LIGHT_MODE,
 	siteName: process.env.NEXT_PUBLIC_SITE_NAME,
 	siteSocialMediaDiscord: process.env.NEXT_PUBLIC_SITE_SOCIAL_MEDIA_DISCORD,
+	siteSocialMediaGitHub: process.env.NEXT_PUBLIC_SITE_SOCIAL_MEDIA_GITHUB,
 	siteSocialMediaTwitter: process.env.NEXT_PUBLIC_SITE_SOCIAL_MEDIA_TWITTER,
 	siteSocialMediaYouTube: process.env.NEXT_PUBLIC_SITE_SOCIAL_MEDIA_YOUTUBE,
 	siteThumbnail: process.env.NEXT_PUBLIC_SITE_THUMBNAIL,
