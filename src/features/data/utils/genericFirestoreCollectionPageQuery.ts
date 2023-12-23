@@ -1,5 +1,6 @@
 import {
 	type DocumentReference,
+	FirestoreError,
 	collection,
 	getDocs,
 	limit,
@@ -11,6 +12,7 @@ import {
 import { BaseApiObject } from 'ergonomic/typescript-api-helpers/object-schema-helpers';
 import { firebaseFirestoreInstance } from '../../../lib/firebase';
 import { FirestoreCollectionQueryOptions } from '../types/FirestoreQueryTypes';
+import { ApiRequestError } from '../../../lib/apiRequestError';
 
 export type FirestoreCollectionPage<T extends BaseApiObject = BaseApiObject> = {
 	currentPageStartAfterDocumentReference: DocumentReference | null | undefined;
@@ -76,6 +78,28 @@ export const genericFirestoreCollectionPageQuery =
 				nextPageStartAfterDocumentReference,
 			};
 		} catch (error) {
-			return Promise.reject(error);
+			if (error instanceof FirestoreError) {
+				// Handle Firestore-specific errors
+				const apiRequestError: ApiRequestError = {
+					error: {
+						data: error,
+						message: error.message,
+						status: -1,
+						statusText: error.code,
+					},
+				};
+				return Promise.reject(apiRequestError);
+			} else {
+				// Handle non-Firestore errors
+				const apiRequestError: ApiRequestError = {
+					error: {
+						data: {},
+						message: 'An unknown error occurred',
+						status: -1,
+						statusText: 'UNKNOWN',
+					},
+				};
+				return Promise.reject(apiRequestError);
+			}
 		}
 	};
