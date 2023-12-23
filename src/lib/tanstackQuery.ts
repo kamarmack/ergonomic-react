@@ -21,24 +21,24 @@ export const queryClient = new QueryClient({
 	defaultOptions: defaultQueryClientOptions,
 });
 
-export type GenericReactQueryKeyFn<T extends BaseApiObject> = (
+export type GenericUseQueryKeyFn<T extends BaseApiObject> = (
 	params: FirestoreCollectionQueryOptions,
 ) => readonly [T['_object'], string];
 
-export type GenericReactQueryPageOptions<T extends BaseApiObject> = Omit<
+export type GenericUseQueryPageOptions<T extends BaseApiObject> = Omit<
 	UseQueryOptions<
 		FirestoreCollectionPage<T>,
 		ApiRequestError,
 		FirestoreCollectionPage<T>,
-		ReturnType<GenericReactQueryKeyFn<T>>
+		ReturnType<GenericUseQueryKeyFn<T>>
 	>,
 	'queryFn' | 'queryKey'
 >;
 
-export type GenericReactQueryPageProps<T extends BaseApiObject> = {
+export type GenericUseQueryPageProps<T extends BaseApiObject> = {
 	firestoreQueryOptions: FirestoreCollectionQueryOptions;
-	reactQueryOptions?: GenericReactQueryPageOptions<T>;
+	reactQueryOptions?: GenericUseQueryPageOptions<T>;
 };
 
-export type GenericReactQueryPageObserver<T extends BaseApiObject> =
+export type GenericUseQueryPageObserver<T extends BaseApiObject> =
 	QueryObserverResult<FirestoreCollectionPage<T>, ApiRequestError>;
