@@ -28,7 +28,6 @@ export type PageStaticProps = BaseComponentWithChildren & {
 	};
 };
 export type PageProps = PageStaticProps & {
-	description: string | React.ReactNode;
 	routeId: string;
 };
 
