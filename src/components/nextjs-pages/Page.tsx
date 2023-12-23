@@ -34,7 +34,7 @@ export type PageProps = PageStaticProps & {
 
 export const Page: React.FC<PageProps> = ({
 	children,
-	description,
+	description = OPEN_GRAPH_CONFIG.siteDescription,
 	hideMobileResponsiveVersion = false,
 	routeId,
 	routeStaticId,
