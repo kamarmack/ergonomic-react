@@ -11,6 +11,10 @@ export const handleKyError = async (err: unknown): Promise<ApiRequestError> => {
 		try {
 			// Attempt to parse JSON data if available
 			data = await err.response.json();
+			const apiRequestError = data as ApiRequestError;
+			if (apiRequestError?.error && apiRequestError?.error?.message) {
+				return apiRequestError;
+			}
 		} catch {
 			data = {
 				message: err.response.statusText,
