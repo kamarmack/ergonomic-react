@@ -18,16 +18,23 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 	const [user, setUser] = useState<FirebaseUser | null>(null);
 
 	useEffect(() => {
-		auth
-			.authStateReady()
-			.then(() => {
+		if (!authStateIsLoading) return;
+
+		return void (async () => {
+			try {
+				// Check the auth state
+				await auth.authStateReady();
+
+				// Wait 500ms
+				await new Promise((resolve) => setTimeout(resolve, 500));
+
+				// Set the auth state to not loading
 				setAuthStateIsLoading(false);
-				return;
-			})
-			.catch((error) => {
+			} catch (error) {
 				console.error(error);
-			});
-	}, []);
+			}
+		})();
+	}, [authStateIsLoading]);
 
 	useEffect(() => {
 		if (authStateIsLoading) return;
