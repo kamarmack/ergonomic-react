@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from 'react';
 import { getAuth, User as FirebaseUser } from 'firebase/auth';
-import { firebaseApp } from '../lib/firebase';
+import { firebaseApp } from '../../../lib/firebase';
 
 const auth = getAuth(firebaseApp);
 
@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged((user) => {
 			if (user) {
-				setUser(user);
+				setUser(() => user);
 			} else {
 				setUser(null);
 			}
