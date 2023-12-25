@@ -55,6 +55,7 @@ export const useAuthStateRedirect = (
 	// Redirect to Authenticated User Welcome Page if User is Authenticated and Authenticated Users are not allowed
 	useEffect(() => {
 		if (!router.isReady) return;
+		if (authContext.authStateIsLoading) return;
 
 		if (authContext.user) {
 			if (allowAuthenticatedUsers) return;
@@ -79,7 +80,12 @@ export const useAuthStateRedirect = (
 
 		redirectToLoginPage({ ...options, router });
 		return;
-	}, [authContext.user, client_token, router.isReady]);
+	}, [
+		authContext.authStateIsLoading,
+		authContext.user,
+		client_token,
+		router.isReady,
+	]);
 
 	return { ...authContext };
 };

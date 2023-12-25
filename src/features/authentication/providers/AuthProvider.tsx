@@ -4,25 +4,44 @@ import { firebaseApp } from '../../../lib/firebase';
 
 const auth = getAuth(firebaseApp);
 
-export const AuthContext = createContext<{ user: FirebaseUser | null }>({
+export type AuthProviderState = {
+	authStateIsLoading: boolean;
+	user: FirebaseUser | null;
+};
+export const AuthContext = createContext<AuthProviderState>({
+	authStateIsLoading: true,
 	user: null,
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+	const [authStateIsLoading, setAuthStateIsLoading] = useState(true);
 	const [user, setUser] = useState<FirebaseUser | null>(null);
 
 	useEffect(() => {
-		const unsubscribe = auth.onAuthStateChanged((user) => {
-			if (user) {
-				setUser(() => user);
-			} else {
-				setUser(null);
-			}
-		});
-		return () => unsubscribe();
+		auth
+			.authStateReady()
+			.then(() => {
+				setAuthStateIsLoading(false);
+				return;
+			})
+			.catch((error) => {
+				console.error(error);
+			});
 	}, []);
 
+	useEffect(() => {
+		if (authStateIsLoading) return;
+
+		const unsubscribe = auth.onAuthStateChanged((user) => {
+			setUser(() => user);
+		});
+
+		return () => unsubscribe();
+	}, [authStateIsLoading]);
+
 	return (
-		<AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+		<AuthContext.Provider value={{ authStateIsLoading, user }}>
+			{children}
+		</AuthContext.Provider>
 	);
 };
