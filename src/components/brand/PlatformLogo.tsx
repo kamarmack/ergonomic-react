@@ -42,7 +42,19 @@ export const PlatformLogo: React.FC<PlatformLogoProps> = ({
 			logoTheme === 'auto' ? (resolvedTheme as 'dark' | 'light') : logoTheme
 		];
 
-	if (!isDomAvailable()) return null;
+	if (!isDomAvailable())
+		return (
+			<div className={cn(logoSize, className)}>
+				<Image
+					alt={alt}
+					className={cn('hidden object-contain', logoSize)}
+					height={height}
+					priority
+					src={src}
+					width={width}
+				/>
+			</div>
+		);
 
 	if (isDarkMode) {
 		return (

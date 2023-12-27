@@ -42,7 +42,19 @@ export const PlatformIcon: React.FC<PlatformIconProps> = ({
 			iconTheme === 'auto' ? (resolvedTheme as 'dark' | 'light') : iconTheme
 		];
 
-	if (!isDomAvailable()) return null;
+	if (!isDomAvailable())
+		return (
+			<div className={cn(iconSize, className)}>
+				<Image
+					alt={alt}
+					className={cn('hidden object-contain', iconSize)}
+					height={height}
+					priority
+					src={src}
+					width={width}
+				/>
+			</div>
+		);
 
 	if (isDarkMode) {
 		return (
