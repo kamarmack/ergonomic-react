@@ -5,7 +5,6 @@ import {
 	BaseComponentTheme,
 } from '../../types/BaseComponentTypes';
 import { default as cn } from '../../lib/cn';
-import { isDomAvailable } from '../../utils/isDomAvailable';
 
 const PLATFORM_LOGO_SIZE = {
 	sm: 'w-16',
@@ -41,20 +40,6 @@ export const PlatformLogo: React.FC<PlatformLogoProps> = ({
 		srcMap[
 			logoTheme === 'auto' ? (resolvedTheme as 'dark' | 'light') : logoTheme
 		];
-
-	if (!isDomAvailable())
-		return (
-			<div className={cn(logoSize, className)}>
-				<Image
-					alt={alt}
-					className={cn('hidden object-contain', logoSize)}
-					height={height}
-					priority
-					src={src}
-					width={width}
-				/>
-			</div>
-		);
 
 	if (isDarkMode) {
 		return (
