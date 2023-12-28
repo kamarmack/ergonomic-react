@@ -6,12 +6,14 @@ export type AsyncLinkProps = BaseComponentWithChildren &
 	LinkProps & {
 		isReady?: boolean;
 		key?: string;
+		target?: string;
 	};
 export const AsyncLink: React.FC<AsyncLinkProps> = ({
 	children,
 	className = '',
 	isReady = true,
 	key,
+	target = '_self',
 	...props
 }) => {
 	if (!isReady) {
@@ -23,7 +25,7 @@ export const AsyncLink: React.FC<AsyncLinkProps> = ({
 	}
 
 	return (
-		<Link {...props}>
+		<Link {...props} target={target}>
 			<div className={cn(className)}>{children}</div>
 		</Link>
 	);
