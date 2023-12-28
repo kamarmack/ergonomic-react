@@ -6,14 +6,14 @@ type NextLinkComponentProps = React.ComponentProps<typeof Link>;
 
 export type AsyncLinkProps = BaseComponentWithChildren &
 	NextLinkComponentProps & {
-		isReady?: boolean;
+		isReady: boolean;
 		key?: string;
 		target?: string;
 	};
 export const AsyncLink: React.FC<AsyncLinkProps> = ({
 	children,
 	className = '',
-	isReady = true,
+	isReady,
 	key,
 	target = '_self',
 	...props
