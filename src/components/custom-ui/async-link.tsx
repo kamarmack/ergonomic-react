@@ -1,9 +1,11 @@
-import Link, { LinkProps } from 'next/link';
+import Link from 'next/link';
 import cn from '../../lib/cn';
 import { BaseComponentWithChildren } from '../../types/BaseComponentTypes';
 
+type NextLinkComponentProps = React.ComponentProps<typeof Link>;
+
 export type AsyncLinkProps = BaseComponentWithChildren &
-	LinkProps & {
+	NextLinkComponentProps & {
 		isReady?: boolean;
 		key?: string;
 		target?: string;
