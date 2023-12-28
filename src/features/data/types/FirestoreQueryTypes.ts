@@ -4,7 +4,7 @@ export type FirestoreCollectionQueryOrderByClause = [string, 'asc' | 'desc'];
 export type FirestoreCollectionQueryWhereClause = [
 	string,
 	WhereFilterOp,
-	string | number | string[] | number[] | boolean | null,
+	string | number | string[] | number[] | boolean | null | undefined,
 ];
 export type FirestoreCollectionQueryOptions = {
 	orderByClauses?: FirestoreCollectionQueryOrderByClause[];

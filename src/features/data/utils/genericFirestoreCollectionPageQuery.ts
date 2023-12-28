@@ -33,6 +33,21 @@ export const genericFirestoreCollectionPageQuery =
 				whereClauses = [],
 			} = queryOptions;
 
+			if (
+				whereClauses.some((whereClause) => {
+					const [_fieldName, _operator, value] = whereClause;
+					return typeof value === 'undefined';
+				})
+			) {
+				// If any of the where clauses have an undefined value, return an empty page.
+				// This typically happens when a query is being built and but the value for a where clause is not yet available.
+				return {
+					currentPageStartAfterDocumentReference: null,
+					documents: [],
+					nextPageStartAfterDocumentReference: null,
+				};
+			}
+
 			// Build the query
 			let q = query(collection(firebaseFirestoreInstance, collectionId));
 
