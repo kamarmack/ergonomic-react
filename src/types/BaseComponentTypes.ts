@@ -3,7 +3,7 @@ export type BaseComponent = {
 	getErrorComponent?: (props: { errorMessage?: string }) => React.ReactNode;
 	getLoadingComponent?: () => React.ReactNode;
 	htmlElementId?: string;
-	key?: string | number;
+	key?: string | number | null | undefined;
 };
 export type BaseComponentWithChildren = BaseComponent & {
 	children?: React.ReactNode;
