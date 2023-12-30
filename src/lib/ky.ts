@@ -1,4 +1,4 @@
 import { default as ky } from 'ky-universal';
-import { defaultKyConfig } from '../config/kyConfig';
+import { generalizedKyConfig } from '../config/kyConfig';
 
-export const defaultKyInstance = ky.create(defaultKyConfig);
+export const generalizedKyInstance = ky.create(generalizedKyConfig);
