@@ -9,13 +9,12 @@ import {
 	startAfter,
 	where,
 } from 'firebase/firestore';
-import { BaseApiObject } from 'ergonomic/typescript-api-helpers/object-schema-helpers';
+import { GeneralizedApiObject, getGeneralizedError } from 'ergonomic';
 import { firebaseFirestoreInstance } from '../../../lib/firebase';
 import { FirestoreCollectionQueryOptions } from '../types/FirestoreQueryTypes';
-import { ApiRequestError } from '../../../lib/apiRequestError';
 
 export type GeneralizedFirestoreCollectionPage<
-	T extends BaseApiObject = BaseApiObject,
+	T extends GeneralizedApiObject = GeneralizedApiObject,
 > = {
 	currentPageStartAfterDocumentReference: DocumentReference | null | undefined;
 	documents: T[];
@@ -23,7 +22,9 @@ export type GeneralizedFirestoreCollectionPage<
 };
 
 export const generalizedFirestoreCollectionPageQuery =
-	<T extends BaseApiObject = BaseApiObject>(collectionId: string) =>
+	<T extends GeneralizedApiObject = GeneralizedApiObject>(
+		collectionId: string,
+	) =>
 	async (
 		queryOptions: FirestoreCollectionQueryOptions,
 	): Promise<GeneralizedFirestoreCollectionPage<T>> => {
@@ -97,26 +98,16 @@ export const generalizedFirestoreCollectionPageQuery =
 		} catch (error) {
 			if (error instanceof FirestoreError) {
 				// Handle Firestore-specific errors
-				const apiRequestError: ApiRequestError = {
-					error: {
-						data: error,
-						message: error.message,
-						status: -1,
-						statusText: error.code,
-					},
-				};
-				return Promise.reject(apiRequestError);
-			} else {
-				// Handle non-Firestore errors
-				const apiRequestError: ApiRequestError = {
-					error: {
-						data: {},
-						message: 'An unknown error occurred',
-						status: -1,
-						statusText: 'UNKNOWN',
-					},
-				};
-				return Promise.reject(apiRequestError);
+				const generalizedError = getGeneralizedError({
+					category: 'request.unknown-error',
+					data: { firestoreError: error },
+					message: error.message,
+					status_text: 'An unknown error occurred.',
+				});
+				console.error({ generalizedError });
+				return Promise.reject(generalizedError);
 			}
+			const defaultError = getGeneralizedError();
+			return Promise.reject(defaultError);
 		}
 	};
