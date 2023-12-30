@@ -6,7 +6,7 @@ import {
 } from '@tanstack/react-query';
 import { BaseApiObject } from 'ergonomic';
 import { FirestoreCollectionQueryOptions } from '../features/data/types/FirestoreQueryTypes';
-import { FirestoreCollectionPage } from '../features/data/utils/genericFirestoreCollectionPageQuery';
+import { GeneralizedFirestoreCollectionPage } from '../features/data/utils/generalizedFirestoreCollectionPageQuery';
 import { ApiRequestError } from './apiRequestError';
 
 const defaultQueryClientOptions: DefaultOptions = {
@@ -21,24 +21,24 @@ export const queryClient = new QueryClient({
 	defaultOptions: defaultQueryClientOptions,
 });
 
-export type GenericUseQueryKeyFn<T extends BaseApiObject> = (
+export type GeneralizedUseQueryKeyFn<T extends BaseApiObject> = (
 	params: FirestoreCollectionQueryOptions,
 ) => readonly [T['_object'], string];
 
-export type GenericUseQueryPageOptions<T extends BaseApiObject> = Omit<
+export type GeneralizedUseQueryPageOptions<T extends BaseApiObject> = Omit<
 	UseQueryOptions<
-		FirestoreCollectionPage<T>,
+		GeneralizedFirestoreCollectionPage<T>,
 		ApiRequestError,
-		FirestoreCollectionPage<T>,
-		ReturnType<GenericUseQueryKeyFn<T>>
+		GeneralizedFirestoreCollectionPage<T>,
+		ReturnType<GeneralizedUseQueryKeyFn<T>>
 	>,
 	'queryFn' | 'queryKey'
 >;
 
-export type GenericUseQueryPageProps<T extends BaseApiObject> = {
+export type GeneralizedUseQueryPageProps<T extends BaseApiObject> = {
 	firestoreQueryOptions: FirestoreCollectionQueryOptions;
-	reactQueryOptions?: GenericUseQueryPageOptions<T>;
+	reactQueryOptions?: GeneralizedUseQueryPageOptions<T>;
 };
 
-export type GenericUseQueryPageObserver<T extends BaseApiObject> =
-	QueryObserverResult<FirestoreCollectionPage<T>, ApiRequestError>;
+export type GeneralizedUseQueryPageObserver<T extends BaseApiObject> =
+	QueryObserverResult<GeneralizedFirestoreCollectionPage<T>, ApiRequestError>;

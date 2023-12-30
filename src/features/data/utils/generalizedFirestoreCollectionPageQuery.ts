@@ -14,17 +14,19 @@ import { firebaseFirestoreInstance } from '../../../lib/firebase';
 import { FirestoreCollectionQueryOptions } from '../types/FirestoreQueryTypes';
 import { ApiRequestError } from '../../../lib/apiRequestError';
 
-export type FirestoreCollectionPage<T extends BaseApiObject = BaseApiObject> = {
+export type GeneralizedFirestoreCollectionPage<
+	T extends BaseApiObject = BaseApiObject,
+> = {
 	currentPageStartAfterDocumentReference: DocumentReference | null | undefined;
 	documents: T[];
 	nextPageStartAfterDocumentReference: DocumentReference | null | undefined;
 };
 
-export const genericFirestoreCollectionPageQuery =
+export const generalizedFirestoreCollectionPageQuery =
 	<T extends BaseApiObject = BaseApiObject>(collectionId: string) =>
 	async (
 		queryOptions: FirestoreCollectionQueryOptions,
-	): Promise<FirestoreCollectionPage<T>> => {
+	): Promise<GeneralizedFirestoreCollectionPage<T>> => {
 		try {
 			const {
 				orderByClauses = [],
