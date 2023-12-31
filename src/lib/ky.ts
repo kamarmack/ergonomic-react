@@ -1,9 +1,9 @@
 import { default as ky } from 'ky-universal';
 import { User as FirebaseUser } from 'firebase/auth';
-import { generalizedKyConfig } from '../config/kyConfig';
+import { GENERALIZED_KY_CONFIG } from '../config/kyConfig';
 import { getCachedFirebaseUserJwt } from '../features/authentication';
 
-export const generalizedKyInstance = ky.create(generalizedKyConfig);
+export const generalizedKyInstance = ky.create(GENERALIZED_KY_CONFIG);
 export const getAuthenticatedGeneralizedKyInstance = (
 	firebaseUser: FirebaseUser,
 	defaultKyInstance: typeof ky = generalizedKyInstance,

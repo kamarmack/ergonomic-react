@@ -1,6 +1,6 @@
 import { Options } from 'ky-universal';
 
-export const generalizedKyConfig: Options = {
+export const GENERALIZED_KY_CONFIG: Options = {
 	headers: {
 		'Content-Type': 'application/json',
 		Accept: 'application/json',
