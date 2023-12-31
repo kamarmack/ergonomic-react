@@ -25,11 +25,11 @@ export const useAuthenticatedRouteRedirect = () => {
 
 				// Wait 1 second
 				await new Promise((resolve) => setTimeout(resolve, 1000));
-
-				// Set the auth state to not loading
-				setAuthStateIsLoading(false);
 			} catch (error) {
 				console.error(error);
+			} finally {
+				// Set the auth state to not loading
+				setAuthStateIsLoading(false);
 			}
 		})();
 	}, [authStateIsLoading]);
