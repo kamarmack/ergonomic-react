@@ -21,9 +21,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
 				if (user) {
 					const idToken = await user.getIdToken();
-					localStorage.setItem('authorization_jwt', idToken);
+					localStorage.setItem('firebase_auth_jwt', idToken);
 				} else {
-					localStorage.removeItem('authorization_jwt');
+					localStorage.removeItem('firebase_auth_jwt');
 				}
 			})();
 		});
