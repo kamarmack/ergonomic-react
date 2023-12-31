@@ -16,13 +16,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged((user) => {
+			setUser(() => user);
 			return void (async () => {
-				setUser(() => user);
-
-				if (user) {
-					const idToken = await user.getIdToken();
-					localStorage.setItem('firebase_auth_jwt', idToken);
-				} else {
+				try {
+					if (user) {
+						const idToken = await user.getIdToken();
+						localStorage.setItem('firebase_auth_jwt', idToken);
+					} else {
+						localStorage.removeItem('firebase_auth_jwt');
+					}
+				} catch (err) {
+					console.error(err);
 					localStorage.removeItem('firebase_auth_jwt');
 				}
 			})();
