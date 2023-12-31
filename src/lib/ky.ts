@@ -24,7 +24,7 @@ export const getAuthenticatedGeneralizedKyInstance = (
 			],
 			afterResponse: [
 				async (request, options, response) => {
-					if (response.status === 403) {
+					if (response.status === 401) {
 						// Check whether a retry has already been attempted
 						if (request.headers.get('X-Retry-Attempt')) {
 							return response;
