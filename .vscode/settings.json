@@ -15,13 +15,13 @@
 		"tanstack"
 	],
 	"clock.format": "isoUtcDateTime",
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.formatOnSave": true,
+	"files.eol": "\n",
 	"jest.outputConfig": {
 		"revealOn": "demand"
 	},
 	"jest.runMode": "on-demand",
-	"editor.defaultFormatter": "esbenp.prettier-vscode",
-	"editor.formatOnSave": true,
-	"files.eol": "\n",
 	"terminal.integrated.confirmOnExit": "always",
 	"workbench.colorCustomizations": {
 		"editorIndentGuide.background1": "#8CA58B8F",
