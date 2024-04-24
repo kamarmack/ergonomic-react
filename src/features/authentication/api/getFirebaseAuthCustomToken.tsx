@@ -1,16 +1,16 @@
 import {
-	FirebaseAuthCustomTokenParams,
-	FirebaseAuthCustomTokenResponse,
+	FirebaseUserCustomTokenParams,
+	FirebaseUserCustomTokenResponse,
 } from 'ergonomic';
 import { generalizedKyInstance } from '../../../lib/ky';
 
-export const getFirebaseAuthCustomToken = async (
-	json: FirebaseAuthCustomTokenParams,
+export const getFirebaseUserCustomToken = async (
+	json: FirebaseUserCustomTokenParams,
 ) => {
 	const data = await generalizedKyInstance
 		.post('v0/auth/custom-token', {
 			json,
 		})
-		.json<FirebaseAuthCustomTokenResponse>();
+		.json<FirebaseUserCustomTokenResponse>();
 	return data;
 };
