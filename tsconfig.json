@@ -12,6 +12,7 @@
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"resolveJsonModule": true,
+		"skipLibCheck": true,
 		"strict": true,
 		"strictNullChecks": true,
 		"strictPropertyInitialization": true,
@@ -24,10 +25,9 @@
 		"isolatedModules": true,
 		"jsx": "preserve",
 		"lib": ["dom", "dom.iterable", "esnext"],
-		"module": "Node16",
-		"moduleResolution": "Node16",
+		"module": "esnext",
+		"moduleResolution": "node",
 		"noEmit": true,
-		"skipLibCheck": true,
 		"target": "esnext"
 		// End -- Base TypeScript Configurations for a Next.js environment
 	}
