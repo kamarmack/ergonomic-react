@@ -5,6 +5,20 @@ import {
 	BaseComponentTheme,
 } from '../../types/BaseComponentTypes';
 import { default as cn } from '../../lib/cn';
+import { useIsMounted } from '../../hooks/useIsMounted';
+
+type PlatformIconFallbackProps = {
+	className: string;
+	size: string;
+};
+export const PlatformIconFallback: React.FC<PlatformIconFallbackProps> = ({
+	className,
+	size,
+}) => (
+	<div
+		className={cn(size, className, 'animate-pulse bg-gray-300 rounded-md')}
+	/>
+);
 
 const PLATFORM_ICON_SIZE = {
 	sm: 'w-6',
@@ -34,12 +48,32 @@ export const PlatformIcon: React.FC<PlatformIconProps> = ({
 	width,
 }) => {
 	const { resolvedTheme } = useTheme();
+	const isMounted = useIsMounted();
+
+	if (!isMounted) {
+		return (
+			<PlatformIconFallback
+				className={className}
+				size={PLATFORM_ICON_SIZE[size]}
+			/>
+		);
+	}
+
 	const isDarkMode = iconTheme === 'dark' || resolvedTheme === 'dark';
 	const iconSize = customIconSizeClassName || PLATFORM_ICON_SIZE[size];
 	const src =
 		srcMap[
 			iconTheme === 'auto' ? (resolvedTheme as 'dark' | 'light') : iconTheme
 		];
+
+	if (typeof src !== 'string' || !src) {
+		return (
+			<PlatformIconFallback
+				className={className}
+				size={PLATFORM_ICON_SIZE[size]}
+			/>
+		);
+	}
 
 	if (isDarkMode) {
 		return (
