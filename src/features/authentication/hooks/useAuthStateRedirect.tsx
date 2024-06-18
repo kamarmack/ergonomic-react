@@ -79,7 +79,7 @@ export const useAuthStateRedirect = (
 
 		redirectToLoginPage({ ...options, router });
 		return;
-	}, [authContext.user, client_token, router.isReady]);
+	}, [authContext.user, client_token, router.isReady, allowAuthStates.join()]);
 
 	return { ...authContext };
 };

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { firebaseAuthInstance } from '../../../lib/firebase';
 import { useAuthStateRedirect } from './useAuthStateRedirect';
-import { RedirectToLoginPageParams } from '../utils/redirectToLoginPage';
+import { RedirectToAuthenticatedUserWelcomePageParams } from '../utils/redirectToAuthenticatedUserWelcomePage';
 
-export const useAuthenticatedRouteRedirect = (
-	options: Omit<RedirectToLoginPageParams, 'router'> = {},
+export const useGuestRouteRedirect = (
+	options: Omit<RedirectToAuthenticatedUserWelcomePageParams, 'router'> = {},
 ) => {
 	// ==== Component State ==== //
 	const [authStateIsLoading, setAuthStateIsLoading] = useState(true);
@@ -12,7 +12,7 @@ export const useAuthenticatedRouteRedirect = (
 	// ==== Hooks ==== //
 	const allowAuthStates = authStateIsLoading
 		? ['authenticated' as const, 'guest' as const]
-		: ['authenticated' as const];
+		: ['guest' as const];
 	useAuthStateRedirect({
 		allowAuthStates,
 		...options,
