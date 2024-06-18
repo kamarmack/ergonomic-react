@@ -58,6 +58,7 @@ export const useAuthStateRedirect = (
 
 		if (authContext.user) {
 			if (allowAuthenticatedUsers) return;
+			if (localStorage.getItem('pause_firebase_auth_redirects')) return;
 
 			redirectToAuthenticatedUserWelcomePage({ ...options, router });
 			return;
