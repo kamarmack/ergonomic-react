@@ -96,7 +96,7 @@ export type FirestoreDocumentUpdateParams<T extends GeneralizedUpdateBody> =
 	| (T & { _id: string })[];
 export const generalizedFirestoreDocumentUpdateOperation =
 	<T extends GeneralizedUpdateBody>(collectionId: string) =>
-	async (params: FirestoreDocumentUpdateParams<T>): Promise<void> => {
+	async (params: FirestoreDocumentUpdateParams<T>): Promise<unknown> => {
 		try {
 			// Get the Firestore collection reference
 			const collectionRef = collection(firebaseFirestoreInstance, collectionId);

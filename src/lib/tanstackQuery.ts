@@ -63,7 +63,7 @@ export type GeneralizedUseUpdateDocumentsMutationOptions<
 	T extends GeneralizedApiObject,
 	U extends GeneralizedUpdateBody,
 > = UseMutationOptions<
-	GeneralizedResponse<T>,
+	unknown,
 	GeneralizedResponse<T>,
 	(U & { _id: string }) | (U & { _id: string })[]
 >;
