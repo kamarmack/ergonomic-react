@@ -3,8 +3,15 @@ import {
 	QueryClient,
 	QueryObserverResult,
 	UseQueryOptions,
+	UseMutationOptions,
 } from '@tanstack/react-query';
-import { GeneralizedApiObject, GeneralizedError } from 'ergonomic';
+import {
+	GeneralizedApiObject,
+	GeneralizedError,
+	GeneralizedCreateBody,
+	GeneralizedUpdateBody,
+	GeneralizedResponse,
+} from 'ergonomic';
 import { FirestoreCollectionQueryOptions } from '../features/data/types/FirestoreQueryTypes';
 import { GeneralizedFirestoreCollectionPage } from '../features/data/utils/generalizedFirestoreCollectionPageQuery';
 
@@ -19,6 +26,8 @@ const defaultQueryClientOptions: DefaultOptions = {
 export const queryClient = new QueryClient({
 	defaultOptions: defaultQueryClientOptions,
 });
+
+// Reads
 
 export type GeneralizedUseQueryKeyFn<T extends GeneralizedApiObject> = (
 	params: FirestoreCollectionQueryOptions,
@@ -42,3 +51,19 @@ export type GeneralizedUseQueryPageProps<T extends GeneralizedApiObject> = {
 
 export type GeneralizedUseQueryPageObserver<T extends GeneralizedApiObject> =
 	QueryObserverResult<GeneralizedFirestoreCollectionPage<T>, GeneralizedError>;
+
+// Writes
+
+export type GeneralizedUseCreateDocumentsMutationOptions<
+	T extends GeneralizedApiObject,
+	U extends GeneralizedCreateBody,
+> = UseMutationOptions<GeneralizedResponse<T>, GeneralizedResponse<T>, U | U[]>;
+
+export type GeneralizedUseUpdateDocumentsMutationOptions<
+	T extends GeneralizedApiObject,
+	U extends GeneralizedUpdateBody,
+> = UseMutationOptions<
+	GeneralizedResponse<T>,
+	GeneralizedResponse<T>,
+	(U & { _id: string }) | (U & { _id: string })[]
+>;
