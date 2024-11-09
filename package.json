@@ -134,5 +134,5 @@
 		"prepare": "(husky install && chmod +x .husky/*) || true",
 		"test": "echo 'No test script configured'"
 	},
-	"version": "0.1.10"
+	"version": "0.1.11"
 }
