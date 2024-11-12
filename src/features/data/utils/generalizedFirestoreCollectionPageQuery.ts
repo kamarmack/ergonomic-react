@@ -1,6 +1,5 @@
 import {
 	type DocumentReference,
-	FirestoreError,
 	collection,
 	getDocs,
 	limit,
@@ -9,8 +8,11 @@ import {
 	startAfter,
 	where,
 } from 'firebase/firestore';
-import { GeneralizedApiObject, getGeneralizedError } from 'ergonomic';
-import { firebaseFirestoreInstance } from '../../../lib/firebase';
+import { GeneralizedApiObject } from 'ergonomic';
+import {
+	firebaseFirestoreInstance,
+	handleFirestoreOperationError,
+} from '../../../lib/firebase';
 import { FirestoreCollectionQueryOptions } from '../types/FirestoreQueryTypes';
 
 export type GeneralizedFirestoreCollectionPage<
@@ -96,18 +98,6 @@ export const generalizedFirestoreCollectionPageQuery =
 				nextPageStartAfterDocumentReference,
 			};
 		} catch (error) {
-			if (error instanceof FirestoreError) {
-				// Handle Firestore-specific errors
-				const generalizedError = getGeneralizedError({
-					category: 'request.unknown-error',
-					data: { firestoreError: error },
-					message: error.message,
-					status_text: 'An unknown error occurred.',
-				});
-				console.error({ generalizedError });
-				return Promise.reject(generalizedError);
-			}
-			const defaultError = getGeneralizedError();
-			return Promise.reject(defaultError);
+			return handleFirestoreOperationError(error);
 		}
 	};

@@ -1,18 +1,15 @@
-import {
-	FirestoreError,
-	collection,
-	doc,
-	writeBatch,
-} from 'firebase/firestore';
+import { collection, doc, writeBatch } from 'firebase/firestore';
 import {
 	GeneralizedApiObject,
 	GeneralizedApiObjectSpec,
 	GeneralizedCreateBody,
 	GeneralizedResponse,
 	GeneralizedUpdateBody,
-	getGeneralizedError,
 } from 'ergonomic';
-import { firebaseFirestoreInstance } from '../../../lib/firebase';
+import {
+	firebaseFirestoreInstance,
+	handleFirestoreOperationError,
+} from '../../../lib/firebase';
 
 // Maximum number of writes that can be batched together
 const MAX_BATCH_SIZE = 490;
@@ -24,22 +21,6 @@ const chunkArray = <T>(array: T[], chunkSize: number): T[][] => {
 		chunks.push(array.slice(i, i + chunkSize));
 	}
 	return chunks;
-};
-
-// Helper function to handle Firestore errors and return a standardized error
-const handleFirestoreError = (error: unknown) => {
-	if (error instanceof FirestoreError) {
-		const generalizedError = getGeneralizedError({
-			category: 'request.unknown-error',
-			data: { firestoreError: error },
-			message: error.message,
-			status_text: 'An unknown error occurred.',
-		});
-		console.error({ generalizedError });
-		return Promise.reject(generalizedError);
-	}
-	const defaultError = getGeneralizedError();
-	return Promise.reject(defaultError);
 };
 
 export type FirestoreDocumentCreateParams<T extends GeneralizedCreateBody> =
@@ -87,7 +68,7 @@ export const generalizedFirestoreDocumentCreateOperation =
 
 			return response;
 		} catch (error) {
-			return handleFirestoreError(error);
+			return handleFirestoreOperationError(error);
 		}
 	};
 
@@ -119,6 +100,6 @@ export const generalizedFirestoreDocumentUpdateOperation =
 
 			return void 0;
 		} catch (error) {
-			return handleFirestoreError(error);
+			return handleFirestoreOperationError(error);
 		}
 	};
