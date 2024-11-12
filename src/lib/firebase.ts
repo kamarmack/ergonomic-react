@@ -2,7 +2,7 @@ import { FirebaseError, initializeApp, getApps } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { FirestoreError, getFirestore } from 'firebase/firestore';
 import { FIREBASE_CONFIG } from '../config/firebaseConfig';
-import { getGeneralizedError } from 'ergonomic';
+import { GeneralizedResponse, getGeneralizedError } from 'ergonomic';
 
 export const firebaseApp = getApps().length
 	? (getApps()[0] as ReturnType<typeof initializeApp>)
@@ -13,6 +13,7 @@ export const firebaseFirestoreInstance = getFirestore(firebaseApp);
 
 // Helper function to handle Firestore errors and return a standardized error
 export const handleFirestoreOperationError = (error: unknown) => {
+	const response: GeneralizedResponse = { data: [], errors: [] };
 	if (error instanceof FirebaseError || error instanceof FirestoreError) {
 		const generalizedError = getGeneralizedError({
 			category: 'request.unknown-error',
@@ -21,9 +22,11 @@ export const handleFirestoreOperationError = (error: unknown) => {
 			status_text: 'An unknown error occurred.',
 		});
 		console.error({ generalizedError });
-		return Promise.reject(generalizedError);
+		response.errors.push(generalizedError);
+		return Promise.reject(response);
 	}
 	console.error({ error });
 	const defaultError = getGeneralizedError();
-	return Promise.reject(defaultError);
+	response.errors.push(defaultError);
+	return Promise.reject(response);
 };
