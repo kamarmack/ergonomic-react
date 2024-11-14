@@ -8,7 +8,7 @@ import {
 	startAfter,
 	where,
 } from 'firebase/firestore';
-import { GeneralizedApiObject } from 'ergonomic';
+import { GeneralizedApiObject, GeneralizedApiObjectSpec } from 'ergonomic';
 import {
 	firebaseFirestoreInstance,
 	handleFirestoreOperationError,
@@ -26,6 +26,7 @@ export type GeneralizedFirestoreCollectionPage<
 export const generalizedFirestoreCollectionPageQuery =
 	<T extends GeneralizedApiObject = GeneralizedApiObject>(
 		collectionId: string,
+		apiObjectSpec: GeneralizedApiObjectSpec,
 	) =>
 	async (
 		queryOptions: FirestoreCollectionQueryOptions,
@@ -79,9 +80,23 @@ export const generalizedFirestoreCollectionPageQuery =
 			}
 
 			const querySnapshot = await getDocs(q);
-			const allDocuments: T[] = querySnapshot.docs.map(
-				(doc) => doc.data() as T,
-			);
+			const allDocuments: T[] = querySnapshot.docs
+				.map((doc): T | null => {
+					const data = doc.data();
+					try {
+						return apiObjectSpec.apiObjectJsonSchema.cast(data, {
+							stripUnknown: true,
+							assert: true,
+						}) as T;
+					} catch (err) {
+						console.error(
+							'ERROR: Detected data in the Firestore collection that does not conform to the schema.',
+							{ data, err },
+						);
+						return null;
+					}
+				})
+				.filter((data: T | null): data is T => data !== null);
 			const hasMore = pageSize != null && allDocuments.length > pageSize;
 			const documents = hasMore
 				? allDocuments.slice(0, pageSize)
