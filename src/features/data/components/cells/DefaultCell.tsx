@@ -9,9 +9,9 @@ import {
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
-} from 'ergonomic-react/src/components/ui/dialog';
-import { Button } from 'ergonomic-react/src/components/ui/button';
-import { default as cn } from 'ergonomic-react/src/lib/cn';
+} from '../../../../components/ui/dialog';
+import { Button } from '../../../../components/ui/button';
+import { default as cn } from '../../../../lib/cn';
 
 export type DefaultCellProps = GeneralizedTableCellProps & {
 	formatValue?: (value: unknown) => string;
