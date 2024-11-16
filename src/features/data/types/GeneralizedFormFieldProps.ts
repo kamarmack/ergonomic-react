@@ -24,6 +24,7 @@ export type GeneralizedFormFieldProps<
 		options: GeneralizedUseQueryPageProps<GeneralizedApiObject>,
 	) => UseQueryResult<GeneralizedFirestoreCollectionPage, GeneralizedResponse>;
 	idPrefixByCollection: Record<TCollection, string>;
+	initialFormData: FieldValues | null;
 	isSubmitting: boolean;
 	operation: 'create' | 'update';
 	setError: (message: string) => void;

@@ -312,6 +312,9 @@ export const GeneralizedForm = <
 		dataTransformationOptions,
 	]);
 
+	const [initialFormData, setInitialFormData] = useState<FieldValues | null>(
+		null,
+	);
 	useEffect(() => {
 		if (operation !== 'update') return;
 		if (updateProps == null) return;
@@ -330,6 +333,7 @@ export const GeneralizedForm = <
 			defaultValues,
 			formDefaultVales,
 		});
+		setInitialFormData(() => formDefaultVales);
 		reset(formDefaultVales);
 		setIsDefaultValuesInitialized(true);
 	}, [
@@ -364,6 +368,7 @@ export const GeneralizedForm = <
 							fieldSpec={fieldSpec}
 							getPageQueryHookForCollection={getPageQueryHookForCollection}
 							idPrefixByCollection={idPrefixByCollection}
+							initialFormData={initialFormData}
 							isSubmitting={isSubmitting}
 							operation={operation}
 							setError={(message) =>

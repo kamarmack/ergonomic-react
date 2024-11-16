@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import * as changeCase from 'change-case';
 import { v4 } from 'uuid';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import { isFieldRequired } from 'ergonomic';
 import { Skeleton } from '../../../../components/ui/skeleton';
@@ -41,6 +41,7 @@ export const DocumentIDReferenceField = <
 	fieldSpec,
 	getPageQueryHookForCollection,
 	idPrefixByCollection,
+	initialFormData,
 	isSubmitting,
 	operation,
 }: GeneralizedFormFieldProps<TFieldValues, TCollection>): JSX.Element => {
@@ -50,7 +51,6 @@ export const DocumentIDReferenceField = <
 	const isMulti = type === 'id_refs';
 	const acceptsMultipleDataTypes = reference_collections.length > 1;
 	const required = isFieldRequired({ fieldSpec, operation });
-	const initialValue = [] as string[];
 
 	// Reference collection query logic
 	const [collectionIdForReference, setCollectionIdForReference] =
@@ -61,7 +61,9 @@ export const DocumentIDReferenceField = <
 		collectionIdForReference != null &&
 		!!idPrefixByCollection[collectionIdForReference];
 	const pageQueryHookForCollection = getPageQueryHookForCollection(
-		collectionIdForReference,
+		collectionIdForReference as
+			| Parameters<typeof getPageQueryHookForCollection>[0]
+			| null,
 	);
 	const { data: documentPageData, isLoading: isDocumentPageDataLoading } =
 		pageQueryHookForCollection({
@@ -70,16 +72,81 @@ export const DocumentIDReferenceField = <
 		});
 	const documentPage = documentPageData?.documents ?? [];
 	const documentPageOptions = (
-		isMulti ? [] : [{ label: 'None', value: '' } as unknown as string]
+		isMulti ? [] : [{ label: 'None', value: '' }]
 	).concat(
-		documentPage.map(
-			({ _id, name }) =>
-				({
+		documentPage.map(({ _id, name }) => ({
+			label: name,
+			value: _id,
+		})),
+	);
+
+	// Initial value
+	const [initialValue, setInitialValue] = useState<
+		| { label: string; value: string }
+		| { label: string; value: string }[]
+		| null
+		| undefined
+	>(null);
+	const isInitialValueReady = !(initialValue === null);
+	useEffect(() => {
+		if (isInitialValueReady) return;
+		if (operation === 'create') {
+			setInitialValue(isMulti ? [] : undefined);
+		}
+
+		if (isDocumentPageDataLoading) return;
+		if (initialFormData == null) {
+			setInitialValue(isMulti ? [] : undefined);
+			return;
+		}
+
+		const value = R.pathOr<string | { id: string; value: string }[] | null>(
+			null,
+			[name],
+			initialFormData,
+		);
+		if (value == null) {
+			setInitialValue(isMulti ? [] : undefined);
+			return;
+		}
+
+		if (isMulti) {
+			const valuesAsArray = (Array.isArray(value) ? value : [value]) as {
+				id: string;
+				value: string;
+			}[];
+			const matches = documentPage.filter(({ _id }) =>
+				valuesAsArray.some((arrayValue) => arrayValue.value === _id),
+			);
+			setInitialValue(() =>
+				matches.map(({ _id, name }) => ({
 					label: name,
 					value: _id,
-				} as unknown as string),
-		),
-	);
+				})),
+			);
+			return;
+		}
+
+		const valuesAsString = (Array.isArray(value) ? value[0] : value) as string;
+		if (!valuesAsString) {
+			setInitialValue(undefined);
+			return;
+		}
+
+		const match = documentPage.find(({ _id }) => _id === valuesAsString);
+		if (!match) {
+			setInitialValue(undefined);
+			return;
+		}
+
+		setInitialValue(() => ({ label: match.name, value: valuesAsString }));
+	}, [
+		isMulti,
+		isInitialValueReady,
+		isDocumentPageDataLoading,
+		documentPage,
+		initialFormData,
+	]);
 
 	// react-hook-form controller render props
 	const { field } = useController({
@@ -89,7 +156,9 @@ export const DocumentIDReferenceField = <
 	});
 
 	// Suspense loading state
-	if (isDocumentPageDataLoading) {
+	const isDocumentIDReferenceFieldLoading =
+		isDocumentPageDataLoading || !isInitialValueReady;
+	if (isDocumentIDReferenceFieldLoading) {
 		return (
 			<div>
 				{Array.from({ length: 1 }).map(() => (
@@ -139,9 +208,7 @@ export const DocumentIDReferenceField = <
 					</div>
 				)}
 				<Select
-					defaultValue={
-						operation === 'create' ? ([] as string[]) : initialValue
-					}
+					defaultValue={initialValue}
 					isDisabled={field.disabled}
 					isMulti={isMulti}
 					name={field.name}
