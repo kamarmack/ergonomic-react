@@ -1,3 +1,4 @@
+import * as R from 'ramda';
 import * as changeCase from 'change-case';
 import { FieldValues, Path, PathValue, useController } from 'react-hook-form';
 import { isFieldRequired } from 'ergonomic';
@@ -31,6 +32,7 @@ export const SelectOneField = <
 	control,
 	fieldKey: name,
 	fieldSpec,
+	initialFormData,
 	isSubmitting,
 	operation,
 }: GeneralizedFormFieldProps<TFieldValues, TCollection>): JSX.Element => {
@@ -39,9 +41,11 @@ export const SelectOneField = <
 	const options = fieldSpec.oneOf;
 	const defaultValueFromSpec = fieldSpec.default?.toString();
 	const defaultValue = (
-		defaultValueFromSpec && options.includes(defaultValueFromSpec)
-			? defaultValueFromSpec
-			: ''
+		operation === 'create'
+			? defaultValueFromSpec && options.includes(defaultValueFromSpec)
+				? defaultValueFromSpec
+				: ''
+			: R.pathOr<string | null>('', [name], initialFormData) ?? ''
 	) as PathValue<TFieldValues, Path<TFieldValues>>;
 	const { field } = useController({
 		control,
