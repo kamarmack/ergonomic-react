@@ -145,6 +145,7 @@ export const DocumentIDReferenceField = <
 		isInitialValueReady,
 		isDocumentPageDataLoading,
 		documentPage,
+		name,
 		initialFormData,
 	]);
 
