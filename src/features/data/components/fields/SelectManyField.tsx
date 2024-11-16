@@ -1,3 +1,4 @@
+import * as R from 'ramda';
 import * as changeCase from 'change-case';
 import { v4 } from 'uuid';
 import { useEffect, useState } from 'react';
@@ -48,6 +49,7 @@ export const SelectManyField = <
 	control,
 	fieldKey: name,
 	fieldSpec,
+	initialFormData,
 	isSubmitting,
 	operation,
 }: GeneralizedFormFieldProps<TFieldValues, TCollection>): JSX.Element => {
@@ -75,25 +77,34 @@ export const SelectManyField = <
 		values: MultiValue<ReactSelectOption> = [],
 	) => field.onChange(values.map(({ value }) => ({ id: v4(), value })));
 
-	// Create operation effect
-	// Initialize interval value using fieldSpec?.default if the isDefaultSelectionsLoading flag is true
+	// Initialize defaultSelections value
 	useEffect(() => {
-		if (operation !== 'create') return;
-
 		if (!isDefaultSelectionsLoading) return;
 
-		const defaultFromSpec = fieldSpec?.default as unknown as
+		const defaultValueForCreateOperations = fieldSpec?.default as unknown as
 			| string[]
 			| undefined;
-		const selections =
-			Array.isArray(defaultFromSpec) &&
-			defaultFromSpec.every((s) => typeof s === 'string')
-				? defaultFromSpec.filter((s) => innerOneOf.includes(s))
-				: [];
+		const defaultValueForUpdateOperations = R.pathOr<
+			{ id: string; value: string }[]
+		>([], [name], initialFormData);
+		const selections = (
+			operation === 'create'
+				? Array.isArray(defaultValueForCreateOperations) &&
+				  defaultValueForCreateOperations.every((s) => typeof s === 'string')
+					? defaultValueForCreateOperations
+					: []
+				: defaultValueForUpdateOperations.map(({ value }) => value)
+		).filter((s) => innerOneOf.includes(s));
 		setDefaultSelections(() =>
 			selections.map(getOption(innerLabelByEnumOption)),
 		);
-	}, [operation, fieldSpec?.default, isDefaultSelectionsLoading]);
+	}, [
+		operation,
+		fieldSpec?.default,
+		isDefaultSelectionsLoading,
+		name,
+		initialFormData,
+	]);
 
 	// Suspense loading state
 	if (isDefaultSelectionsLoading)
