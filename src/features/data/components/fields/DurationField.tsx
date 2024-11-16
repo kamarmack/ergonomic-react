@@ -60,8 +60,7 @@ export const DurationField = <
 		name,
 	});
 
-	// Create operation effect
-	// Initialize duration value using fieldSpec?.default if the isIsoDurationLoading flag is true
+	// Initialize duration value
 	useEffect(() => {
 		if (!isIsoDurationLoading) return;
 
