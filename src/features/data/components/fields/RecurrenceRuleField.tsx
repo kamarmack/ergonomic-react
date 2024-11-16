@@ -5,6 +5,7 @@
 	FREQ=YEARLY;DTSTART=20230307T000000Z
 	 */
 
+import * as R from 'ramda';
 import * as changeCase from 'change-case';
 import { useEffect, useState } from 'react';
 import { FieldValues, useController } from 'react-hook-form';
@@ -68,6 +69,7 @@ export const RecurrenceRuleField = <
 	control,
 	fieldKey: name,
 	fieldSpec,
+	initialFormData,
 	isSubmitting,
 	operation,
 }: GeneralizedFormFieldProps<TFieldValues, TCollection>): JSX.Element => {
@@ -95,14 +97,23 @@ export const RecurrenceRuleField = <
 	// Create operation effect
 	// Initialize recurrence rule value using fieldSpec?.default if the isIsoRecurrenceRuleLoading flag is true
 	useEffect(() => {
-		if (operation !== 'create') return;
-
 		if (!isIsoRecurrenceRuleLoading) return;
 
 		let initialRecurrenceRule = defaultRecurrenceRule;
 
-		const defaultValueString = fieldSpec?.default?.toString() || '';
+		const defaultValueStringForCreateOperation =
+			fieldSpec?.default?.toString() || '';
+		const defaultValueStringForUpdateOperation = R.pathOr<string>(
+			'',
+			[name],
+			initialFormData,
+		);
+		const defaultValueString =
+			operation === 'create'
+				? defaultValueStringForCreateOperation
+				: defaultValueStringForUpdateOperation;
 		const isDefaultValueStringAValidRecurrenceRule =
+			defaultValueString !== '' &&
 			YupHelpers.recurrenceRule().isValidSync(defaultValueString);
 
 		if (isDefaultValueStringAValidRecurrenceRule) {
@@ -119,7 +130,13 @@ export const RecurrenceRuleField = <
 
 		setRecurrenceRuleEnding(initialRecurrenceRuleEnding);
 		setRecurrenceRule(() => initialRecurrenceRule);
-	}, [operation, fieldSpec?.default, isIsoRecurrenceRuleLoading]);
+	}, [
+		operation,
+		fieldSpec?.default,
+		isIsoRecurrenceRuleLoading,
+		name,
+		initialFormData,
+	]);
 
 	// Sync recurrence rule value with form state
 	useEffect(() => {
