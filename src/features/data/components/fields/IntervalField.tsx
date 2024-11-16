@@ -77,6 +77,7 @@ export const IntervalField = <
 				? defaultValueStringForCreateOperation
 				: defaultValueStringForUpdateOperation;
 		const isDefaultValueStringAValidInterval =
+			defaultValueString !== '' &&
 			YupHelpers.interval().isValidSync(defaultValueString);
 
 		if (isDefaultValueStringAValidInterval) {
