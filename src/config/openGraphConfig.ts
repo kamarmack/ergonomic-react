@@ -1,3 +1,5 @@
+import { SITE_ORIGIN } from './originConfig';
+
 export const OPEN_GRAPH_CONFIG = {
 	author: process.env.NEXT_PUBLIC_SITE_AUTHOR,
 	siteBrandIconDarkMode: process.env.NEXT_PUBLIC_SITE_BRAND_ICON_DARK_MODE,
@@ -15,5 +17,5 @@ export const OPEN_GRAPH_CONFIG = {
 	siteThumbnailHeight: process.env.NEXT_PUBLIC_SITE_THUMBNAIL_HEIGHT || 630,
 	siteThumbnailType: process.env.NEXT_PUBLIC_SITE_THUMBNAIL_TYPE || 'image/png',
 	siteThumbnailWidth: process.env.NEXT_PUBLIC_SITE_THUMBNAIL_WIDTH || 1200,
-	siteUrl: process.env.NEXT_PUBLIC_SITE_URL,
+	siteUrl: SITE_ORIGIN,
 };

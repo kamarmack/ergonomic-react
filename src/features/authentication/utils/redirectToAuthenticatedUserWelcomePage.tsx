@@ -1,5 +1,6 @@
 import { NextRouter } from 'next/router';
 import { isDomAvailable } from '../../../utils/isDomAvailable';
+import { SITE_ORIGIN } from '../../../config/originConfig';
 
 export type RedirectToAuthenticatedUserWelcomePageParams = {
 	router: NextRouter;
@@ -9,7 +10,7 @@ export type RedirectToAuthenticatedUserWelcomePageParams = {
 export const redirectToAuthenticatedUserWelcomePage = ({
 	router,
 	welcomeRoutePath = '/',
-	welcomeSiteOrigin = process.env.NEXT_PUBLIC_SITE_URL as string,
+	welcomeSiteOrigin = SITE_ORIGIN,
 }: RedirectToAuthenticatedUserWelcomePageParams) => {
 	if (!isDomAvailable()) return;
 	return void router.replace(`${welcomeSiteOrigin}${welcomeRoutePath}`);
