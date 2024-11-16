@@ -1,3 +1,4 @@
+import * as R from 'ramda';
 import { useEffect, useMemo, useState } from 'react';
 import { FieldValues, useController } from 'react-hook-form';
 import dynamic from 'next/dynamic';
@@ -30,6 +31,7 @@ export const MarkdownTextField = <
 	control,
 	fieldKey: name,
 	fieldSpec,
+	initialFormData,
 	isSubmitting,
 	operation,
 }: GeneralizedFormFieldProps<TFieldValues, TCollection>): JSX.Element => {
@@ -51,14 +53,16 @@ export const MarkdownTextField = <
 		name,
 	});
 
-	// Create operation effect
-	// Initialize markdown value using fieldSpec?.default if the isMarkdownLoading flag is true
+	// Initialize markdown value
 	useEffect(() => {
-		if (operation !== 'create') return;
 		if (isMarkdownLoading) {
-			setMarkdown(fieldSpec?.default ?? '');
+			setMarkdown(
+				operation === 'create'
+					? fieldSpec?.default ?? ''
+					: R.pathOr<string>('', [name], initialFormData),
+			);
 		}
-	}, [fieldSpec?.default, isMarkdownLoading]);
+	}, [fieldSpec?.default, isMarkdownLoading, name, initialFormData]);
 
 	// Sync markdown value with form state
 	useEffect(() => {
