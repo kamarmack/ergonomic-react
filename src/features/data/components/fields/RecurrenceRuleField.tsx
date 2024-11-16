@@ -94,8 +94,7 @@ export const RecurrenceRuleField = <
 		name,
 	});
 
-	// Create operation effect
-	// Initialize recurrence rule value using fieldSpec?.default if the isIsoRecurrenceRuleLoading flag is true
+	// Initialize recurrence rule
 	useEffect(() => {
 		if (!isIsoRecurrenceRuleLoading) return;
 
