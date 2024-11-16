@@ -85,7 +85,13 @@ export const IntervalField = <
 		}
 
 		setInterval(() => initialInterval);
-	}, [operation, fieldSpec?.default, isIsoIntervalLoading]);
+	}, [
+		operation,
+		fieldSpec?.default,
+		isIsoIntervalLoading,
+		name,
+		initialFormData,
+	]);
 
 	// Sync interval value with form state
 	useEffect(() => {
