@@ -105,7 +105,13 @@ export const DurationField = <
 		}
 
 		setDuration(() => initialDuration);
-	}, [operation, fieldSpec?.default, isIsoDurationLoading]);
+	}, [
+		operation,
+		fieldSpec?.default,
+		name,
+		initialFormData,
+		isIsoDurationLoading,
+	]);
 
 	// Sync duration value with form state
 	useEffect(() => {
