@@ -1,3 +1,4 @@
+import * as R from 'ramda';
 import { useEffect, useState } from 'react';
 import { FieldValues, useController } from 'react-hook-form';
 import { YupHelpers } from 'ergonomic';
@@ -35,6 +36,7 @@ export const IntervalField = <
 	control,
 	fieldKey: name,
 	fieldSpec,
+	initialFormData,
 	isSubmitting,
 	operation,
 }: GeneralizedFormFieldProps<TFieldValues, TCollection>): JSX.Element => {
@@ -57,16 +59,23 @@ export const IntervalField = <
 		name,
 	});
 
-	// Create operation effect
-	// Initialize interval value using fieldSpec?.default if the isIsoIntervalLoading flag is true
+	// Initialize interval value
 	useEffect(() => {
-		if (operation !== 'create') return;
-
 		if (!isIsoIntervalLoading) return;
 
 		let initialInterval: IntervalLikeObject = { start: '', end: '' };
 
-		const defaultValueString = fieldSpec?.default?.toString() || '';
+		const defaultValueStringForCreateOperation =
+			fieldSpec?.default?.toString() || '';
+		const defaultValueStringForUpdateOperation = R.pathOr<string>(
+			'',
+			[name],
+			initialFormData,
+		);
+		const defaultValueString =
+			operation === 'create'
+				? defaultValueStringForCreateOperation
+				: defaultValueStringForUpdateOperation;
 		const isDefaultValueStringAValidInterval =
 			YupHelpers.interval().isValidSync(defaultValueString);
 
