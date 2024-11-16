@@ -1,3 +1,4 @@
+import * as R from 'ramda';
 import { FieldValues, Path, PathValue, useController } from 'react-hook-form';
 import { IanaTimeZoneEnum, isFieldRequired } from 'ergonomic';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
@@ -30,6 +31,7 @@ export const TimeZoneField = <
 	control,
 	fieldKey: name,
 	fieldSpec,
+	initialFormData,
 	isSubmitting,
 	operation,
 }: GeneralizedFormFieldProps<TFieldValues, TCollection>): JSX.Element => {
@@ -38,9 +40,11 @@ export const TimeZoneField = <
 	const options = IanaTimeZoneEnum.arr;
 	const defaultValueFromSpec = fieldSpec.default?.toString();
 	const defaultValue = (
-		defaultValueFromSpec && IanaTimeZoneEnum.isMember(defaultValueFromSpec)
-			? defaultValueFromSpec
-			: ''
+		operation === 'create'
+			? defaultValueFromSpec && IanaTimeZoneEnum.isMember(defaultValueFromSpec)
+				? defaultValueFromSpec
+				: ''
+			: R.pathOr<string | null>('', [name], initialFormData) ?? ''
 	) as PathValue<TFieldValues, Path<TFieldValues>>;
 	const { field } = useController({
 		control,
