@@ -1,5 +1,6 @@
 // TODO: Implement logic for duration fields where `required` is true
 
+import * as R from 'ramda';
 import { Duration, DurationLikeObject } from 'luxon';
 import { YupHelpers } from 'ergonomic';
 import { Skeleton } from '../../../../components/ui/skeleton';
@@ -36,6 +37,7 @@ export const DurationField = <
 	control,
 	fieldKey: name,
 	fieldSpec,
+	initialFormData,
 	isSubmitting,
 	operation,
 }: GeneralizedFormFieldProps<TFieldValues, TCollection>): JSX.Element => {
@@ -61,8 +63,6 @@ export const DurationField = <
 	// Create operation effect
 	// Initialize duration value using fieldSpec?.default if the isIsoDurationLoading flag is true
 	useEffect(() => {
-		if (operation !== 'create') return;
-
 		if (!isIsoDurationLoading) return;
 
 		let initialDuration: DurationLikeObject = {
@@ -73,8 +73,19 @@ export const DurationField = <
 			hours: 0,
 		};
 
-		const defaultValueString = fieldSpec?.default?.toString() || '';
+		const defaultValueStringForCreateOperation =
+			fieldSpec?.default?.toString() || '';
+		const defaultValueStringForUpdateOperation = R.pathOr<string>(
+			'',
+			[name],
+			initialFormData,
+		);
+		const defaultValueString =
+			operation === 'create'
+				? defaultValueStringForCreateOperation
+				: defaultValueStringForUpdateOperation;
 		const isDefaultValueStringAValidDuration =
+			defaultValueString !== '' &&
 			YupHelpers.duration().isValidSync(defaultValueString);
 
 		if (isDefaultValueStringAValidDuration) {
