@@ -62,7 +62,7 @@ export const MarkdownTextField = <
 					: R.pathOr<string>('', [name], initialFormData),
 			);
 		}
-	}, [fieldSpec?.default, isMarkdownLoading, name, initialFormData]);
+	}, [operation, fieldSpec?.default, isMarkdownLoading, name, initialFormData]);
 
 	// Sync markdown value with form state
 	useEffect(() => {

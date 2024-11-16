@@ -1,4 +1,5 @@
 import 'react-quill/dist/quill.snow.css';
+import * as R from 'ramda';
 import { useEffect, useMemo, useState } from 'react';
 import { FieldValues, useController } from 'react-hook-form';
 import dynamic from 'next/dynamic';
@@ -31,6 +32,7 @@ export const RichTextField = <
 	control,
 	fieldKey: name,
 	fieldSpec,
+	initialFormData,
 	isSubmitting,
 	operation,
 }: GeneralizedFormFieldProps<TFieldValues, TCollection>): JSX.Element => {
@@ -52,14 +54,17 @@ export const RichTextField = <
 		name,
 	});
 
-	// Create operation effect
-	// Initialize rich text value using fieldSpec?.default if the isRichTextLoading flag is true
+	// Initialize rich text
 	useEffect(() => {
 		if (operation !== 'create') return;
 		if (isRichTextLoading) {
-			setRichText(fieldSpec?.default ?? '');
+			setRichText(
+				operation === 'create'
+					? fieldSpec?.default ?? ''
+					: R.pathOr<string>('', [name], initialFormData),
+			);
 		}
-	}, [fieldSpec?.default, isRichTextLoading]);
+	}, [operation, fieldSpec?.default, isRichTextLoading, name, initialFormData]);
 
 	// Sync rich text value with form state
 	useEffect(() => {
