@@ -12,3 +12,12 @@ if (!siteOrigin) {
 }
 
 export const SITE_ORIGIN = siteOrigin;
+
+const productionSsoSiteOrigin =
+	process.env.NEXT_PUBLIC_PRODUCTION_SITE_URL_SSO_WEB_APP;
+const stagingSsoSiteOrigin =
+	process.env.NEXT_PUBLIC_STAGING_SITE_URL_SSO_WEB_APP;
+export const SSO_SITE_ORIGIN = {
+	production: productionSsoSiteOrigin,
+	staging: stagingSsoSiteOrigin,
+}[DEPLOYMENT_ENV];
