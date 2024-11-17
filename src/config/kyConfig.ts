@@ -1,14 +1,19 @@
 import { Options } from 'ky-universal';
 import { DEPLOYMENT_ENV } from './deploymentEnv';
 
-const productionRestAPIBaseURL =
-	process.env.NEXT_PUBLIC_PRODUCTION_REST_API_BASE_URL;
-const stagingRestAPIBaseURL = process.env.NEXT_PUBLIC_STAGING_REST_API_BASE_URL;
+const liveRestAPIBaseURL = process.env.NEXT_PUBLIC_LIVE_REST_API_BASE_URL;
+const testRestAPIBaseURL = process.env.NEXT_PUBLIC_TEST_REST_API_BASE_URL;
 
-export const REST_API_PREFIX_URL = {
-	production: productionRestAPIBaseURL,
-	staging: stagingRestAPIBaseURL,
+const restApiBaseUrl = {
+	live: liveRestAPIBaseURL,
+	test: testRestAPIBaseURL,
 }[DEPLOYMENT_ENV];
+
+if (!restApiBaseUrl) {
+	throw new Error('Missing REST API base URL');
+}
+
+export const REST_API_PREFIX_URL = restApiBaseUrl;
 
 export const GENERALIZED_KY_CONFIG: Options = {
 	headers: {
