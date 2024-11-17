@@ -1,10 +1,10 @@
 import { DEPLOYMENT_ENV } from './deploymentEnv';
 
-const productionSiteOrigin = process.env.NEXT_PUBLIC_PRODUCTION_SITE_URL;
-const stagingSiteOrigin = process.env.NEXT_PUBLIC_STAGING_SITE_URL;
+const liveSiteOrigin = process.env.NEXT_PUBLIC_LIVE_SITE_URL;
+const testSiteOrigin = process.env.NEXT_PUBLIC_TEST_SITE_URL;
 export const siteOrigin = {
-	production: productionSiteOrigin,
-	staging: stagingSiteOrigin,
+	live: liveSiteOrigin,
+	test: testSiteOrigin,
 }[DEPLOYMENT_ENV];
 
 if (!siteOrigin) {
@@ -13,11 +13,9 @@ if (!siteOrigin) {
 
 export const SITE_ORIGIN = siteOrigin;
 
-const productionSsoSiteOrigin =
-	process.env.NEXT_PUBLIC_PRODUCTION_SITE_URL_SSO_WEB_APP;
-const stagingSsoSiteOrigin =
-	process.env.NEXT_PUBLIC_STAGING_SITE_URL_SSO_WEB_APP;
+const liveSsoSiteOrigin = process.env.NEXT_PUBLIC_LIVE_SITE_URL_SSO_WEB_APP;
+const testSsoSiteOrigin = process.env.NEXT_PUBLIC_TEST_SITE_URL_SSO_WEB_APP;
 export const SSO_SITE_ORIGIN = {
-	production: productionSsoSiteOrigin,
-	staging: stagingSsoSiteOrigin,
+	live: liveSsoSiteOrigin,
+	test: testSsoSiteOrigin,
 }[DEPLOYMENT_ENV];

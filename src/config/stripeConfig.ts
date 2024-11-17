@@ -1,13 +1,13 @@
 import { DEPLOYMENT_ENV } from './deploymentEnv';
 
-const productionStripePublishableKey =
-	process.env.NEXT_PUBLIC_PRODUCTION_STRIPE_PUBLISHABLE_KEY;
-const stagingStripePublishableKey =
-	process.env.NEXT_PUBLIC_STAGING_STRIPE_PUBLISHABLE_KEY;
+const liveStripePublishableKey =
+	process.env.NEXT_PUBLIC_LIVE_STRIPE_PUBLISHABLE_KEY;
+const testStripePublishableKey =
+	process.env.NEXT_PUBLIC_TEST_STRIPE_PUBLISHABLE_KEY;
 
 const stripePublishableKey = {
-	production: productionStripePublishableKey,
-	staging: stagingStripePublishableKey,
+	live: liveStripePublishableKey,
+	test: testStripePublishableKey,
 }[DEPLOYMENT_ENV];
 
 if (!stripePublishableKey) {

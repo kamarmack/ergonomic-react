@@ -1,6 +1,6 @@
 import { getEnum, EnumMember } from 'ergonomic';
 
-export const DeploymentEnvironmentEnum = getEnum(['production', 'staging']);
+export const DeploymentEnvironmentEnum = getEnum(['live', 'test']);
 export type DeploymentEnvironment = EnumMember<
 	typeof DeploymentEnvironmentEnum
 >;
