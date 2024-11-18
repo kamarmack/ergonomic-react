@@ -1,18 +1,7 @@
 import * as R from 'ramda';
-import {
-	GeneralizedApiObject,
-	GeneralizedApiObjectSpec,
-	GeneralizedResponse,
-	getFieldSpecByFieldKey,
-	getGeneralizedError,
-} from 'ergonomic';
+import { getFieldSpecByFieldKey, getGeneralizedError } from 'ergonomic';
 import { useEffect, useState } from 'react';
 import { GoInfo } from 'react-icons/go';
-import {
-	UseMutationOptions,
-	UseMutationResult,
-	UseQueryResult,
-} from '@tanstack/react-query';
 import { FieldValues, Path, UseFormSetError, useForm } from 'react-hook-form';
 import { Skeleton } from '../../../components/ui/skeleton';
 import { useToast } from '../../../components/ui/use-toast';
@@ -30,8 +19,7 @@ import { getGeneralizedFormDataFromServerData } from '../utils/getGeneralizedFor
 import { useYupValidationResolver } from '../hooks/useYupValidationResolver';
 import { getGeneralizedFormFieldErrors } from '../utils/getGeneralizedFormFieldErrors';
 import { GeneralizedFormDataTransformationOptions } from '../types/GeneralizedFormDataTransformationOptions';
-import { GeneralizedUseQueryPageProps } from '../../../lib/tanstackQuery';
-import { GeneralizedFirestoreCollectionPage } from '../utils/generalizedFirestoreCollectionPageQuery';
+import { GeneralizedFormProps } from '../types/GeneralizedFormProps';
 
 export const GeneralizedFormSuspense = () => {
 	return (
@@ -50,35 +38,6 @@ export const GeneralizedFormSuspense = () => {
 	);
 };
 
-export type GeneralizedFormProps<
-	TFieldValues extends FieldValues = FieldValues,
-	TCollection extends string = string,
-> = {
-	collectionId: TCollection;
-	getApiObjectSpec: (collectionId: TCollection) => GeneralizedApiObjectSpec;
-	getCreateOperationMutationForCollection: (
-		collectionId: TCollection,
-	) => (
-		options: UseMutationOptions<unknown, GeneralizedResponse>,
-	) => UseMutationResult;
-	getPageQueryHookForCollection: (
-		collectionId: string | null,
-	) => (
-		options: GeneralizedUseQueryPageProps<GeneralizedApiObject>,
-	) => UseQueryResult<GeneralizedFirestoreCollectionPage, GeneralizedResponse>;
-	getUpdateOperationMutationForCollection: (
-		collectionId: TCollection,
-	) => (
-		options: UseMutationOptions<unknown, GeneralizedResponse>,
-	) => UseMutationResult;
-	idPrefixByCollection: Record<TCollection, string>;
-	onMutationSuccess: () => Promise<void>;
-	operation: 'create' | 'update';
-	updateProps: {
-		documentId: string;
-		initialFieldValues: TFieldValues;
-	} | null;
-};
 export const GeneralizedForm = <
 	TFieldValues extends FieldValues = FieldValues,
 	TCollection extends string = string,
