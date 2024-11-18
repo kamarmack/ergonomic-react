@@ -2,6 +2,7 @@ import * as changeCase from 'change-case';
 import { GoPencil, GoPlus } from 'react-icons/go';
 import { FieldValues } from 'react-hook-form';
 import Link from 'next/link';
+import { Keys } from 'ergonomic';
 import cn from '../../../lib/cn';
 import { GeneralizedFormProps } from '../types/GeneralizedFormProps';
 
@@ -15,7 +16,7 @@ export type GeneralizedAdminIndexPageProps<
 };
 export const GeneralizedAdminIndexPage = <TCollection extends string = string>({
 	getAdminWebAppRoute,
-	// getApiObjectSpec,
+	getApiObjectSpec,
 	idPrefixByCollection,
 }: GeneralizedAdminIndexPageProps<TCollection>): JSX.Element => {
 	return (
@@ -39,7 +40,10 @@ export const GeneralizedAdminIndexPage = <TCollection extends string = string>({
 						<p className='text-white'>Firestore database (default)</p>
 					</div>
 					<div className={cn('p-2', 'flex flex-col space-y-2')}>
-						{Object.keys(idPrefixByCollection).map((collectionId, idx) => {
+						{Keys(idPrefixByCollection).map((collectionId, idx) => {
+							const { apiObjectCollectionIdPlural } =
+								getApiObjectSpec(collectionId);
+
 							return (
 								<div
 									className={cn(
@@ -66,7 +70,7 @@ export const GeneralizedAdminIndexPage = <TCollection extends string = string>({
 													'cursor-pointer hover:underline',
 												)}
 											>
-												{changeCase.capitalCase(collectionId)}s
+												{changeCase.capitalCase(apiObjectCollectionIdPlural)}
 											</p>
 										</Link>
 									</div>
