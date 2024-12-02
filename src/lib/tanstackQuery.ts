@@ -49,6 +49,15 @@ export type GeneralizedUseQueryPageProps<T extends GeneralizedApiObject> = {
 	reactQueryOptions?: GeneralizedUseQueryPageOptions<T>;
 };
 
+export type GeneralizedUseQueryOptionsFn<T extends GeneralizedApiObject> = (
+	props: GeneralizedUseQueryPageProps<T>,
+) => UseQueryOptions<
+	GeneralizedFirestoreCollectionPage<T>,
+	GeneralizedError,
+	GeneralizedFirestoreCollectionPage<T>,
+	ReturnType<GeneralizedUseQueryKeyFn<T>>
+>;
+
 export type GeneralizedUseQueryPageObserver<T extends GeneralizedApiObject> =
 	QueryObserverResult<GeneralizedFirestoreCollectionPage<T>, GeneralizedError>;
 
