@@ -7,3 +7,5 @@ export * from './components/GeneralizedTableCell';
 export * from './types/FirestoreQueryTypes';
 export * from './types/GeneralizedFormProps';
 export * from './types/GeneralizedTableCellProps';
+export * from './utils/generalizedFirestoreCollectionPageQuery';
+export * from './utils/generalizedFirestoreDocumentWrite';
