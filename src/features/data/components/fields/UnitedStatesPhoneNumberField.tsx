@@ -5,11 +5,11 @@ import { isFieldRequired } from 'ergonomic';
 import { Input } from '../../../../components/ui/input';
 import { FieldValues, useController } from 'react-hook-form';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
-import { handlePhoneNumberFieldBlur } from '../../utils/handlePhoneNumberFieldBlur';
-import { handlePhoneNumberFieldKeyUp } from '../../utils/handlePhoneNumberFieldKeyUp';
+import { handleUnitedStatesPhoneNumberFieldBlur } from '../../utils/handleUnitedStatesPhoneNumberFieldBlur';
+import { handleUnitedStatesPhoneNumberFieldKeyUp } from '../../utils/handleUnitedStatesPhoneNumberFieldKeyUp';
 
 /**
- * PhoneNumberField component renders an input field for handling phone numbers with a country code selector.
+ * UnitedStatesPhoneNumberField component renders an input field for handling phone numbers with a country code selector.
  *
  * @template TFieldValues - The type representing all form field values.
  * @template TCollection - TCollection parameter is a string union of the Document Database Collection IDs.
@@ -21,15 +21,15 @@ import { handlePhoneNumberFieldKeyUp } from '../../utils/handlePhoneNumberFieldK
  * @param {string} props.operation - The operation type for the form, either 'create' or 'update'.
  * @param {function} props.setError - Function to set custom error messages for invalid phone number input.
  *
- * @returns {JSX.Element} The rendered PhoneNumberField component, a phone number input with country code selection.
+ * @returns {JSX.Element} The rendered UnitedStatesPhoneNumberField component, a phone number input with country code selection.
  *
  * @description
- * The `PhoneNumberField` component integrates with `react-hook-form` to manage an input field for phone numbers,
+ * The `UnitedStatesPhoneNumberField` component integrates with `react-hook-form` to manage an input field for phone numbers,
  * with a selectable country code prefix. The input field automatically formats the phone number based on blur and key-up
  * events using helper functions to enforce valid formatting and to provide error feedback as necessary. The component
  * dynamically sets the required attribute based on `fieldSpec` and `operation`, and it disables inputs during form submission.
  */
-export const PhoneNumberField = <
+export const UnitedStatesPhoneNumberField = <
 	TFieldValues extends FieldValues = FieldValues,
 	TCollection extends string = string,
 >({
@@ -72,11 +72,11 @@ export const PhoneNumberField = <
 				<Input
 					{...field}
 					className='block w-full p-2 border rounded-md bg-white'
-					onBlur={handlePhoneNumberFieldBlur({
+					onBlur={handleUnitedStatesPhoneNumberFieldBlur({
 						field: R.pick(['onBlur'], field),
 						setError,
 					})}
-					onKeyUp={handlePhoneNumberFieldKeyUp({
+					onKeyUp={handleUnitedStatesPhoneNumberFieldKeyUp({
 						field: R.pick(['onChange'], field),
 						setError,
 					})}

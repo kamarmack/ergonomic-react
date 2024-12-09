@@ -1,7 +1,7 @@
 import { ControllerRenderProps, FieldValues, Path } from 'react-hook-form';
 import { Digits } from 'ergonomic';
 
-export const handlePhoneNumberFieldKeyUp =
+export const handleUnitedStatesPhoneNumberFieldKeyUp =
 	<TFieldValues extends FieldValues = FieldValues>(params: {
 		field: Pick<
 			ControllerRenderProps<TFieldValues, Path<TFieldValues>>,

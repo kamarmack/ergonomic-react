@@ -1,7 +1,7 @@
 import { ControllerRenderProps, FieldValues, Path } from 'react-hook-form';
 import { YupHelpers } from 'ergonomic';
 
-export const handlePhoneNumberFieldBlur =
+export const handleUnitedStatesPhoneNumberFieldBlur =
 	<TFieldValues extends FieldValues = FieldValues>(params: {
 		field: Pick<
 			ControllerRenderProps<TFieldValues, Path<TFieldValues>>,

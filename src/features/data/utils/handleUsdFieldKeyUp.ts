@@ -1,7 +1,7 @@
 import { ControllerRenderProps, FieldValues, Path } from 'react-hook-form';
 import { getCurrencyUsdStringFromCents } from 'ergonomic';
 
-export const handleCurrencyFieldKeyUp =
+export const handleUsdFieldKeyUp =
 	<TFieldValues extends FieldValues = FieldValues>(params: {
 		field: Pick<
 			ControllerRenderProps<TFieldValues, Path<TFieldValues>>,

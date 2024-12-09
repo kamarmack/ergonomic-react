@@ -1,7 +1,6 @@
 import { GeneralizedTableCellProps } from '../types/GeneralizedTableCellProps';
 import { AddressCell } from './cells/AddressCell';
 import { BooleanCell } from './cells/BooleanCell';
-import { CurrencyCell } from './cells/CurrencyCell';
 import { DateCell } from './cells/DateCell';
 import { DocumentIDCell } from './cells/DocumentIDCell';
 import { DocumentIDReferenceCell } from './cells/DocumentIDReferenceCell';
@@ -24,6 +23,7 @@ import { ShortTextCell } from './cells/ShortTextCell';
 import { TimeZoneCell } from './cells/TimeZoneCell';
 import { UrlCell } from './cells/UrlCell';
 import { UnitedStatesPhoneNumberCell } from './cells/UnitedStatesPhoneNumberCell';
+import { UsdCell } from './cells/UsdCell';
 
 export const GeneralizedTableCell = <
 	// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint
@@ -115,7 +115,7 @@ export const GeneralizedTableCell = <
 			return <UrlCell {...props} />;
 
 		case 'usd':
-			return <CurrencyCell {...props} />;
+			return <UsdCell {...props} />;
 
 		default:
 			throw new Error(`Unsupported field type: ${type ?? ''}`);
