@@ -10,13 +10,13 @@ export type GeneralizedAdminIndexPageProps<
 	TCollection extends string = string,
 > = Pick<
 	GeneralizedFormProps<FieldValues, TCollection>,
-	'getApiObjectSpec' | 'idPrefixByCollection'
+	'getApiResourceSpec' | 'idPrefixByCollection'
 > & {
 	getAdminWebAppRoute: (options: unknown) => string;
 };
 export const GeneralizedAdminIndexPage = <TCollection extends string = string>({
 	getAdminWebAppRoute,
-	getApiObjectSpec,
+	getApiResourceSpec,
 	idPrefixByCollection,
 }: GeneralizedAdminIndexPageProps<TCollection>): JSX.Element => {
 	return (
@@ -41,8 +41,8 @@ export const GeneralizedAdminIndexPage = <TCollection extends string = string>({
 					</div>
 					<div className={cn('p-2', 'flex flex-col space-y-2')}>
 						{Keys(idPrefixByCollection).map((collectionId, idx) => {
-							const { apiObjectCollectionIdPlural } =
-								getApiObjectSpec(collectionId);
+							const { apiResourceCollectionIdPlural } =
+								getApiResourceSpec(collectionId);
 
 							return (
 								<div
@@ -70,7 +70,7 @@ export const GeneralizedAdminIndexPage = <TCollection extends string = string>({
 													'cursor-pointer hover:underline',
 												)}
 											>
-												{changeCase.capitalCase(apiObjectCollectionIdPlural)}
+												{changeCase.capitalCase(apiResourceCollectionIdPlural)}
 											</p>
 										</Link>
 									</div>

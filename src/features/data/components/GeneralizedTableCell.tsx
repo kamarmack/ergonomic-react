@@ -15,7 +15,6 @@ import { ListCell } from './cells/ListCell';
 import { LongTextCell } from './cells/LongTextCell';
 import { MarkdownTextCell } from './cells/MarkdownTextCell';
 import { PercentageCell } from './cells/PercentageCell';
-import { PhoneNumberCell } from './cells/PhoneNumberCell';
 import { RecurrenceRuleCell } from './cells/RecurrenceRuleCell';
 import { RichTextCell } from './cells/RichTextCell';
 import { SelectManyCell } from './cells/SelectManyCell';
@@ -24,6 +23,7 @@ import { SensitiveTextCell } from './cells/SensitiveTextCell';
 import { ShortTextCell } from './cells/ShortTextCell';
 import { TimeZoneCell } from './cells/TimeZoneCell';
 import { UrlCell } from './cells/UrlCell';
+import { UnitedStatesPhoneNumberCell } from './cells/UnitedStatesPhoneNumberCell';
 
 export const GeneralizedTableCell = <
 	// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint
@@ -40,9 +40,6 @@ export const GeneralizedTableCell = <
 
 		case 'boolean':
 			return <BooleanCell {...props} />;
-
-		case 'currency':
-			return <CurrencyCell {...props} />;
 
 		case 'date':
 			return <DateCell {...props} />;
@@ -91,7 +88,7 @@ export const GeneralizedTableCell = <
 			return <PercentageCell {...props} />;
 
 		case 'phone_number':
-			return <PhoneNumberCell {...props} />;
+			return <UnitedStatesPhoneNumberCell {...props} />;
 
 		case 'recurrence_rule':
 			return <RecurrenceRuleCell {...props} />;
@@ -116,6 +113,9 @@ export const GeneralizedTableCell = <
 
 		case 'url':
 			return <UrlCell {...props} />;
+
+		case 'usd':
+			return <CurrencyCell {...props} />;
 
 		default:
 			throw new Error(`Unsupported field type: ${type ?? ''}`);

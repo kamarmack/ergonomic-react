@@ -3,7 +3,7 @@ import { GeneralizedTableCellProps } from '../../types/GeneralizedTableCellProps
 import { DefaultCell } from './DefaultCell';
 import { getFormattedPhoneNumberFromE164 } from '../../utils/getFormattedPhoneNumberFromE164';
 
-export const PhoneNumberCell = (
+export const UnitedStatesPhoneNumberCell = (
 	props: GeneralizedTableCellProps,
 ): JSX.Element => (
 	<DefaultCell
@@ -13,7 +13,7 @@ export const PhoneNumberCell = (
 			return getFormattedPhoneNumberFromE164(phoneNumberE164);
 		}}
 		isValid={(value: unknown): boolean =>
-			YupHelpers.phoneNumber().isValidSync(value)
+			YupHelpers.unitedStatesPhoneNumber().isValidSync(value)
 		}
 	/>
 );

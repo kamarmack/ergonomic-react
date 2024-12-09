@@ -6,7 +6,7 @@ import {
 	UseMutationOptions,
 } from '@tanstack/react-query';
 import {
-	GeneralizedApiObject,
+	GeneralizedApiResource,
 	GeneralizedError,
 	GeneralizedCreateBody,
 	GeneralizedUpdateBody,
@@ -29,11 +29,11 @@ export const queryClient = new QueryClient({
 
 // Reads
 
-export type GeneralizedUseQueryKeyFn<T extends GeneralizedApiObject> = (
+export type GeneralizedUseQueryKeyFn<T extends GeneralizedApiResource> = (
 	params: FirestoreCollectionQueryOptions,
 ) => readonly [T['_object'], string];
 
-export type GeneralizedUseQueryPageOptions<T extends GeneralizedApiObject> =
+export type GeneralizedUseQueryPageOptions<T extends GeneralizedApiResource> =
 	Omit<
 		UseQueryOptions<
 			GeneralizedFirestoreCollectionPage<T>,
@@ -44,12 +44,12 @@ export type GeneralizedUseQueryPageOptions<T extends GeneralizedApiObject> =
 		'queryFn' | 'queryKey'
 	>;
 
-export type GeneralizedUseQueryPageProps<T extends GeneralizedApiObject> = {
+export type GeneralizedUseQueryPageProps<T extends GeneralizedApiResource> = {
 	firestoreQueryOptions: FirestoreCollectionQueryOptions;
 	reactQueryOptions?: GeneralizedUseQueryPageOptions<T>;
 };
 
-export type GeneralizedUseQueryOptionsFn<T extends GeneralizedApiObject> = (
+export type GeneralizedUseQueryOptionsFn<T extends GeneralizedApiResource> = (
 	props: GeneralizedUseQueryPageProps<T>,
 ) => UseQueryOptions<
 	GeneralizedFirestoreCollectionPage<T>,
@@ -58,18 +58,18 @@ export type GeneralizedUseQueryOptionsFn<T extends GeneralizedApiObject> = (
 	ReturnType<GeneralizedUseQueryKeyFn<T>>
 >;
 
-export type GeneralizedUseQueryPageObserver<T extends GeneralizedApiObject> =
+export type GeneralizedUseQueryPageObserver<T extends GeneralizedApiResource> =
 	QueryObserverResult<GeneralizedFirestoreCollectionPage<T>, GeneralizedError>;
 
 // Writes
 
 export type GeneralizedUseCreateDocumentsMutationOptions<
-	T extends GeneralizedApiObject,
+	T extends GeneralizedApiResource,
 	U extends GeneralizedCreateBody,
 > = UseMutationOptions<GeneralizedResponse<T>, GeneralizedResponse<T>, U | U[]>;
 
 export type GeneralizedUseUpdateDocumentsMutationOptions<
-	T extends GeneralizedApiObject,
+	T extends GeneralizedApiResource,
 	U extends GeneralizedUpdateBody,
 > = UseMutationOptions<
 	unknown,

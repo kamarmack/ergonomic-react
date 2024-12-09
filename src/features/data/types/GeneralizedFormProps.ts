@@ -1,6 +1,6 @@
 import {
-	GeneralizedApiObject,
-	GeneralizedApiObjectSpec,
+	GeneralizedApiResource,
+	GeneralizedApiResourceSpec,
 	GeneralizedResponse,
 } from 'ergonomic';
 import {
@@ -17,7 +17,7 @@ export type GeneralizedFormProps<
 	TCollection extends string = string,
 > = {
 	collectionId: TCollection;
-	getApiObjectSpec: (collectionId: TCollection) => GeneralizedApiObjectSpec;
+	getApiResourceSpec: (collectionId: TCollection) => GeneralizedApiResourceSpec;
 	getCreateOperationMutationForCollection: (
 		collectionId: TCollection,
 	) => (
@@ -26,7 +26,7 @@ export type GeneralizedFormProps<
 	getPageQueryHookForCollection: (
 		collectionId: string | null,
 	) => (
-		options: GeneralizedUseQueryPageProps<GeneralizedApiObject>,
+		options: GeneralizedUseQueryPageProps<GeneralizedApiResource>,
 	) => UseQueryResult<GeneralizedFirestoreCollectionPage, GeneralizedResponse>;
 	getUpdateOperationMutationForCollection: (
 		collectionId: TCollection,

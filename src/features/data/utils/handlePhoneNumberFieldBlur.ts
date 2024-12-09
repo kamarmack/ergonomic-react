@@ -15,9 +15,11 @@ export const handlePhoneNumberFieldBlur =
 		params.field.onBlur();
 
 		const value = e.target.value.replace(/[^0-9]/g, '');
-		if (YupHelpers.phoneNumber().isValidSync(value)) {
+		if (YupHelpers.unitedStatesPhoneNumber().isValidSync(value)) {
 			params.setError('');
 		} else {
-			params.setError('Please enter a valid phone number, e.g. (555) 555-5555');
+			params.setError(
+				'Please enter a valid US phone number, e.g. (555) 555-5555',
+			);
 		}
 	};

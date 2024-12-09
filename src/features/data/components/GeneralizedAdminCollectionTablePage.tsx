@@ -26,7 +26,9 @@ export type GeneralizedAdminCollectionTablePageProps<
 	TCollection extends string = string,
 > = Pick<
 	GeneralizedFormProps<FieldValues, TCollection>,
-	'getApiObjectSpec' | 'getPageQueryHookForCollection' | 'idPrefixByCollection'
+	| 'getApiResourceSpec'
+	| 'getPageQueryHookForCollection'
+	| 'idPrefixByCollection'
 > & {
 	getAdminWebAppRoute: (options: unknown) => string;
 	getFirestoreCollectionPath: (collectionId: string) => string;
@@ -35,7 +37,7 @@ export const GeneralizedAdminCollectionTablePage = <
 	TCollection extends string = string,
 >({
 	getAdminWebAppRoute,
-	getApiObjectSpec,
+	getApiResourceSpec,
 	getFirestoreCollectionPath,
 	getPageQueryHookForCollection,
 	idPrefixByCollection,
@@ -72,21 +74,21 @@ export const GeneralizedAdminCollectionTablePage = <
 	const documentPage = documentPageData?.documents ?? [];
 
 	// API Object Spec
-	const apiObjectSpec = collectionId
-		? getApiObjectSpec(collectionId)
+	const apiResourceSpec = collectionId
+		? getApiResourceSpec(collectionId)
 		: undefined;
 
 	// Field Spec by Field Key
 	const fieldSpecByFieldKey = getFieldSpecByFieldKey(
-		apiObjectSpec?.apiObjectJsonSchema,
-		apiObjectSpec?.apiObjectFieldEnum.arr,
+		apiResourceSpec?.apiResourceJsonSchema,
+		apiResourceSpec?.apiResourceFieldEnum.arr,
 	);
-	const isApiObjectSpecInitialized =
-		Object.keys(fieldSpecByFieldKey).length > 0 && apiObjectSpec != null;
+	const isApiResourceSpecInitialized =
+		Object.keys(fieldSpecByFieldKey).length > 0 && apiResourceSpec != null;
 	const isDocumentPageReady =
 		isPageQueryForReferenceCollectionEnabled &&
 		!isDocumentPageDataLoading &&
-		isApiObjectSpecInitialized;
+		isApiResourceSpecInitialized;
 	const unsortedFieldSpecEntries = Object.entries(fieldSpecByFieldKey);
 	const fieldSpecEntries = unsortedFieldSpecEntries.toSorted((a, b) => {
 		const order: Record<string, number> = { name: 1, _id: 2 }; // Define the priority order
