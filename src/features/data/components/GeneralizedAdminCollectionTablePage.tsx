@@ -73,7 +73,7 @@ export const GeneralizedAdminCollectionTablePage = <
 		});
 	const documentPage = documentPageData?.documents ?? [];
 
-	// API Object Spec
+	// API Resource Spec
 	const apiResourceSpec = collectionId
 		? getApiResourceSpec(collectionId)
 		: undefined;

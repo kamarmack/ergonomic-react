@@ -54,7 +54,7 @@ export const GeneralizedForm = <
 }: GeneralizedFormProps<TFieldValues, TCollection>): JSX.Element => {
 	const { toast } = useToast();
 
-	// API Object Spec
+	// API Resource Spec
 	const apiResourceSpec = collectionId
 		? getApiResourceSpec(collectionId)
 		: undefined;
