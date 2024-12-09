@@ -2,7 +2,6 @@ import { FieldValues } from 'react-hook-form';
 import { GeneralizedFormFieldProps } from '../types/GeneralizedFormFieldProps';
 import { AddressField } from './fields/AddressField';
 import { BooleanField } from './fields/BooleanField';
-import { CurrencyField } from './fields/CurrencyField';
 import { DateField } from './fields/DateField';
 import { DocumentIDField } from './fields/DocumentIDField';
 import { DocumentIDReferenceField } from './fields/DocumentIDReferenceField';
@@ -16,7 +15,6 @@ import { ListField } from './fields/ListField';
 import { LongTextField } from './fields/LongTextField';
 import { MarkdownTextField } from './fields/MarkdownTextField';
 import { PercentageField } from './fields/PercentageField';
-import { PhoneNumberField } from './fields/PhoneNumberField';
 import { RecurrenceRuleField } from './fields/RecurrenceRuleField';
 import { RichTextField } from './fields/RichTextField';
 import { SelectManyField } from './fields/SelectManyField';
@@ -24,7 +22,9 @@ import { SelectOneField } from './fields/SelectOneField';
 import { SensitiveTextField } from './fields/SensitiveTextField';
 import { ShortTextField } from './fields/ShortTextField';
 import { TimeZoneField } from './fields/TimeZoneField';
+import { UnitedStatesPhoneNumberField } from './fields/UnitedStatesPhoneNumberField';
 import { UrlField } from './fields/UrlField';
+import { UsdField } from './fields/UsdField';
 
 export const GeneralizedFormField = <T extends FieldValues = FieldValues>(
 	props: GeneralizedFormFieldProps<T>,
@@ -37,9 +37,6 @@ export const GeneralizedFormField = <T extends FieldValues = FieldValues>(
 
 		case 'boolean':
 			return <BooleanField {...props} />;
-
-		case 'currency':
-			return <CurrencyField {...props} />;
 
 		case 'date':
 			return <DateField {...props} />;
@@ -87,9 +84,6 @@ export const GeneralizedFormField = <T extends FieldValues = FieldValues>(
 		case 'percentage':
 			return <PercentageField {...props} />;
 
-		case 'phone_number':
-			return <PhoneNumberField {...props} />;
-
 		case 'recurrence_rule':
 			return <RecurrenceRuleField {...props} />;
 
@@ -111,8 +105,14 @@ export const GeneralizedFormField = <T extends FieldValues = FieldValues>(
 		case 'time_zone':
 			return <TimeZoneField {...props} />;
 
+		case 'united_states_phone_number':
+			return <UnitedStatesPhoneNumberField {...props} />;
+
 		case 'url':
 			return <UrlField {...props} />;
+
+		case 'usd':
+			return <UsdField {...props} />;
 
 		default:
 			throw new Error(`Unsupported field type: ${type ?? ''}`);

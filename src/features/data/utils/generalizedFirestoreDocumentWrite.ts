@@ -1,7 +1,7 @@
 import { collection, doc, writeBatch } from 'firebase/firestore';
 import {
-	GeneralizedApiObject,
-	GeneralizedApiObjectSpec,
+	GeneralizedApiResource,
+	GeneralizedApiResourceSpec,
 	GeneralizedCreateBody,
 	GeneralizedResponse,
 	GeneralizedUpdateBody,
@@ -26,12 +26,12 @@ const chunkArray = <T>(array: T[], chunkSize: number): T[][] => {
 export type FirestoreDocumentCreateParams<T extends GeneralizedCreateBody> =
 	| T
 	| T[];
-export type FirestoreDocumentCreateResponse<T extends GeneralizedApiObject> =
+export type FirestoreDocumentCreateResponse<T extends GeneralizedApiResource> =
 	GeneralizedResponse<T>;
 export const generalizedFirestoreDocumentCreateOperation =
-	<T extends GeneralizedCreateBody, U extends GeneralizedApiObject>(
+	<T extends GeneralizedCreateBody, U extends GeneralizedApiResource>(
 		collectionId: string,
-		apiObjectSpec: GeneralizedApiObjectSpec,
+		apiResourceSpec: GeneralizedApiResourceSpec,
 	) =>
 	async (
 		params: FirestoreDocumentCreateParams<T>,
@@ -55,7 +55,7 @@ export const generalizedFirestoreDocumentCreateOperation =
 				const batch = writeBatch(firebaseFirestoreInstance);
 
 				for (const createParams of writeChunk) {
-					const documentData = apiObjectSpec.mergeCreateParams({
+					const documentData = apiResourceSpec.mergeCreateParams({
 						createParams,
 					}) as U;
 					const documentRef = doc(collectionRef, documentData._id);

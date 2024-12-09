@@ -61,7 +61,7 @@ import {
  * //   weight: 81646.6,
  * //   num_followers: 1548,
  * //   interest_rate: 0.05,
- * //   cell_number: '+14155552671,
+ * //   cell_number: '+14155552671',
  * // }
  * ```
  */

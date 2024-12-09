@@ -1,5 +1,5 @@
 import {
-	GeneralizedApiObject,
+	GeneralizedApiResource,
 	GeneralizedFieldSpec,
 	GeneralizedResponse,
 } from 'ergonomic';
@@ -21,7 +21,7 @@ export type GeneralizedFormFieldProps<
 	getPageQueryHookForCollection: (
 		collectionId: string | null,
 	) => (
-		options: GeneralizedUseQueryPageProps<GeneralizedApiObject>,
+		options: GeneralizedUseQueryPageProps<GeneralizedApiResource>,
 	) => UseQueryResult<GeneralizedFirestoreCollectionPage, GeneralizedResponse>;
 	idPrefixByCollection: Record<TCollection, string>;
 	initialFormData: FieldValues | null;

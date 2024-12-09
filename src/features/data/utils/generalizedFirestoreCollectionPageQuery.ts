@@ -8,7 +8,7 @@ import {
 	startAfter,
 	where,
 } from 'firebase/firestore';
-import { GeneralizedApiObject, GeneralizedApiObjectSpec } from 'ergonomic';
+import { GeneralizedApiResource, GeneralizedApiResourceSpec } from 'ergonomic';
 import {
 	firebaseFirestoreInstance,
 	handleFirestoreOperationError,
@@ -16,7 +16,7 @@ import {
 import { FirestoreCollectionQueryOptions } from '../types/FirestoreQueryTypes';
 
 export type GeneralizedFirestoreCollectionPage<
-	T extends GeneralizedApiObject = GeneralizedApiObject,
+	T extends GeneralizedApiResource = GeneralizedApiResource,
 > = {
 	currentPageStartAfterDocumentReference: DocumentReference | null | undefined;
 	documents: T[];
@@ -24,9 +24,9 @@ export type GeneralizedFirestoreCollectionPage<
 };
 
 export const generalizedFirestoreCollectionPageQuery =
-	<T extends GeneralizedApiObject = GeneralizedApiObject>(
+	<T extends GeneralizedApiResource = GeneralizedApiResource>(
 		collectionId: string,
-		apiObjectSpec: GeneralizedApiObjectSpec,
+		apiResourceSpec: GeneralizedApiResourceSpec,
 	) =>
 	async (
 		queryOptions: FirestoreCollectionQueryOptions,
@@ -84,7 +84,7 @@ export const generalizedFirestoreCollectionPageQuery =
 				.map((doc): T | null => {
 					const data = doc.data();
 					try {
-						return apiObjectSpec.apiObjectJsonSchema.cast(data, {
+						return apiResourceSpec.apiResourceJsonSchema.cast(data, {
 							stripUnknown: true,
 							assert: true,
 						}) as T;

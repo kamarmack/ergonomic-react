@@ -1,7 +1,7 @@
 import { ControllerRenderProps, FieldValues, Path } from 'react-hook-form';
 import { YupHelpers } from 'ergonomic';
 
-export const handlePhoneNumberFieldBlur =
+export const handleUnitedStatesPhoneNumberFieldBlur =
 	<TFieldValues extends FieldValues = FieldValues>(params: {
 		field: Pick<
 			ControllerRenderProps<TFieldValues, Path<TFieldValues>>,
@@ -15,9 +15,11 @@ export const handlePhoneNumberFieldBlur =
 		params.field.onBlur();
 
 		const value = e.target.value.replace(/[^0-9]/g, '');
-		if (YupHelpers.phoneNumber().isValidSync(value)) {
+		if (YupHelpers.unitedStatesPhoneNumber().isValidSync(value)) {
 			params.setError('');
 		} else {
-			params.setError('Please enter a valid phone number, e.g. (555) 555-5555');
+			params.setError(
+				'Please enter a valid US phone number, e.g. (555) 555-5555',
+			);
 		}
 	};

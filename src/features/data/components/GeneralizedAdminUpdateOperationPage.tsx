@@ -13,7 +13,7 @@ export type GeneralizedAdminUpdateOperationPageProps<
 	TCollection extends string = string,
 > = Pick<
 	GeneralizedFormProps<FieldValues, TCollection>,
-	| 'getApiObjectSpec'
+	| 'getApiResourceSpec'
 	| 'getCreateOperationMutationForCollection'
 	| 'getPageQueryHookForCollection'
 	| 'getUpdateOperationMutationForCollection'
@@ -25,7 +25,7 @@ export const GeneralizedAdminUpdateOperationPage = <
 	TCollection extends string = string,
 >({
 	getAdminWebAppRoute,
-	getApiObjectSpec,
+	getApiResourceSpec,
 	getCreateOperationMutationForCollection,
 	getPageQueryHookForCollection,
 	getUpdateOperationMutationForCollection,
@@ -120,7 +120,7 @@ export const GeneralizedAdminUpdateOperationPage = <
 			</p>
 			<GeneralizedForm
 				collectionId={collectionId}
-				getApiObjectSpec={getApiObjectSpec}
+				getApiResourceSpec={getApiResourceSpec}
 				getCreateOperationMutationForCollection={
 					getCreateOperationMutationForCollection
 				}

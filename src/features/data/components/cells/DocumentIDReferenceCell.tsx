@@ -1,4 +1,4 @@
-import { getApiObjectYupHelpers } from 'ergonomic';
+import { getApiResourceYupHelpers } from 'ergonomic';
 import { GeneralizedTableCellProps } from '../../types/GeneralizedTableCellProps';
 import { DefaultCell } from './DefaultCell';
 
@@ -8,7 +8,7 @@ export const DocumentIDReferenceCell = (
 	const { reference_collections = [], type } = props.fieldSpec?.meta || {};
 	const isMulti = type === 'id_refs';
 	const collections = Object.keys(props.idPrefixByCollection);
-	const apiYupHelpers = getApiObjectYupHelpers(
+	const apiYupHelpers = getApiResourceYupHelpers(
 		collections,
 		props.idPrefixByCollection,
 	);

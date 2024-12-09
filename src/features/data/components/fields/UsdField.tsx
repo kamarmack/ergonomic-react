@@ -1,12 +1,12 @@
 import * as R from 'ramda';
-import { handleCurrencyFieldKeyUp } from '../../utils/handleCurrencyFieldKeyUp';
+import { handleUsdFieldKeyUp } from '../../utils/handleUsdFieldKeyUp';
 import { FieldValues, useController } from 'react-hook-form';
 import { isFieldRequired } from 'ergonomic';
 import { Input } from '../../../../components/ui/input';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
 
 /**
- * CurrencyField component renders an input field for handling currency values, formatted in USD cents.
+ * UsdField component renders an input field for handling currency values, formatted in USD cents.
  *
  * @template TFieldValues - The type representing all form field values.
  * @template TCollection - TCollection parameter is a string union of the Document Database Collection IDs.
@@ -18,14 +18,14 @@ import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps
  * @param {string} props.operation - The operation type for the form, either 'create' or 'update'.
  * @param {function} props.setError - Function to set custom error messages for invalid currency input.
  *
- * @returns {JSX.Element} The rendered CurrencyField component, which is an input field for currency formatted in USD.
+ * @returns {JSX.Element} The rendered UsdField component, which is an input field for currency formatted in USD.
  *
  * @description
- * The `CurrencyField` component integrates with `react-hook-form` to manage an input field tailored for currency input in USD.
- * It uses `handleCurrencyFieldKeyUp` to format input values to cents and to validate against potential errors.
+ * The `UsdField` component integrates with `react-hook-form` to manage an input field tailored for currency input in USD.
+ * It uses `handleUsdFieldKeyUp` to format input values to cents and to validate against potential errors.
  * The component dynamically sets whether the field is required based on `fieldSpec` and `operation`, and disables input when the form is submitting.
  */
-export const CurrencyField = <
+export const UsdField = <
 	TFieldValues extends FieldValues = FieldValues,
 	TCollection extends string = string,
 >({
@@ -47,7 +47,7 @@ export const CurrencyField = <
 		<Input
 			{...field}
 			className='block w-full p-2 border rounded-md bg-white'
-			onKeyUp={handleCurrencyFieldKeyUp({
+			onKeyUp={handleUsdFieldKeyUp({
 				field: R.pick(['onChange'], field),
 				setError,
 			})}

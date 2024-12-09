@@ -15,7 +15,7 @@ export const handleDomainFieldBlur =
 		params.field.onBlur();
 
 		const value = e.target.value;
-		if (!value || YupHelpers.webDomain().isValidSync(value)) {
+		if (!value || YupHelpers.domain().isValidSync(value)) {
 			params.setError('');
 		} else {
 			params.setError('Please enter a valid domain, e.g. example.com');

@@ -43,7 +43,7 @@ export const GeneralizedForm = <
 	TCollection extends string = string,
 >({
 	collectionId,
-	getApiObjectSpec,
+	getApiResourceSpec,
 	getCreateOperationMutationForCollection,
 	getPageQueryHookForCollection,
 	getUpdateOperationMutationForCollection,
@@ -54,18 +54,20 @@ export const GeneralizedForm = <
 }: GeneralizedFormProps<TFieldValues, TCollection>): JSX.Element => {
 	const { toast } = useToast();
 
-	// API Object Spec
-	const apiObjectSpec = collectionId
-		? getApiObjectSpec(collectionId)
+	// API Resource Spec
+	const apiResourceSpec = collectionId
+		? getApiResourceSpec(collectionId)
 		: undefined;
 
 	// Field Spec by Field Key
-	const createOperationSchema = apiObjectSpec?.createParamsJsonSchema ?? null;
-	const updateOperationSchema = apiObjectSpec?.updateParamsJsonSchema ?? null;
+	const createOperationSchema = apiResourceSpec?.createParamsJsonSchema ?? null;
+	const updateOperationSchema = apiResourceSpec?.updateParamsJsonSchema ?? null;
 	const writeOperationSchema =
 		operation === 'create' ? createOperationSchema : updateOperationSchema;
-	const createOperationFieldEnum = apiObjectSpec?.createParamsFieldEnum ?? null;
-	const updateOperationFieldEnum = apiObjectSpec?.updateParamsFieldEnum ?? null;
+	const createOperationFieldEnum =
+		apiResourceSpec?.createParamsFieldEnum ?? null;
+	const updateOperationFieldEnum =
+		apiResourceSpec?.updateParamsFieldEnum ?? null;
 	const writeOperationFieldEnum =
 		operation === 'create'
 			? createOperationFieldEnum
@@ -75,7 +77,10 @@ export const GeneralizedForm = <
 		writeOperationFieldEnum?.arr ?? undefined,
 	);
 	const currencyFieldKeys = Object.entries(fieldSpecByFieldKey)
-		.filter(([_, fieldSpec]) => fieldSpec.meta?.type === 'currency')
+		.filter(
+			([_, fieldSpec]) =>
+				fieldSpec.meta?.type && ['usd'].includes(fieldSpec.meta?.type),
+		)
 		.map(([fieldKey]) => fieldKey);
 	const dateTimeLocalFieldKeys = Object.entries(fieldSpecByFieldKey)
 		.filter(([_, fieldSpec]) => fieldSpec.meta?.type === 'date')
@@ -92,7 +97,11 @@ export const GeneralizedForm = <
 		.filter(([_, fieldSpec]) => fieldSpec.meta?.type === 'percentage')
 		.map(([fieldKey]) => fieldKey);
 	const phoneNumberFieldKeys = Object.entries(fieldSpecByFieldKey)
-		.filter(([_, fieldSpec]) => fieldSpec.meta?.type === 'phone_number')
+		.filter(
+			([_, fieldSpec]) =>
+				fieldSpec.meta?.type &&
+				['united_states_phone_number'].includes(fieldSpec.meta?.type),
+		)
 		.map(([fieldKey]) => fieldKey);
 	const dataTransformationOptions: GeneralizedFormDataTransformationOptions = {
 		currencyFieldKeys,
@@ -143,7 +152,7 @@ export const GeneralizedForm = <
 			const data =
 				error?.errors?.[0]?.error?.data ?? getGeneralizedError().error.data;
 			const errors = Object.entries(data).filter(
-				([k]) => apiObjectSpec?.createParamsFieldEnum.isMember(k) ?? false,
+				([k]) => apiResourceSpec?.createParamsFieldEnum.isMember(k) ?? false,
 			);
 
 			toast({
@@ -200,7 +209,7 @@ export const GeneralizedForm = <
 			const data =
 				error?.errors?.[0]?.error?.data ?? getGeneralizedError().error.data;
 			const errors = Object.entries(data).filter(
-				([k]) => apiObjectSpec?.updateParamsFieldEnum.isMember(k) ?? false,
+				([k]) => apiResourceSpec?.updateParamsFieldEnum.isMember(k) ?? false,
 			);
 
 			toast({
@@ -241,18 +250,18 @@ export const GeneralizedForm = <
 		writeMutation(serverData);
 	}) as () => void;
 
-	const isApiObjectSpecInitialized =
-		Object.keys(fieldSpecByFieldKey).length > 0 && apiObjectSpec != null;
+	const isApiResourceSpecInitialized =
+		Object.keys(fieldSpecByFieldKey).length > 0 && apiResourceSpec != null;
 	const [isDefaultValuesInitialized, setIsDefaultValuesInitialized] =
 		useState(false);
 	useEffect(() => {
 		if (operation !== 'create') return;
 
-		if (!isApiObjectSpecInitialized) return;
+		if (!isApiResourceSpecInitialized) return;
 		if (isDefaultValuesInitialized) return;
 
 		const defaultValues =
-			apiObjectSpec.createParamsJsonSchema.getDefault() as TFieldValues;
+			apiResourceSpec.createParamsJsonSchema.getDefault() as TFieldValues;
 		const formDefaultVales = getGeneralizedFormDataFromServerData(
 			defaultValues,
 			dataTransformationOptions,
@@ -266,7 +275,7 @@ export const GeneralizedForm = <
 		setIsDefaultValuesInitialized(true);
 	}, [
 		operation,
-		isApiObjectSpecInitialized,
+		isApiResourceSpecInitialized,
 		isDefaultValuesInitialized,
 		dataTransformationOptions,
 	]);
@@ -277,7 +286,7 @@ export const GeneralizedForm = <
 	useEffect(() => {
 		if (operation !== 'update') return;
 		if (updateProps == null) return;
-		if (!isApiObjectSpecInitialized) return;
+		if (!isApiResourceSpecInitialized) return;
 		if (isDefaultValuesInitialized) return;
 
 		const defaultValues = R.pick(
@@ -298,7 +307,7 @@ export const GeneralizedForm = <
 	}, [
 		operation,
 		updateProps,
-		isApiObjectSpecInitialized,
+		isApiResourceSpecInitialized,
 		isDefaultValuesInitialized,
 	]);
 
