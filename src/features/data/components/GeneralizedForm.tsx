@@ -77,7 +77,10 @@ export const GeneralizedForm = <
 		writeOperationFieldEnum?.arr ?? undefined,
 	);
 	const currencyFieldKeys = Object.entries(fieldSpecByFieldKey)
-		.filter(([_, fieldSpec]) => fieldSpec.meta?.type === 'currency')
+		.filter(
+			([_, fieldSpec]) =>
+				fieldSpec.meta?.type && ['usd'].includes(fieldSpec.meta?.type),
+		)
 		.map(([fieldKey]) => fieldKey);
 	const dateTimeLocalFieldKeys = Object.entries(fieldSpecByFieldKey)
 		.filter(([_, fieldSpec]) => fieldSpec.meta?.type === 'date')
@@ -94,7 +97,11 @@ export const GeneralizedForm = <
 		.filter(([_, fieldSpec]) => fieldSpec.meta?.type === 'percentage')
 		.map(([fieldKey]) => fieldKey);
 	const phoneNumberFieldKeys = Object.entries(fieldSpecByFieldKey)
-		.filter(([_, fieldSpec]) => fieldSpec.meta?.type === 'phone_number')
+		.filter(
+			([_, fieldSpec]) =>
+				fieldSpec.meta?.type &&
+				['united_states_phone_number'].includes(fieldSpec.meta?.type),
+		)
 		.map(([fieldKey]) => fieldKey);
 	const dataTransformationOptions: GeneralizedFormDataTransformationOptions = {
 		currencyFieldKeys,

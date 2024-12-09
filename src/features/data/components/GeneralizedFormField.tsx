@@ -84,9 +84,6 @@ export const GeneralizedFormField = <T extends FieldValues = FieldValues>(
 		case 'percentage':
 			return <PercentageField {...props} />;
 
-		case 'phone_number':
-			return <UnitedStatesPhoneNumberField {...props} />;
-
 		case 'recurrence_rule':
 			return <RecurrenceRuleField {...props} />;
 
@@ -107,6 +104,9 @@ export const GeneralizedFormField = <T extends FieldValues = FieldValues>(
 
 		case 'time_zone':
 			return <TimeZoneField {...props} />;
+
+		case 'united_states_phone_number':
+			return <UnitedStatesPhoneNumberField {...props} />;
 
 		case 'url':
 			return <UrlField {...props} />;

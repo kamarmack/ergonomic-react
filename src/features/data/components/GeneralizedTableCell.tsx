@@ -87,9 +87,6 @@ export const GeneralizedTableCell = <
 		case 'percentage':
 			return <PercentageCell {...props} />;
 
-		case 'phone_number':
-			return <UnitedStatesPhoneNumberCell {...props} />;
-
 		case 'recurrence_rule':
 			return <RecurrenceRuleCell {...props} />;
 
@@ -110,6 +107,9 @@ export const GeneralizedTableCell = <
 
 		case 'time_zone':
 			return <TimeZoneCell {...props} />;
+
+		case 'united_states_phone_number':
+			return <UnitedStatesPhoneNumberCell {...props} />;
 
 		case 'url':
 			return <UrlCell {...props} />;
