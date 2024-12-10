@@ -63,7 +63,7 @@ export const SITE_ORIGIN_BY_TARGET = Object.keys(process.env ?? {})
 					key.match(/_(LIVE|TEST)_SITE_URL_(.*)_WEB_APP$/) || [];
 				if (target && appName) {
 					const targetKey = target.toLowerCase() as 'live' | 'test';
-					acc[targetKey][appName] = value;
+					acc[targetKey][appName + '_WEB_APP'] = value;
 				}
 			}
 			return acc;
