@@ -1,14 +1,13 @@
 import { NextRouter } from 'next/router';
 import { isDomAvailable } from '../../../utils/isDomAvailable';
-import { SITE_ORIGIN_BY_TARGET } from '../../../config/originConfig';
 
 export type RedirectToLoginPageParams = {
-	authSiteOrigin?: string;
+	authSiteOrigin: string;
 	loginRoutePath?: string;
 	router: NextRouter;
 };
 export const redirectToLoginPage = ({
-	authSiteOrigin = SITE_ORIGIN_BY_TARGET.SSO_WEB_APP,
+	authSiteOrigin,
 	loginRoutePath = '/login',
 	router,
 }: RedirectToLoginPageParams) => {

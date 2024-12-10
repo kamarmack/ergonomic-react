@@ -12,12 +12,13 @@ import {
 	redirectToAuthenticatedUserWelcomePage,
 } from '../utils/redirectToAuthenticatedUserWelcomePage';
 import { AuthContext } from '../providers/AuthProvider';
+import { useSiteOriginByTarget } from '../../../hooks/useSiteOriginByTarget';
 
 const DEFAULT_ALLOW_AUTH_STATES = ['authenticated' as const, 'guest' as const];
 
 export type UseAuthStateRedirectOptions = {
 	allowAuthStates?: ('authenticated' | 'guest')[];
-} & Omit<RedirectToLoginPageParams, 'router'> &
+} & Partial<Omit<RedirectToLoginPageParams, 'router'>> &
 	Omit<RedirectToAuthenticatedUserWelcomePageParams, 'router'>;
 
 export const useAuthStateRedirect = (
@@ -49,6 +50,10 @@ export const useAuthStateRedirect = (
 	const allowGuestUsers = allowAuthStates.includes('guest');
 	const allowAuthenticatedUsers = allowAuthStates.includes('authenticated');
 
+	// ==== Hooks ==== //
+	const siteOriginByTarget = useSiteOriginByTarget();
+	const authSiteOrigin = siteOriginByTarget.SSO_WEB_APP ?? '';
+
 	// ==== Effects ==== //
 
 	// Redirect to Login Page if User is not Authenticated and Guest Users are not allowed
@@ -71,14 +76,22 @@ export const useAuthStateRedirect = (
 					redirectToPathname(router);
 				} catch (err) {
 					console.error(err);
-					redirectToLoginPage({ ...options, router });
+					redirectToLoginPage({
+						...options,
+						authSiteOrigin,
+						router,
+					});
 				}
 			})();
 		}
 
 		if (allowGuestUsers) return;
 
-		redirectToLoginPage({ ...options, router });
+		redirectToLoginPage({
+			...options,
+			authSiteOrigin,
+			router,
+		});
 		return;
 	}, [authContext.user, client_token, router.isReady, allowAuthStates.join()]);
 
