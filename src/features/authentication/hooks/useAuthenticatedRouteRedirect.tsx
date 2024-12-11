@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { firebaseAuthInstance } from '../../../lib/firebase';
 import { useAuthStateRedirect } from './useAuthStateRedirect';
 import { RedirectToLoginPageParams } from '../utils/redirectToLoginPage';
-import { useSiteOriginByTarget } from '../../../hooks/useSiteOriginByTarget';
 
 export const useAuthenticatedRouteRedirect = (
 	options: Partial<Omit<RedirectToLoginPageParams, 'router'>> = {},
@@ -11,8 +10,7 @@ export const useAuthenticatedRouteRedirect = (
 	const [authStateIsLoading, setAuthStateIsLoading] = useState(true);
 
 	// ==== Hooks ==== //
-	const siteOriginByTarget = useSiteOriginByTarget();
-	const authSiteOrigin = siteOriginByTarget.SSO_WEB_APP ?? '';
+	const authSiteOrigin = process.env.NEXT_PUBLIC_SITE_URL_SSO_WEB_APP ?? '';
 	const allowAuthStates = authStateIsLoading
 		? ['authenticated' as const, 'guest' as const]
 		: ['authenticated' as const];

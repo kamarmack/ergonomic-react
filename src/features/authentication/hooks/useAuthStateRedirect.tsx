@@ -12,7 +12,6 @@ import {
 	redirectToAuthenticatedUserWelcomePage,
 } from '../utils/redirectToAuthenticatedUserWelcomePage';
 import { AuthContext } from '../providers/AuthProvider';
-import { useSiteOriginByTarget } from '../../../hooks/useSiteOriginByTarget';
 
 const DEFAULT_ALLOW_AUTH_STATES = ['authenticated' as const, 'guest' as const];
 
@@ -51,8 +50,7 @@ export const useAuthStateRedirect = (
 	const allowAuthenticatedUsers = allowAuthStates.includes('authenticated');
 
 	// ==== Hooks ==== //
-	const siteOriginByTarget = useSiteOriginByTarget();
-	const authSiteOrigin = siteOriginByTarget.SSO_WEB_APP ?? '';
+	const authSiteOrigin = process.env.NEXT_PUBLIC_SITE_URL_SSO_WEB_APP ?? '';
 
 	// ==== Effects ==== //
 
