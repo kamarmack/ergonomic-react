@@ -23,10 +23,7 @@ export const getCachedFirebaseUserJwt = async (
 			return null;
 		}
 
-		if (!cachedToken) {
-			localStorage.setItem('firebase_auth_jwt', token);
-		}
-
+		localStorage.setItem('firebase_auth_jwt', token);
 		return token;
 	} catch (err) {
 		console.error('Error getting firebase auth token for ky instance', err);
