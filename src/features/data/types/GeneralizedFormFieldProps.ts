@@ -1,7 +1,7 @@
 import {
 	GeneralizedApiResource,
+	GeneralizedError,
 	GeneralizedFieldSpec,
-	GeneralizedResponse,
 } from 'ergonomic';
 import { UseQueryResult } from '@tanstack/react-query';
 import { Control, FieldValues, Path } from 'react-hook-form';
@@ -22,7 +22,7 @@ export type GeneralizedFormFieldProps<
 		collectionId: string | null,
 	) => (
 		options: GeneralizedUseQueryPageProps<GeneralizedApiResource>,
-	) => UseQueryResult<GeneralizedFirestoreCollectionPage, GeneralizedResponse>;
+	) => UseQueryResult<GeneralizedFirestoreCollectionPage, GeneralizedError>;
 	idPrefixByCollection: Record<TCollection, string>;
 	initialFormData: FieldValues | null;
 	isSubmitting: boolean;

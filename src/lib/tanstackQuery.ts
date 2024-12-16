@@ -10,7 +10,6 @@ import {
 	GeneralizedError,
 	GeneralizedCreateBody,
 	GeneralizedUpdateBody,
-	GeneralizedResponse,
 } from 'ergonomic';
 import { FirestoreCollectionQueryOptions } from '../features/data/types/FirestoreQueryTypes';
 import { GeneralizedFirestoreCollectionPage } from '../features/data/utils/generalizedFirestoreCollectionPageQuery';
@@ -29,50 +28,60 @@ export const queryClient = new QueryClient({
 
 // Reads
 
-export type GeneralizedUseQueryKeyFn<T extends GeneralizedApiResource> = (
+export type GeneralizedUseQueryKeyFn<TData extends GeneralizedApiResource> = (
 	params: FirestoreCollectionQueryOptions,
-) => readonly [T['_object'], string];
+) => readonly [TData['_object'], string];
 
-export type GeneralizedUseQueryPageOptions<T extends GeneralizedApiResource> =
-	Omit<
-		UseQueryOptions<
-			GeneralizedFirestoreCollectionPage<T>,
-			GeneralizedError,
-			GeneralizedFirestoreCollectionPage<T>,
-			ReturnType<GeneralizedUseQueryKeyFn<T>>
-		>,
-		'queryFn' | 'queryKey'
-	>;
-
-export type GeneralizedUseQueryPageProps<T extends GeneralizedApiResource> = {
-	firestoreQueryOptions: FirestoreCollectionQueryOptions;
-	reactQueryOptions?: GeneralizedUseQueryPageOptions<T>;
-};
-
-export type GeneralizedUseQueryOptionsFn<T extends GeneralizedApiResource> = (
-	props: GeneralizedUseQueryPageProps<T>,
-) => UseQueryOptions<
-	GeneralizedFirestoreCollectionPage<T>,
-	GeneralizedError,
-	GeneralizedFirestoreCollectionPage<T>,
-	ReturnType<GeneralizedUseQueryKeyFn<T>>
+export type GeneralizedUseQueryPageOptions<
+	TData extends GeneralizedApiResource,
+> = Omit<
+	UseQueryOptions<
+		GeneralizedFirestoreCollectionPage<TData>,
+		GeneralizedError,
+		GeneralizedFirestoreCollectionPage<TData>,
+		ReturnType<GeneralizedUseQueryKeyFn<TData>>
+	>,
+	'queryFn' | 'queryKey'
 >;
 
-export type GeneralizedUseQueryPageObserver<T extends GeneralizedApiResource> =
-	QueryObserverResult<GeneralizedFirestoreCollectionPage<T>, GeneralizedError>;
+export type GeneralizedUseQueryPageProps<TData extends GeneralizedApiResource> =
+	{
+		firestoreQueryOptions: FirestoreCollectionQueryOptions;
+		reactQueryOptions?: GeneralizedUseQueryPageOptions<TData>;
+	};
+
+export type GeneralizedUseQueryOptionsFn<TData extends GeneralizedApiResource> =
+	(
+		props: GeneralizedUseQueryPageProps<TData>,
+	) => UseQueryOptions<
+		GeneralizedFirestoreCollectionPage<TData>,
+		GeneralizedError,
+		GeneralizedFirestoreCollectionPage<TData>,
+		ReturnType<GeneralizedUseQueryKeyFn<TData>>
+	>;
+
+export type GeneralizedUseQueryPageObserver<
+	TData extends GeneralizedApiResource,
+> = QueryObserverResult<
+	GeneralizedFirestoreCollectionPage<TData>,
+	GeneralizedError
+>;
 
 // Writes
 
 export type GeneralizedUseCreateDocumentsMutationOptions<
-	T extends GeneralizedApiResource,
-	U extends GeneralizedCreateBody,
-> = UseMutationOptions<GeneralizedResponse<T>, GeneralizedResponse<T>, U | U[]>;
+	TData extends GeneralizedApiResource,
+	TCreateParams extends GeneralizedCreateBody,
+> = UseMutationOptions<
+	TData[],
+	GeneralizedError,
+	TCreateParams | TCreateParams[]
+>;
 
 export type GeneralizedUseUpdateDocumentsMutationOptions<
-	T extends GeneralizedApiResource,
-	U extends GeneralizedUpdateBody,
+	TUpdateParams extends GeneralizedUpdateBody,
 > = UseMutationOptions<
 	unknown,
-	GeneralizedResponse<T>,
-	(U & { _id: string }) | (U & { _id: string })[]
+	GeneralizedError,
+	(TUpdateParams & { _id: string }) | (TUpdateParams & { _id: string })[]
 >;
