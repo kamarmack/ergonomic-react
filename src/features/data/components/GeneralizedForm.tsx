@@ -144,13 +144,11 @@ export const GeneralizedForm = <
 		mutate: createOperationMutation,
 	} = createOperationMutationForCollection({
 		onSuccess,
-		onError: (error) => {
+		onError: ({ error }) => {
 			const message =
-				error?.errors?.[0]?.error?.message ??
-				'Unknown error occurred while adding your record';
+				error?.message ?? 'Unknown error occurred while adding your record';
 
-			const data =
-				error?.errors?.[0]?.error?.data ?? getGeneralizedError().error.data;
+			const data = error?.data ?? getGeneralizedError().error.data;
 			const errors = Object.entries(data).filter(
 				([k]) => apiResourceSpec?.createParamsFieldEnum.isMember(k) ?? false,
 			);
@@ -201,13 +199,11 @@ export const GeneralizedForm = <
 		// 	onMutationSuccess();
 		// },
 		onSuccess,
-		onError: (error) => {
+		onError: ({ error }) => {
 			const message =
-				error?.errors?.[0]?.error?.message ??
-				'Unknown error occurred while updating your record';
+				error?.message ?? 'Unknown error occurred while adding your record';
 
-			const data =
-				error?.errors?.[0]?.error?.data ?? getGeneralizedError().error.data;
+			const data = error?.data ?? getGeneralizedError().error.data;
 			const errors = Object.entries(data).filter(
 				([k]) => apiResourceSpec?.updateParamsFieldEnum.isMember(k) ?? false,
 			);
