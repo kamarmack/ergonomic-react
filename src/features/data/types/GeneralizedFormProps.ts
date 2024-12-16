@@ -1,7 +1,7 @@
 import {
 	GeneralizedApiResource,
 	GeneralizedApiResourceSpec,
-	GeneralizedResponse,
+	GeneralizedError,
 } from 'ergonomic';
 import {
 	UseMutationOptions,
@@ -21,17 +21,17 @@ export type GeneralizedFormProps<
 	getCreateOperationMutationForCollection: (
 		collectionId: TCollection,
 	) => (
-		options: UseMutationOptions<unknown, GeneralizedResponse>,
+		options: UseMutationOptions<unknown, GeneralizedError>,
 	) => UseMutationResult;
 	getPageQueryHookForCollection: (
 		collectionId: string | null,
 	) => (
 		options: GeneralizedUseQueryPageProps<GeneralizedApiResource>,
-	) => UseQueryResult<GeneralizedFirestoreCollectionPage, GeneralizedResponse>;
+	) => UseQueryResult<GeneralizedFirestoreCollectionPage, GeneralizedError>;
 	getUpdateOperationMutationForCollection: (
 		collectionId: TCollection,
 	) => (
-		options: UseMutationOptions<unknown, GeneralizedResponse>,
+		options: UseMutationOptions<unknown, GeneralizedError>,
 	) => UseMutationResult;
 	idPrefixByCollection: Record<TCollection, string>;
 	onMutationSuccess: () => Promise<void>;

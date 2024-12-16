@@ -3,7 +3,6 @@ import {
 	GeneralizedApiResource,
 	GeneralizedApiResourceSpec,
 	GeneralizedCreateBody,
-	GeneralizedResponse,
 	GeneralizedUpdateBody,
 } from 'ergonomic';
 import {
@@ -27,21 +26,16 @@ export type FirestoreDocumentCreateParams<T extends GeneralizedCreateBody> =
 	| T
 	| T[];
 export type FirestoreDocumentCreateResponse<T extends GeneralizedApiResource> =
-	GeneralizedResponse<T>;
+	T[];
 export const generalizedFirestoreDocumentCreateOperation =
 	<T extends GeneralizedCreateBody, U extends GeneralizedApiResource>(
 		collectionId: string,
 		apiResourceSpec: GeneralizedApiResourceSpec,
 	) =>
-	async (
-		params: FirestoreDocumentCreateParams<T>,
-	): Promise<GeneralizedResponse<U>> => {
+	async (params: FirestoreDocumentCreateParams<T>): Promise<U[]> => {
 		try {
 			// Setup response object
-			const response: GeneralizedResponse<U> = {
-				data: [],
-				errors: [],
-			};
+			const responses: U[] = [];
 
 			// Get the Firestore collection reference
 			const collectionRef = collection(firebaseFirestoreInstance, collectionId);
@@ -60,13 +54,13 @@ export const generalizedFirestoreDocumentCreateOperation =
 					}) as U;
 					const documentRef = doc(collectionRef, documentData._id);
 					batch.set(documentRef, documentData);
-					response.data.push(documentData);
+					responses.push(documentData);
 				}
 
 				await batch.commit();
 			}
 
-			return response;
+			return responses;
 		} catch (error) {
 			return handleFirestoreOperationError(error);
 		}
