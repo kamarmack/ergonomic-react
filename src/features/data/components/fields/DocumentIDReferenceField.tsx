@@ -39,7 +39,7 @@ export const DocumentIDReferenceField = <
 	control,
 	fieldKey: name,
 	fieldSpec,
-	getPageQueryHookForCollection,
+	getPageQueryHookForResource,
 	idPrefixByResourceName,
 	initialFormData,
 	isSubmitting,
@@ -60,13 +60,13 @@ export const DocumentIDReferenceField = <
 	const isPageQueryForReferenceCollectionEnabled =
 		collectionIdForReference != null &&
 		!!idPrefixByResourceName[collectionIdForReference];
-	const pageQueryHookForCollection = getPageQueryHookForCollection(
+	const pageQueryHookForResource = getPageQueryHookForResource(
 		collectionIdForReference as
-			| Parameters<typeof getPageQueryHookForCollection>[0]
+			| Parameters<typeof getPageQueryHookForResource>[0]
 			| null,
 	);
 	const { data: documentPageData, isLoading: isDocumentPageDataLoading } =
-		pageQueryHookForCollection({
+		pageQueryHookForResource({
 			firestoreQueryOptions: { pageSize: 300 },
 			reactQueryOptions: { enabled: isPageQueryForReferenceCollectionEnabled },
 		});

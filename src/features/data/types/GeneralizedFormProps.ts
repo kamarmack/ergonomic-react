@@ -16,28 +16,28 @@ export type GeneralizedFormProps<
 	TFieldValues extends FieldValues = FieldValues,
 	TResourceName extends string = string,
 > = {
-	collectionId: TResourceName;
 	getApiResourceSpec: (
-		collectionId: TResourceName,
+		resourceName: TResourceName,
 	) => GeneralizedApiResourceSpec;
-	getCreateOperationMutationForCollection: (
-		collectionId: TResourceName,
+	getCreateOperationMutationForResource: (
+		resourceName: TResourceName,
 	) => (
 		options: UseMutationOptions<unknown, GeneralizedError>,
 	) => UseMutationResult;
-	getPageQueryHookForCollection: (
-		collectionId: string | null,
+	getPageQueryHookForResource: (
+		resourceName: string | null,
 	) => (
 		options: GeneralizedUseQueryPageProps<GeneralizedApiResource>,
 	) => UseQueryResult<GeneralizedFirestoreCollectionPage, GeneralizedError>;
-	getUpdateOperationMutationForCollection: (
-		collectionId: TResourceName,
+	getUpdateOperationMutationForResource: (
+		resourceName: TResourceName,
 	) => (
 		options: UseMutationOptions<unknown, GeneralizedError>,
 	) => UseMutationResult;
 	idPrefixByResourceName: Record<TResourceName, string>;
 	onMutationSuccess: () => Promise<void>;
 	operation: 'create' | 'update';
+	resourceName: TResourceName;
 	updateProps: {
 		documentId: string;
 		initialFieldValues: TFieldValues;

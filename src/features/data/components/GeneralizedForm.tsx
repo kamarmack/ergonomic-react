@@ -44,9 +44,9 @@ export const GeneralizedForm = <
 >({
 	collectionId,
 	getApiResourceSpec,
-	getCreateOperationMutationForCollection,
-	getPageQueryHookForCollection,
-	getUpdateOperationMutationForCollection,
+	getCreateOperationMutationForResource,
+	getPageQueryHookForResource,
+	getUpdateOperationMutationForResource,
 	idPrefixByResourceName,
 	onMutationSuccess: onSuccess,
 	operation,
@@ -134,15 +134,15 @@ export const GeneralizedForm = <
 	});
 
 	// Create Operation Mutation
-	const isCreateOperationMutationForCollectionEnabled = collectionId != null;
-	const createOperationMutationForCollection =
-		isCreateOperationMutationForCollectionEnabled
-			? getCreateOperationMutationForCollection(collectionId)
+	const isCreateOperationMutationForResourceEnabled = collectionId != null;
+	const createOperationMutationForResource =
+		isCreateOperationMutationForResourceEnabled
+			? getCreateOperationMutationForResource(collectionId)
 			: () => ({ isLoading: false, mutate: (_data: unknown) => void 0 });
 	const {
 		isLoading: isCreateOperationLoading,
 		mutate: createOperationMutation,
-	} = createOperationMutationForCollection({
+	} = createOperationMutationForResource({
 		onSuccess,
 		onError: ({ error }) => {
 			const message =
@@ -180,16 +180,16 @@ export const GeneralizedForm = <
 	});
 
 	// Update Operation Mutation
-	const isUpdateOperationMutationForCollectionEnabled =
+	const isUpdateOperationMutationForResourceEnabled =
 		collectionId != null && updateProps?.documentId != null;
-	const updateOperationMutationForCollection =
-		isUpdateOperationMutationForCollectionEnabled
-			? getUpdateOperationMutationForCollection(collectionId)
+	const updateOperationMutationForResource =
+		isUpdateOperationMutationForResourceEnabled
+			? getUpdateOperationMutationForResource(collectionId)
 			: () => ({ isLoading: false, mutate: (_data: unknown) => void 0 });
 	const {
 		isLoading: isUpdateOperationLoading,
 		mutate: updateOperationMutation,
-	} = updateOperationMutationForCollection({
+	} = updateOperationMutationForResource({
 		// onSuccess: async () => {
 		// 	toast({
 		// 		title: 'Success',
@@ -330,7 +330,7 @@ export const GeneralizedForm = <
 							fieldErrors={fieldErrors}
 							fieldKey={fieldKey as Path<TFieldValues>}
 							fieldSpec={fieldSpec}
-							getPageQueryHookForCollection={getPageQueryHookForCollection}
+							getPageQueryHookForResource={getPageQueryHookForResource}
 							idPrefixByResourceName={idPrefixByResourceName}
 							initialFormData={initialFormData}
 							isSubmitting={isSubmitting}

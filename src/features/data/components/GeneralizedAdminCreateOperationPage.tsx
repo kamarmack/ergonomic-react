@@ -14,9 +14,9 @@ export type GeneralizedAdminCreateOperationPageProps<
 > = Pick<
 	GeneralizedFormProps<FieldValues, TResourceName>,
 	| 'getApiResourceSpec'
-	| 'getCreateOperationMutationForCollection'
-	| 'getPageQueryHookForCollection'
-	| 'getUpdateOperationMutationForCollection'
+	| 'getCreateOperationMutationForResource'
+	| 'getPageQueryHookForResource'
+	| 'getUpdateOperationMutationForResource'
 	| 'idPrefixByResourceName'
 > & {
 	getAdminWebAppRoute: (options: unknown) => string;
@@ -26,9 +26,9 @@ export const GeneralizedAdminCreateOperationPage = <
 >({
 	getAdminWebAppRoute,
 	getApiResourceSpec,
-	getCreateOperationMutationForCollection,
-	getPageQueryHookForCollection,
-	getUpdateOperationMutationForCollection,
+	getCreateOperationMutationForResource,
+	getPageQueryHookForResource,
+	getUpdateOperationMutationForResource,
 	idPrefixByResourceName,
 }: GeneralizedAdminCreateOperationPageProps<TResourceName>): JSX.Element => {
 	// ==== Hooks ==== //
@@ -62,10 +62,10 @@ export const GeneralizedAdminCreateOperationPage = <
 
 	// Data query hook for refetch
 	const isPageQueryForReferenceCollectionEnabled = collectionId != null;
-	const pageQueryHookForCollection = getPageQueryHookForCollection(
+	const pageQueryHookForResource = getPageQueryHookForResource(
 		isPageQueryForReferenceCollectionEnabled ? collectionId : null,
 	);
-	const { refetch: refetchDocumentPageData } = pageQueryHookForCollection({
+	const { refetch: refetchDocumentPageData } = pageQueryHookForResource({
 		firestoreQueryOptions: {
 			pageSize: 300,
 			orderByClauses: [['_date_created', 'desc']],
@@ -114,12 +114,12 @@ export const GeneralizedAdminCreateOperationPage = <
 				<GeneralizedForm
 					collectionId={collectionId}
 					getApiResourceSpec={getApiResourceSpec}
-					getCreateOperationMutationForCollection={
-						getCreateOperationMutationForCollection
+					getCreateOperationMutationForResource={
+						getCreateOperationMutationForResource
 					}
-					getPageQueryHookForCollection={getPageQueryHookForCollection}
-					getUpdateOperationMutationForCollection={
-						getUpdateOperationMutationForCollection
+					getPageQueryHookForResource={getPageQueryHookForResource}
+					getUpdateOperationMutationForResource={
+						getUpdateOperationMutationForResource
 					}
 					idPrefixByResourceName={idPrefixByResourceName}
 					operation='create'

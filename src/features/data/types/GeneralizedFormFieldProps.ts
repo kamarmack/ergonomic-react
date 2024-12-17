@@ -18,7 +18,7 @@ export type GeneralizedFormFieldProps<
 	fieldErrors: GeneralizedFormFieldErrors<TFieldValues>;
 	fieldKey: Path<TFieldValues>;
 	fieldSpec: GeneralizedFieldSpec;
-	getPageQueryHookForCollection: (
+	getPageQueryHookForResource: (
 		collectionId: string | null,
 	) => (
 		options: GeneralizedUseQueryPageProps<GeneralizedApiResource>,

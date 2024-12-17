@@ -28,7 +28,7 @@ export type GeneralizedAdminCollectionTablePageProps<
 > = Pick<
 	GeneralizedFormProps<FieldValues, TResourceName>,
 	| 'getApiResourceSpec'
-	| 'getPageQueryHookForCollection'
+	| 'getPageQueryHookForResource'
 	| 'idPrefixByResourceName'
 > & {
 	getAdminWebAppRoute: (options: unknown) => string;
@@ -38,7 +38,7 @@ export const GeneralizedAdminCollectionTablePage = <
 >({
 	getAdminWebAppRoute,
 	getApiResourceSpec,
-	getPageQueryHookForCollection,
+	getPageQueryHookForResource,
 	idPrefixByResourceName,
 }: GeneralizedAdminCollectionTablePageProps<TResourceName>): JSX.Element => {
 	// ==== Hooks ==== //
@@ -61,11 +61,11 @@ export const GeneralizedAdminCollectionTablePage = <
 
 	// Data
 	const isPageQueryForReferenceCollectionEnabled = collectionId != null;
-	const pageQueryHookForCollection = getPageQueryHookForCollection(
+	const pageQueryHookForResource = getPageQueryHookForResource(
 		isPageQueryForReferenceCollectionEnabled ? collectionId : null,
 	);
 	const { data: documentPageData, isLoading: isDocumentPageDataLoading } =
-		pageQueryHookForCollection({
+		pageQueryHookForResource({
 			firestoreQueryOptions: {
 				pageSize: 300,
 				orderByClauses: [['_date_created', 'desc']],
