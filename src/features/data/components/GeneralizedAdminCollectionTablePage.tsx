@@ -31,14 +31,12 @@ export type GeneralizedAdminCollectionTablePageProps<
 	| 'idPrefixByCollection'
 > & {
 	getAdminWebAppRoute: (options: unknown) => string;
-	getFirestoreCollectionPath: (collectionId: string) => string;
 };
 export const GeneralizedAdminCollectionTablePage = <
 	TCollection extends string = string,
 >({
 	getAdminWebAppRoute,
 	getApiResourceSpec,
-	getFirestoreCollectionPath,
 	getPageQueryHookForCollection,
 	idPrefixByCollection,
 }: GeneralizedAdminCollectionTablePageProps<TCollection>): JSX.Element => {
@@ -200,8 +198,6 @@ export const GeneralizedAdminCollectionTablePage = <
 									{rowData.map((cellData, cellIdx) => {
 										const firebaseProjectId =
 											process.env.NEXT_PUBLIC_CONFIG_FIREBASE_PROJECT_ID ?? '';
-										const firestoreCollectionId =
-											getFirestoreCollectionPath(collectionId);
 										const documentId = (
 											cellData.originalData as { _id: string }
 										)._id;
@@ -218,7 +214,7 @@ export const GeneralizedAdminCollectionTablePage = <
 														},
 												  })
 												: cellIdx === 1
-												? `https://console.firebase.google.com/project/${firebaseProjectId}/firestore/databases/-default-/data/~2F${firestoreCollectionId}~2F${documentId}`
+												? `https://console.firebase.google.com/project/${firebaseProjectId}/firestore/databases/-default-/data/~2F${apiResourceSpec.collectionId}~2F${documentId}`
 												: '';
 										const isReady = cellIdx === 0 || cellIdx === 1;
 										const target = cellIdx === 1 ? '_blank' : '_self';

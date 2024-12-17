@@ -40,9 +40,8 @@ export const GeneralizedAdminIndexPage = <TCollection extends string = string>({
 						<p className='text-white'>Firestore database (default)</p>
 					</div>
 					<div className={cn('p-2', 'flex flex-col space-y-2')}>
-						{Keys(idPrefixByCollection).map((collectionId, idx) => {
-							const { apiResourceCollectionIdPlural } =
-								getApiResourceSpec(collectionId);
+						{Keys(idPrefixByCollection).map((resourceName, idx) => {
+							const { collectionId } = getApiResourceSpec(resourceName);
 
 							return (
 								<div
@@ -50,7 +49,7 @@ export const GeneralizedAdminIndexPage = <TCollection extends string = string>({
 										'flex items-center justify-between w-full',
 										idx === 0 ? '' : 'border-t border-t-gray-200 pt-2',
 									)}
-									key={collectionId}
+									key={resourceName}
 								>
 									<div>
 										<Link
@@ -60,7 +59,7 @@ export const GeneralizedAdminIndexPage = <TCollection extends string = string>({
 												routeStaticId:
 													'ADMIN_WEB_APP__/COLLECTION/[COLLECTION_ID]/ALL',
 												queryParams: {
-													collection_id: collectionId,
+													collection_id: resourceName,
 												},
 											})}
 										>
@@ -70,7 +69,7 @@ export const GeneralizedAdminIndexPage = <TCollection extends string = string>({
 													'cursor-pointer hover:underline',
 												)}
 											>
-												{changeCase.capitalCase(apiResourceCollectionIdPlural)}
+												{changeCase.capitalCase(collectionId)}
 											</p>
 										</Link>
 									</div>
@@ -84,7 +83,7 @@ export const GeneralizedAdminIndexPage = <TCollection extends string = string>({
 													routeStaticId:
 														'ADMIN_WEB_APP__/COLLECTION/[COLLECTION_ID]/CREATE',
 													queryParams: {
-														collection_id: collectionId,
+														collection_id: resourceName,
 													},
 												})}
 											>
@@ -105,7 +104,7 @@ export const GeneralizedAdminIndexPage = <TCollection extends string = string>({
 													routeStaticId:
 														'ADMIN_WEB_APP__/COLLECTION/[COLLECTION_ID]/ALL',
 													queryParams: {
-														collection_id: collectionId,
+														collection_id: resourceName,
 													},
 												})}
 											>
