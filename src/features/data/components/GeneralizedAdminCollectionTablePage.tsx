@@ -4,6 +4,7 @@ import { getFieldSpecByFieldKey } from 'ergonomic';
 import Link from 'next/link';
 import { FieldValues } from 'react-hook-form';
 import { GoChevronLeft, GoPlus } from 'react-icons/go';
+import { FIREBASE_CONFIG } from '../../../config/firebaseConfig';
 import { AsyncLink } from '../../../components/custom-ui/async-link';
 import { ThemeSelect } from '../../../components/theme/ThemeSelect';
 import { Skeleton } from '../../../components/ui/skeleton';
@@ -196,8 +197,7 @@ export const GeneralizedAdminCollectionTablePage = <
 							return (
 								<TableRow key={rowIdx.toString()}>
 									{rowData.map((cellData, cellIdx) => {
-										const firebaseProjectId =
-											process.env.NEXT_PUBLIC_CONFIG_FIREBASE_PROJECT_ID ?? '';
+										const firebaseProjectId = FIREBASE_CONFIG.projectId ?? '';
 										const documentId = (
 											cellData.originalData as { _id: string }
 										)._id;
