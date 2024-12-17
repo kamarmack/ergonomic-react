@@ -21,7 +21,7 @@ import { GeneralizedTableCellProps } from '../types/GeneralizedTableCellProps';
 import { getGeneralizedFormFieldLabel } from '../utils/getGeneralizedFormFieldLabel';
 import { GeneralizedTableCell } from './GeneralizedTableCell';
 
-type RouteQueryParams = { collection_id?: string };
+type RouteQueryParams = { resource_name?: string };
 
 export type GeneralizedAdminCollectionTablePageProps<
 	TResourceName extends string = string,
@@ -52,12 +52,12 @@ export const GeneralizedAdminCollectionTablePage = <
 	const query = (router?.query as RouteQueryParams) ?? {};
 
 	// Router Query Param Values
-	const { collection_id } = query;
+	const { resource_name } = query;
 	const isValidCollection = (
 		value: string | undefined,
 	): value is TResourceName =>
 		value != null && Object.keys(idPrefixByCollection).includes(value);
-	const collectionId = isValidCollection(collection_id) ? collection_id : null;
+	const collectionId = isValidCollection(resource_name) ? resource_name : null;
 
 	// Data
 	const isPageQueryForReferenceCollectionEnabled = collectionId != null;
@@ -164,7 +164,7 @@ export const GeneralizedAdminCollectionTablePage = <
 								includeOrigin: false,
 								routeStaticId:
 									'ADMIN_WEB_APP__/COLLECTION/[COLLECTION_ID]/CREATE',
-								queryParams: { collection_id: collectionId },
+								queryParams: { resource_name: collectionId },
 							})}
 						>
 							<div className='mt-0.5'>
@@ -211,7 +211,7 @@ export const GeneralizedAdminCollectionTablePage = <
 														routeStaticId:
 															'ADMIN_WEB_APP__/COLLECTION/[COLLECTION_ID]/[DOCUMENT_ID]/EDIT',
 														queryParams: {
-															collection_id: collectionId,
+															resource_name: collectionId,
 															document_id: documentId,
 														},
 												  })

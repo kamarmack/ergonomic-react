@@ -7,7 +7,7 @@ import { useToast } from '../../../components/ui/use-toast';
 import { GeneralizedFormProps } from '../types/GeneralizedFormProps';
 import { GeneralizedFormSuspense, GeneralizedForm } from './GeneralizedForm';
 
-type RouteQueryParams = { collection_id?: string; document_id?: string };
+type RouteQueryParams = { resource_name?: string; document_id?: string };
 
 export type GeneralizedAdminUpdateOperationPageProps<
 	TResourceName extends string = string,
@@ -45,12 +45,12 @@ export const GeneralizedAdminUpdateOperationPage = <
 	const query = (router?.query as RouteQueryParams) ?? {};
 
 	// Router Query Param Values
-	const { collection_id, document_id } = query;
+	const { resource_name, document_id } = query;
 	const isValidCollection = (
 		value: string | undefined,
 	): value is TResourceName =>
 		value != null && Object.keys(idPrefixByCollection).includes(value);
-	const collectionId = isValidCollection(collection_id) ? collection_id : null;
+	const collectionId = isValidCollection(resource_name) ? resource_name : null;
 
 	// Data
 	const isPageQueryForReferenceCollectionEnabled =
@@ -80,7 +80,7 @@ export const GeneralizedAdminUpdateOperationPage = <
 		origin,
 		includeOrigin: false,
 		routeStaticId: 'ADMIN_WEB_APP__/COLLECTION/[COLLECTION_ID]/ALL',
-		queryParams: { collection_id },
+		queryParams: { resource_name },
 	});
 
 	// Data query hook for refetch
@@ -115,7 +115,7 @@ export const GeneralizedAdminUpdateOperationPage = <
 				</div>
 			</div>
 			<p className='font-light text-sm'>
-				The collection_id for this page is: {collectionId}
+				The resource_name for this page is: {collectionId}
 			</p>
 			<p className='font-light text-sm'>
 				The document_id for this page is: {document_id}

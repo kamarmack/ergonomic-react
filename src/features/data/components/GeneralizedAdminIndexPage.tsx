@@ -61,7 +61,7 @@ export const GeneralizedAdminIndexPage = <
 												routeStaticId:
 													'ADMIN_WEB_APP__/COLLECTION/[COLLECTION_ID]/ALL',
 												queryParams: {
-													collection_id: resourceName,
+													resource_name: resourceName,
 												},
 											})}
 										>
@@ -85,7 +85,7 @@ export const GeneralizedAdminIndexPage = <
 													routeStaticId:
 														'ADMIN_WEB_APP__/COLLECTION/[COLLECTION_ID]/CREATE',
 													queryParams: {
-														collection_id: resourceName,
+														resource_name: resourceName,
 													},
 												})}
 											>
@@ -106,7 +106,7 @@ export const GeneralizedAdminIndexPage = <
 													routeStaticId:
 														'ADMIN_WEB_APP__/COLLECTION/[COLLECTION_ID]/ALL',
 													queryParams: {
-														collection_id: resourceName,
+														resource_name: resourceName,
 													},
 												})}
 											>

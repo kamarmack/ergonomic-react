@@ -7,7 +7,7 @@ import { useToast } from '../../../components/ui/use-toast';
 import { GeneralizedFormProps } from '../types/GeneralizedFormProps';
 import { GeneralizedFormSuspense, GeneralizedForm } from './GeneralizedForm';
 
-type RouteQueryParams = { collection_id?: string };
+type RouteQueryParams = { resource_name?: string };
 
 export type GeneralizedAdminCreateOperationPageProps<
 	TResourceName extends string = string,
@@ -45,19 +45,19 @@ export const GeneralizedAdminCreateOperationPage = <
 	const query = (router?.query as RouteQueryParams) ?? {};
 
 	// Router Query Param Values
-	const { collection_id } = query;
+	const { resource_name } = query;
 	const isValidCollection = (
 		value: string | undefined,
 	): value is TResourceName =>
 		value != null && Object.keys(idPrefixByCollection).includes(value);
-	const collectionId = isValidCollection(collection_id) ? collection_id : null;
+	const collectionId = isValidCollection(resource_name) ? resource_name : null;
 
 	// Collection URL
 	const collectionHref = getAdminWebAppRoute({
 		origin,
 		includeOrigin: false,
 		routeStaticId: 'ADMIN_WEB_APP__/COLLECTION/[COLLECTION_ID]/ALL',
-		queryParams: { collection_id },
+		queryParams: { resource_name },
 	});
 
 	// Data query hook for refetch
@@ -83,7 +83,7 @@ export const GeneralizedAdminCreateOperationPage = <
 							origin,
 							includeOrigin: false,
 							routeStaticId: 'ADMIN_WEB_APP__/COLLECTION/[COLLECTION_ID]/ALL',
-							queryParams: { collection_id },
+							queryParams: { resource_name },
 						})}
 					>
 						<div className='mt-0.5'>
@@ -99,12 +99,12 @@ export const GeneralizedAdminCreateOperationPage = <
 				</div>
 			</div>
 			<p className='font-light text-sm'>
-				The collection_id for this page is: {collection_id}
+				The resource_name for this page is: {resource_name}
 			</p>
 			{collectionId != null && (
 				<div>
 					<p className='font-medium text-lg'>
-						Here's the JSON schema for the create params for the {collection_id}{' '}
+						Here's the JSON schema for the create params for the {resource_name}{' '}
 						collection:
 					</p>
 				</div>
