@@ -46,31 +46,33 @@ export const GeneralizedAdminCreateOperationPage = <
 
 	// Router Query Param Values
 	const { resource_name } = query;
-	const isValidCollection = (
+	const isValidResourceName = (
 		value: string | undefined,
 	): value is TResourceName =>
 		value != null && Object.keys(idPrefixByResourceName).includes(value);
-	const collectionId = isValidCollection(resource_name) ? resource_name : null;
+	const resourceName = isValidResourceName(resource_name)
+		? resource_name
+		: null;
 
-	// Collection URL
-	const collectionHref = getAdminWebAppRoute({
+	// Resource URL
+	const resourceHref = getAdminWebAppRoute({
 		origin,
 		includeOrigin: false,
-		routeStaticId: 'ADMIN_WEB_APP__/COLLECTION/[COLLECTION_ID]/ALL',
+		routeStaticId: 'ADMIN_WEB_APP__/RESOURCE/[RESOURCE_NAME]/ALL',
 		queryParams: { resource_name },
 	});
 
 	// Data query hook for refetch
-	const isPageQueryForReferenceCollectionEnabled = collectionId != null;
+	const isPageQueryForReferenceResourceEnabled = resourceName != null;
 	const pageQueryHookForResource = getPageQueryHookForResource(
-		isPageQueryForReferenceCollectionEnabled ? collectionId : null,
+		isPageQueryForReferenceResourceEnabled ? resourceName : null,
 	);
 	const { refetch: refetchDocumentPageData } = pageQueryHookForResource({
 		firestoreQueryOptions: {
 			pageSize: 300,
 			orderByClauses: [['_date_created', 'desc']],
 		},
-		reactQueryOptions: { enabled: isPageQueryForReferenceCollectionEnabled },
+		reactQueryOptions: { enabled: isPageQueryForReferenceResourceEnabled },
 	});
 
 	return (
@@ -82,7 +84,7 @@ export const GeneralizedAdminCreateOperationPage = <
 						href={getAdminWebAppRoute({
 							origin,
 							includeOrigin: false,
-							routeStaticId: 'ADMIN_WEB_APP__/COLLECTION/[COLLECTION_ID]/ALL',
+							routeStaticId: 'ADMIN_WEB_APP__/RESOURCE/[RESOURCE_NAME]/ALL',
 							queryParams: { resource_name },
 						})}
 					>
@@ -101,7 +103,7 @@ export const GeneralizedAdminCreateOperationPage = <
 			<p className='font-light text-sm'>
 				The resource_name for this page is: {resource_name}
 			</p>
-			{collectionId != null && (
+			{resourceName != null && (
 				<div>
 					<p className='font-medium text-lg'>
 						Here's the JSON schema for the create params for the {resource_name}{' '}
@@ -109,10 +111,10 @@ export const GeneralizedAdminCreateOperationPage = <
 					</p>
 				</div>
 			)}
-			{!collectionId && <GeneralizedFormSuspense />}
-			{collectionId != null && (
+			{!resourceName && <GeneralizedFormSuspense />}
+			{resourceName != null && (
 				<GeneralizedForm
-					collectionId={collectionId}
+					resourceName={resourceName}
 					getApiResourceSpec={getApiResourceSpec}
 					getCreateOperationMutationForResource={
 						getCreateOperationMutationForResource
@@ -130,7 +132,7 @@ export const GeneralizedAdminCreateOperationPage = <
 							title: 'Success',
 							description: 'Added a new record',
 						});
-						await router.push(collectionHref || '/');
+						await router.push(resourceHref || '/');
 					}}
 				/>
 			)}

@@ -19,7 +19,7 @@ export type GeneralizedFormFieldProps<
 	fieldKey: Path<TFieldValues>;
 	fieldSpec: GeneralizedFieldSpec;
 	getPageQueryHookForResource: (
-		collectionId: string | null,
+		resourceName: string | null,
 	) => (
 		options: GeneralizedUseQueryPageProps<GeneralizedApiResource>,
 	) => UseQueryResult<GeneralizedFirestoreCollectionPage, GeneralizedError>;

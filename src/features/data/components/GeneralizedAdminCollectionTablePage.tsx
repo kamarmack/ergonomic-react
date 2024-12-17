@@ -23,7 +23,7 @@ import { GeneralizedTableCell } from './GeneralizedTableCell';
 
 type RouteQueryParams = { resource_name?: string };
 
-export type GeneralizedAdminCollectionTablePageProps<
+export type GeneralizedAdminResourceTablePageProps<
 	TResourceName extends string = string,
 > = Pick<
 	GeneralizedFormProps<FieldValues, TResourceName>,
@@ -33,14 +33,14 @@ export type GeneralizedAdminCollectionTablePageProps<
 > & {
 	getAdminWebAppRoute: (options: unknown) => string;
 };
-export const GeneralizedAdminCollectionTablePage = <
+export const GeneralizedAdminResourceTablePage = <
 	TResourceName extends string = string,
 >({
 	getAdminWebAppRoute,
 	getApiResourceSpec,
 	getPageQueryHookForResource,
 	idPrefixByResourceName,
-}: GeneralizedAdminCollectionTablePageProps<TResourceName>): JSX.Element => {
+}: GeneralizedAdminResourceTablePageProps<TResourceName>): JSX.Element => {
 	// ==== Hooks ==== //
 
 	// Router
@@ -53,16 +53,18 @@ export const GeneralizedAdminCollectionTablePage = <
 
 	// Router Query Param Values
 	const { resource_name } = query;
-	const isValidCollection = (
+	const isValidResourceName = (
 		value: string | undefined,
 	): value is TResourceName =>
 		value != null && Object.keys(idPrefixByResourceName).includes(value);
-	const collectionId = isValidCollection(resource_name) ? resource_name : null;
+	const resourceName = isValidResourceName(resource_name)
+		? resource_name
+		: null;
 
 	// Data
-	const isPageQueryForReferenceCollectionEnabled = collectionId != null;
+	const isPageQueryForReferenceResourceEnabled = resourceName != null;
 	const pageQueryHookForResource = getPageQueryHookForResource(
-		isPageQueryForReferenceCollectionEnabled ? collectionId : null,
+		isPageQueryForReferenceResourceEnabled ? resourceName : null,
 	);
 	const { data: documentPageData, isLoading: isDocumentPageDataLoading } =
 		pageQueryHookForResource({
@@ -70,13 +72,13 @@ export const GeneralizedAdminCollectionTablePage = <
 				pageSize: 300,
 				orderByClauses: [['_date_created', 'desc']],
 			},
-			reactQueryOptions: { enabled: isPageQueryForReferenceCollectionEnabled },
+			reactQueryOptions: { enabled: isPageQueryForReferenceResourceEnabled },
 		});
 	const documentPage = documentPageData?.documents ?? [];
 
 	// API Resource Spec
-	const apiResourceSpec = collectionId
-		? getApiResourceSpec(collectionId)
+	const apiResourceSpec = resourceName
+		? getApiResourceSpec(resourceName)
 		: undefined;
 
 	// Field Spec by Field Key
@@ -87,7 +89,7 @@ export const GeneralizedAdminCollectionTablePage = <
 	const isApiResourceSpecInitialized =
 		Object.keys(fieldSpecByFieldKey).length > 0 && apiResourceSpec != null;
 	const isDocumentPageReady =
-		isPageQueryForReferenceCollectionEnabled &&
+		isPageQueryForReferenceResourceEnabled &&
 		!isDocumentPageDataLoading &&
 		isApiResourceSpecInitialized;
 	const unsortedFieldSpecEntries = Object.entries(fieldSpecByFieldKey);
@@ -111,7 +113,7 @@ export const GeneralizedAdminCollectionTablePage = <
 					([fieldKey, fieldSpec]): GeneralizedTableCellProps => {
 						const value = doc[fieldKey as keyof typeof doc];
 						const props: GeneralizedTableCellProps = {
-							_object: collectionId,
+							_object: resourceName,
 							fieldSpec,
 							idPrefixByResourceName,
 							originalData: doc,
@@ -163,8 +165,8 @@ export const GeneralizedAdminCollectionTablePage = <
 								origin,
 								includeOrigin: false,
 								routeStaticId:
-									'ADMIN_WEB_APP__/COLLECTION/[COLLECTION_ID]/CREATE',
-								queryParams: { resource_name: collectionId },
+									'ADMIN_WEB_APP__/RESOURCE/[RESOURCE_NAME]/CREATE',
+								queryParams: { resource_name: resourceName },
 							})}
 						>
 							<div className='mt-0.5'>
@@ -172,7 +174,7 @@ export const GeneralizedAdminCollectionTablePage = <
 							</div>
 							<div>
 								<p className='font-light text-sm'>
-									Add {changeCase.capitalCase(collectionId ?? '')}
+									Add {changeCase.capitalCase(resourceName ?? '')}
 								</p>
 							</div>
 						</Link>
@@ -183,7 +185,7 @@ export const GeneralizedAdminCollectionTablePage = <
 				</div>
 			</div>
 			<p className='font-light text-sm'>
-				Select {changeCase.capitalCase(collectionId ?? '')} to change
+				Select {changeCase.capitalCase(resourceName ?? '')} to change
 			</p>
 			<div className=''>
 				<Table className=''>
@@ -209,9 +211,9 @@ export const GeneralizedAdminCollectionTablePage = <
 														origin,
 														includeOrigin: false,
 														routeStaticId:
-															'ADMIN_WEB_APP__/COLLECTION/[COLLECTION_ID]/[DOCUMENT_ID]/EDIT',
+															'ADMIN_WEB_APP__/RESOURCE/[RESOURCE_NAME]/[DOCUMENT_ID]/EDIT',
 														queryParams: {
-															resource_name: collectionId,
+															resource_name: resourceName,
 															document_id: documentId,
 														},
 												  })

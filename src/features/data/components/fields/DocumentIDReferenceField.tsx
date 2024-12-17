@@ -18,7 +18,7 @@ import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps
  * @param {GeneralizedFormFieldProps<TFieldValues, TResourceName>} props - The properties for configuring the component.
  * @param {unknown} props.control - The control object from `react-hook-form` used to manage form state.
  * @param {string} props.fieldKey - The key for identifying the form field, passed to `useController`.
- * @param {object} props.fieldSpec - Additional specifications for the field, such as meta information about reference collections.
+ * @param {object} props.fieldSpec - Additional specifications for the field.
  * @param {Record<string, string>} props.idPrefixByResourceName - Map of resource names to their document ID prefixes.
  * @param {boolean} props.isSubmitting - Flag indicating if the form is currently submitting, disabling inputs when true.
  * @param {string} props.operation - The operation type for the form, either 'create' or 'update'.
@@ -27,8 +27,8 @@ import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps
  *
  * @description
  * The `DocumentIDReferenceField` component integrates with `react-hook-form` to manage a selection field that allows
- * users to reference document IDs from other collections. Depending on the `fieldSpec` metadata, it can support multiple
- * reference collections and enable multi-selection for ID references. If multiple reference collections are specified,
+ * users to reference document IDs from other resources. Depending on the `fieldSpec` metadata, it can support multiple
+ * reference resources and enable multi-selection for ID references. If multiple reference resources are specified,
  * a resource name selector appears for filtering document options. The component handles loading states with skeletons and
  * dynamically sets whether the field is required based on `fieldSpec` and `operation`.
  */
@@ -46,29 +46,27 @@ export const DocumentIDReferenceField = <
 	operation,
 }: GeneralizedFormFieldProps<TFieldValues, TResourceName>): JSX.Element => {
 	// Field variables
-	const { reference_collections = [], type } = fieldSpec?.meta || {};
+	const { resources = [], type } = fieldSpec?.meta || {};
 	const disabled = isSubmitting;
 	const isMulti = type === 'id_refs';
-	const acceptsMultipleDataTypes = reference_collections.length > 1;
+	const acceptsMultipleDataTypes = resources.length > 1;
 	const required = isFieldRequired({ fieldSpec, operation });
 
 	// Reference resource query logic
-	const [collectionIdForReference, seTResourceNameIdForReference] =
-		useState<TResourceName | null>(
-			(reference_collections as TResourceName[])[0] ?? null,
-		);
-	const isPageQueryForReferenceCollectionEnabled =
-		collectionIdForReference != null &&
-		!!idPrefixByResourceName[collectionIdForReference];
+	const [resourceNameForReference, setResourceNameIdForReference] =
+		useState<TResourceName | null>((resources as TResourceName[])[0] ?? null);
+	const isPageQueryForReferenceResourceEnabled =
+		resourceNameForReference != null &&
+		!!idPrefixByResourceName[resourceNameForReference];
 	const pageQueryHookForResource = getPageQueryHookForResource(
-		collectionIdForReference as
+		resourceNameForReference as
 			| Parameters<typeof getPageQueryHookForResource>[0]
 			| null,
 	);
 	const { data: documentPageData, isLoading: isDocumentPageDataLoading } =
 		pageQueryHookForResource({
 			firestoreQueryOptions: { pageSize: 300 },
-			reactQueryOptions: { enabled: isPageQueryForReferenceCollectionEnabled },
+			reactQueryOptions: { enabled: isPageQueryForReferenceResourceEnabled },
 		});
 	const documentPage = documentPageData?.documents ?? [];
 	const documentPageOptions = (
@@ -171,24 +169,24 @@ export const DocumentIDReferenceField = <
 
 	return (
 		<div className='flex items-start space-x-2 w-full'>
-			{/* Collection selector (not present if there is only one option in `reference_collections`) */}
+			{/* Resource selector (not present if there is only one option in `resources`) */}
 			{acceptsMultipleDataTypes && (
 				<div className='flex-1'>
 					<div>
-						<p>Data Type</p>
+						<p>Resource Type</p>
 					</div>
 					<select
 						className='block w-full p-2 border rounded-md bg-white'
-						defaultValue={collectionIdForReference ?? ''}
+						defaultValue={resourceNameForReference ?? ''}
 						disabled={disabled}
 						onChange={(e) =>
-							seTResourceNameIdForReference(e.target.value as TResourceName)
+							setResourceNameIdForReference(e.target.value as TResourceName)
 						}
 					>
 						<option disabled value=''>
 							Select one
 						</option>
-						{reference_collections.map((option) => {
+						{resources.map((option) => {
 							return (
 								<option key={option} value={option}>
 									{changeCase.sentenceCase(option)}

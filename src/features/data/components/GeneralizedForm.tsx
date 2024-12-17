@@ -42,7 +42,6 @@ export const GeneralizedForm = <
 	TFieldValues extends FieldValues = FieldValues,
 	TResourceName extends string = string,
 >({
-	collectionId,
 	getApiResourceSpec,
 	getCreateOperationMutationForResource,
 	getPageQueryHookForResource,
@@ -50,13 +49,14 @@ export const GeneralizedForm = <
 	idPrefixByResourceName,
 	onMutationSuccess: onSuccess,
 	operation,
+	resourceName,
 	updateProps,
 }: GeneralizedFormProps<TFieldValues, TResourceName>): JSX.Element => {
 	const { toast } = useToast();
 
 	// API Resource Spec
-	const apiResourceSpec = collectionId
-		? getApiResourceSpec(collectionId)
+	const apiResourceSpec = resourceName
+		? getApiResourceSpec(resourceName)
 		: undefined;
 
 	// Field Spec by Field Key
@@ -134,10 +134,10 @@ export const GeneralizedForm = <
 	});
 
 	// Create Operation Mutation
-	const isCreateOperationMutationForResourceEnabled = collectionId != null;
+	const isCreateOperationMutationForResourceEnabled = resourceName != null;
 	const createOperationMutationForResource =
 		isCreateOperationMutationForResourceEnabled
-			? getCreateOperationMutationForResource(collectionId)
+			? getCreateOperationMutationForResource(resourceName)
 			: () => ({ isLoading: false, mutate: (_data: unknown) => void 0 });
 	const {
 		isLoading: isCreateOperationLoading,
@@ -181,23 +181,15 @@ export const GeneralizedForm = <
 
 	// Update Operation Mutation
 	const isUpdateOperationMutationForResourceEnabled =
-		collectionId != null && updateProps?.documentId != null;
+		resourceName != null && updateProps?.documentId != null;
 	const updateOperationMutationForResource =
 		isUpdateOperationMutationForResourceEnabled
-			? getUpdateOperationMutationForResource(collectionId)
+			? getUpdateOperationMutationForResource(resourceName)
 			: () => ({ isLoading: false, mutate: (_data: unknown) => void 0 });
 	const {
 		isLoading: isUpdateOperationLoading,
 		mutate: updateOperationMutation,
 	} = updateOperationMutationForResource({
-		// onSuccess: async () => {
-		// 	toast({
-		// 		title: 'Success',
-		// 		description: 'Updated record',
-		// 	});
-		// 	await router.push(collectionHref || '/');
-		// 	onMutationSuccess();
-		// },
 		onSuccess,
 		onError: ({ error }) => {
 			const message =
@@ -325,7 +317,7 @@ export const GeneralizedForm = <
 				{Object.entries(fieldSpecByFieldKey).map(([fieldKey, fieldSpec]) => (
 					<div key={fieldKey}>
 						<GeneralizedFormFieldContainer
-							_object={collectionId}
+							_object={resourceName}
 							control={control}
 							fieldErrors={fieldErrors}
 							fieldKey={fieldKey as Path<TFieldValues>}

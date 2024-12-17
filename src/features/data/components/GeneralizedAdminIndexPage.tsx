@@ -43,7 +43,7 @@ export const GeneralizedAdminIndexPage = <
 					</div>
 					<div className={cn('p-2', 'flex flex-col space-y-2')}>
 						{Keys(idPrefixByResourceName).map((resourceName, idx) => {
-							const { collectionId } = getApiResourceSpec(resourceName);
+							const apiResourceSpec = getApiResourceSpec(resourceName);
 
 							return (
 								<div
@@ -59,7 +59,7 @@ export const GeneralizedAdminIndexPage = <
 												origin,
 												includeOrigin: false,
 												routeStaticId:
-													'ADMIN_WEB_APP__/COLLECTION/[COLLECTION_ID]/ALL',
+													'ADMIN_WEB_APP__/RESOURCE/[RESOURCE_NAME]/ALL',
 												queryParams: {
 													resource_name: resourceName,
 												},
@@ -71,7 +71,9 @@ export const GeneralizedAdminIndexPage = <
 													'cursor-pointer hover:underline',
 												)}
 											>
-												{changeCase.capitalCase(collectionId)}
+												{changeCase.capitalCase(
+													apiResourceSpec.apiResourceNamePlural,
+												)}
 											</p>
 										</Link>
 									</div>
@@ -83,7 +85,7 @@ export const GeneralizedAdminIndexPage = <
 													origin,
 													includeOrigin: false,
 													routeStaticId:
-														'ADMIN_WEB_APP__/COLLECTION/[COLLECTION_ID]/CREATE',
+														'ADMIN_WEB_APP__/RESOURCE/[RESOURCE_NAME]/CREATE',
 													queryParams: {
 														resource_name: resourceName,
 													},
@@ -104,7 +106,7 @@ export const GeneralizedAdminIndexPage = <
 													origin,
 													includeOrigin: false,
 													routeStaticId:
-														'ADMIN_WEB_APP__/COLLECTION/[COLLECTION_ID]/ALL',
+														'ADMIN_WEB_APP__/RESOURCE/[RESOURCE_NAME]/ALL',
 													queryParams: {
 														resource_name: resourceName,
 													},

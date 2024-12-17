@@ -5,17 +5,15 @@ import { DefaultCell } from './DefaultCell';
 export const DocumentIDReferenceCell = (
 	props: GeneralizedTableCellProps,
 ): JSX.Element => {
-	const { reference_collections = [], type } = props.fieldSpec?.meta || {};
+	const { resources = [], type } = props.fieldSpec?.meta || {};
 	const isMulti = type === 'id_refs';
-	const collections = Object.keys(props.idPrefixByResourceName);
+	const allResourceNames = Object.keys(props.idPrefixByResourceName);
 	const apiYupHelpers = getApiResourceYupHelpers(
-		collections,
+		allResourceNames,
 		props.idPrefixByResourceName,
 	);
 	const isValueValid = (value: unknown) =>
-		reference_collections.some((_object) =>
-			apiYupHelpers.id(_object).isValidSync(value),
-		);
+		resources.some((_object) => apiYupHelpers.id(_object).isValidSync(value));
 
 	return (
 		<DefaultCell

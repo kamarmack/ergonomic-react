@@ -46,17 +46,19 @@ export const GeneralizedAdminUpdateOperationPage = <
 
 	// Router Query Param Values
 	const { resource_name, document_id } = query;
-	const isValidCollection = (
+	const isValidResourceName = (
 		value: string | undefined,
 	): value is TResourceName =>
 		value != null && Object.keys(idPrefixByResourceName).includes(value);
-	const collectionId = isValidCollection(resource_name) ? resource_name : null;
+	const resourceName = isValidResourceName(resource_name)
+		? resource_name
+		: null;
 
 	// Data
-	const isPageQueryForReferenceCollectionEnabled =
-		collectionId != null && document_id != null;
+	const isPageQueryForReferenceResourceEnabled =
+		resourceName != null && document_id != null;
 	const pageQueryHookForResource = getPageQueryHookForResource(
-		isPageQueryForReferenceCollectionEnabled ? collectionId : null,
+		isPageQueryForReferenceResourceEnabled ? resourceName : null,
 	);
 	const {
 		data: documentPageData,
@@ -66,20 +68,20 @@ export const GeneralizedAdminUpdateOperationPage = <
 		firestoreQueryOptions: {
 			whereClauses: [['_id', '==', document_id]],
 		},
-		reactQueryOptions: { enabled: isPageQueryForReferenceCollectionEnabled },
+		reactQueryOptions: { enabled: isPageQueryForReferenceResourceEnabled },
 	});
 	const documentPage = documentPageData?.documents ?? [];
 	const documentData = documentPage[0] ?? null;
 	const isDocumentReady =
-		isPageQueryForReferenceCollectionEnabled &&
+		isPageQueryForReferenceResourceEnabled &&
 		!isDocumentPageDataLoading &&
 		documentData !== null;
 
-	// Collection URL
-	const collectionHref = getAdminWebAppRoute({
+	// Resource URL
+	const resourceHref = getAdminWebAppRoute({
 		origin,
 		includeOrigin: false,
-		routeStaticId: 'ADMIN_WEB_APP__/COLLECTION/[COLLECTION_ID]/ALL',
+		routeStaticId: 'ADMIN_WEB_APP__/RESOURCE/[RESOURCE_NAME]/ALL',
 		queryParams: { resource_name },
 	});
 
@@ -89,7 +91,7 @@ export const GeneralizedAdminUpdateOperationPage = <
 			pageSize: 300,
 			orderByClauses: [['_date_created', 'desc']],
 		},
-		reactQueryOptions: { enabled: isPageQueryForReferenceCollectionEnabled },
+		reactQueryOptions: { enabled: isPageQueryForReferenceResourceEnabled },
 	});
 
 	// Suspense loading state
@@ -101,7 +103,7 @@ export const GeneralizedAdminUpdateOperationPage = <
 		<div className='p-4'>
 			<div className='flex items-center justify-between'>
 				<div>
-					<Link className='flex space-x-0.5' href={collectionHref}>
+					<Link className='flex space-x-0.5' href={resourceHref}>
 						<div className='mt-0.5'>
 							<GoChevronLeft className='text-green-800' />
 						</div>
@@ -115,13 +117,13 @@ export const GeneralizedAdminUpdateOperationPage = <
 				</div>
 			</div>
 			<p className='font-light text-sm'>
-				The resource_name for this page is: {collectionId}
+				The resource_name for this page is: {resourceName}
 			</p>
 			<p className='font-light text-sm'>
 				The document_id for this page is: {document_id}
 			</p>
 			<GeneralizedForm
-				collectionId={collectionId}
+				resourceName={resourceName}
 				getApiResourceSpec={getApiResourceSpec}
 				getCreateOperationMutationForResource={
 					getCreateOperationMutationForResource
@@ -143,7 +145,7 @@ export const GeneralizedAdminUpdateOperationPage = <
 						title: 'Success',
 						description: 'Updated record',
 					});
-					await router.push(collectionHref || '/');
+					await router.push(resourceHref || '/');
 				}}
 			/>
 		</div>
