@@ -9,7 +9,7 @@ import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps
  * UsdField component renders an input field for handling currency values, formatted in USD cents.
  *
  * @template TFieldValues - The type representing all form field values.
- * @template TResourceName - TResourceName parameter is a string union of the Document Database Collection IDs.
+ * @template TResourceName - TResourceName parameter is a string union of the API resource names.
  * @param {GeneralizedFormFieldProps<TFieldValues, TResourceName>} props - The properties for configuring the component.
  * @param {unknown} props.control - The control object from `react-hook-form` used to manage form state.
  * @param {string} props.fieldKey - The key for identifying the form field, passed to `useController`.

@@ -18,7 +18,7 @@ import { GoPlus, GoXCircle } from 'react-icons/go';
  * suitable for managing lists within a form, such as file paths or simple text values.
  *
  * @template TFieldValues - The type representing all form field values.
- * @template TResourceName - TResourceName parameter is a string union of the Document Database Collection IDs.
+ * @template TResourceName - TResourceName parameter is a string union of the API resource names.
  * @param {GeneralizedFormFieldProps<TFieldValues, TResourceName>} props - The properties for configuring the component.
  * @param {unknown} props.control - The control object from `react-hook-form` used to manage form state.
  * @param {object} props.fieldErrors - Error messages for specific list items.

@@ -7,13 +7,13 @@ import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps
 /**
  * DocumentIDField component renders an input field with a button to generate a new unique document ID.
  *
- * @template TFieldValues - The shape of the form field values extending from FieldValues.
- * @template TResourceName - The string type comprising all possible collection names.
+ * @template TFieldValues - The type representing all form field values.
+ * @template TResourceName - TResourceName parameter is a string union of the API resource names.
  * @param {GeneralizedFormFieldProps<T>} props - The properties for configuring the component.
- * @param {TResourceName} props._object - Specifies the collection.
+ * @param {TResourceName} props._object - Specifies the resource name.
  * @param {unknown} props.control - The control object from `react-hook-form` used to manage the form state.
  * @param {string} props.fieldKey - The key for identifying the form field, passed to `useController`.
- * @param {Record<TResourceName, string>} props.idPrefixByCollection - A map of document ID prefixes for each collection.
+ * @param {Record<TResourceName, string>} props.idPrefixByCollection - A map of document ID prefixes for each resource name.
  * @param {boolean} props.isSubmitting - Flag indicating if the form is currently submitting, disabling inputs when true.
  * @param {string} props.operation - The operation type for the form, either 'create' or 'update'.
  *

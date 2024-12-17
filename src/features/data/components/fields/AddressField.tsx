@@ -9,7 +9,7 @@ import { getGeneralizedFormFieldLabel as getLabel } from '../../utils/getGeneral
  * specifically supporting address line 1, address line 2, city, state, country, and postal code fields within a form.
  *
  * @template TFieldValues - The type representing all form field values.
- * @template TResourceName - The collection name or identifier for namespacing form fields.
+ * @template TResourceName - TResourceName parameter is a string union of the API resource names.
  * @param {GeneralizedFormFieldProps<TFieldValues, TResourceName>} props - The properties for configuring the component.
  * @param {unknown} props.control - The control object from `react-hook-form` for managing form state.
  * @param {string} props.fieldKey - The name of the form field, passed to `useController`.

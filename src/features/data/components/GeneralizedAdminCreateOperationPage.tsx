@@ -105,7 +105,7 @@ export const GeneralizedAdminCreateOperationPage = <
 				<div>
 					<p className='font-medium text-lg'>
 						Here's the JSON schema for the create params for the {resource_name}{' '}
-						collection:
+						resource:
 					</p>
 				</div>
 			)}

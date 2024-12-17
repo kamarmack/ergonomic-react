@@ -9,7 +9,7 @@ import { handleUrlFieldBlur } from '../../utils/handleUrlFieldBlur';
  * UrlField component renders an input field for handling URL values, with optional guidance for file storage paths.
  *
  * @template TFieldValues - The type representing all form field values.
- * @template TResourceName - TResourceName parameter is a string union of the Document Database Collection IDs.
+ * @template TResourceName - TResourceName parameter is a string union of the API resource names.
  * @param {GeneralizedFormFieldProps<TFieldValues, TResourceName>} props - The properties for configuring the component.
  * @param {unknown} props.control - The control object from `react-hook-form` used to manage form state.
  * @param {string} props.fieldKey - The key for identifying the form field, passed to `useController`.

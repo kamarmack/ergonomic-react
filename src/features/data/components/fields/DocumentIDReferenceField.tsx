@@ -10,16 +10,16 @@ import { FieldValues, useController } from 'react-hook-form';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
 
 /**
- * DocumentIDReferenceField component renders a selector for referencing document IDs within a specific collection,
+ * DocumentIDReferenceField component renders a selector for referencing document IDs for a specific resource,
  * supporting multiple data types and multi-selection.
  *
  * @template TFieldValues - The type representing all form field values.
- * @template TResourceName - TResourceName parameter is a string union of the Document Database Collection IDs.
+ * @template TResourceName - TResourceName parameter is a string union of the API resource names.
  * @param {GeneralizedFormFieldProps<TFieldValues, TResourceName>} props - The properties for configuring the component.
  * @param {unknown} props.control - The control object from `react-hook-form` used to manage form state.
  * @param {string} props.fieldKey - The key for identifying the form field, passed to `useController`.
  * @param {object} props.fieldSpec - Additional specifications for the field, such as meta information about reference collections.
- * @param {Record<string, string>} props.idPrefixByCollection - Map of collection IDs to their document ID prefixes.
+ * @param {Record<string, string>} props.idPrefixByCollection - Map of resource names to their document ID prefixes.
  * @param {boolean} props.isSubmitting - Flag indicating if the form is currently submitting, disabling inputs when true.
  * @param {string} props.operation - The operation type for the form, either 'create' or 'update'.
  *
@@ -29,7 +29,7 @@ import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps
  * The `DocumentIDReferenceField` component integrates with `react-hook-form` to manage a selection field that allows
  * users to reference document IDs from other collections. Depending on the `fieldSpec` metadata, it can support multiple
  * reference collections and enable multi-selection for ID references. If multiple reference collections are specified,
- * a collection selector appears for filtering document options. The component handles loading states with skeletons and
+ * a resource name selector appears for filtering document options. The component handles loading states with skeletons and
  * dynamically sets whether the field is required based on `fieldSpec` and `operation`.
  */
 export const DocumentIDReferenceField = <
@@ -52,7 +52,7 @@ export const DocumentIDReferenceField = <
 	const acceptsMultipleDataTypes = reference_collections.length > 1;
 	const required = isFieldRequired({ fieldSpec, operation });
 
-	// Reference collection query logic
+	// Reference resource query logic
 	const [collectionIdForReference, seTResourceNameIdForReference] =
 		useState<TResourceName | null>(
 			(reference_collections as TResourceName[])[0] ?? null,
