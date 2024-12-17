@@ -24,9 +24,9 @@ import { GeneralizedTableCell } from './GeneralizedTableCell';
 type RouteQueryParams = { collection_id?: string };
 
 export type GeneralizedAdminCollectionTablePageProps<
-	TCollection extends string = string,
+	TResourceName extends string = string,
 > = Pick<
-	GeneralizedFormProps<FieldValues, TCollection>,
+	GeneralizedFormProps<FieldValues, TResourceName>,
 	| 'getApiResourceSpec'
 	| 'getPageQueryHookForCollection'
 	| 'idPrefixByCollection'
@@ -34,13 +34,13 @@ export type GeneralizedAdminCollectionTablePageProps<
 	getAdminWebAppRoute: (options: unknown) => string;
 };
 export const GeneralizedAdminCollectionTablePage = <
-	TCollection extends string = string,
+	TResourceName extends string = string,
 >({
 	getAdminWebAppRoute,
 	getApiResourceSpec,
 	getPageQueryHookForCollection,
 	idPrefixByCollection,
-}: GeneralizedAdminCollectionTablePageProps<TCollection>): JSX.Element => {
+}: GeneralizedAdminCollectionTablePageProps<TResourceName>): JSX.Element => {
 	// ==== Hooks ==== //
 
 	// Router
@@ -53,7 +53,9 @@ export const GeneralizedAdminCollectionTablePage = <
 
 	// Router Query Param Values
 	const { collection_id } = query;
-	const isValidCollection = (value: string | undefined): value is TCollection =>
+	const isValidCollection = (
+		value: string | undefined,
+	): value is TResourceName =>
 		value != null && Object.keys(idPrefixByCollection).includes(value);
 	const collectionId = isValidCollection(collection_id) ? collection_id : null;
 

@@ -8,12 +8,12 @@ import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps
  * DocumentIDField component renders an input field with a button to generate a new unique document ID.
  *
  * @template TFieldValues - The shape of the form field values extending from FieldValues.
- * @template TCollection - The string type comprising all possible collection names.
+ * @template TResourceName - The string type comprising all possible collection names.
  * @param {GeneralizedFormFieldProps<T>} props - The properties for configuring the component.
- * @param {TCollection} props._object - Specifies the collection.
+ * @param {TResourceName} props._object - Specifies the collection.
  * @param {unknown} props.control - The control object from `react-hook-form` used to manage the form state.
  * @param {string} props.fieldKey - The key for identifying the form field, passed to `useController`.
- * @param {Record<TCollection, string>} props.idPrefixByCollection - A map of document ID prefixes for each collection.
+ * @param {Record<TResourceName, string>} props.idPrefixByCollection - A map of document ID prefixes for each collection.
  * @param {boolean} props.isSubmitting - Flag indicating if the form is currently submitting, disabling inputs when true.
  * @param {string} props.operation - The operation type for the form, either 'create' or 'update'.
  *
@@ -27,7 +27,7 @@ import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps
  */
 export const DocumentIDField = <
 	TFieldValues extends FieldValues = FieldValues,
-	TCollection extends string = string,
+	TResourceName extends string = string,
 >({
 	_object,
 	control,
@@ -35,7 +35,7 @@ export const DocumentIDField = <
 	idPrefixByCollection,
 	isSubmitting,
 	operation,
-}: GeneralizedFormFieldProps<TFieldValues, TCollection>): JSX.Element => {
+}: GeneralizedFormFieldProps<TFieldValues, TResourceName>): JSX.Element => {
 	const disabled = isSubmitting || operation === 'update';
 	const { field } = useController({
 		control,

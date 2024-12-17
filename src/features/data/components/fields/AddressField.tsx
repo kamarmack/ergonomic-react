@@ -9,8 +9,8 @@ import { getGeneralizedFormFieldLabel as getLabel } from '../../utils/getGeneral
  * specifically supporting address line 1, address line 2, city, state, country, and postal code fields within a form.
  *
  * @template TFieldValues - The type representing all form field values.
- * @template TCollection - The collection name or identifier for namespacing form fields.
- * @param {GeneralizedFormFieldProps<TFieldValues, TCollection>} props - The properties for configuring the component.
+ * @template TResourceName - The collection name or identifier for namespacing form fields.
+ * @param {GeneralizedFormFieldProps<TFieldValues, TResourceName>} props - The properties for configuring the component.
  * @param {unknown} props.control - The control object from `react-hook-form` for managing form state.
  * @param {string} props.fieldKey - The name of the form field, passed to `useController`.
  * @param {object} props.fieldSpec - Additional specifications for the field, such as default values.
@@ -27,14 +27,14 @@ import { getGeneralizedFormFieldLabel as getLabel } from '../../utils/getGeneral
  */
 export const AddressField = <
 	TFieldValues extends FieldValues = FieldValues,
-	TCollection extends string = string,
+	TResourceName extends string = string,
 >({
 	control,
 	fieldKey: name,
 	fieldSpec,
 	isSubmitting,
 	operation,
-}: GeneralizedFormFieldProps<TFieldValues, TCollection>): JSX.Element => {
+}: GeneralizedFormFieldProps<TFieldValues, TResourceName>): JSX.Element => {
 	const disabled = isSubmitting;
 	const { field } = useController({
 		control,

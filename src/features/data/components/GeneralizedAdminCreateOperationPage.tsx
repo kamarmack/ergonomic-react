@@ -10,9 +10,9 @@ import { GeneralizedFormSuspense, GeneralizedForm } from './GeneralizedForm';
 type RouteQueryParams = { collection_id?: string };
 
 export type GeneralizedAdminCreateOperationPageProps<
-	TCollection extends string = string,
+	TResourceName extends string = string,
 > = Pick<
-	GeneralizedFormProps<FieldValues, TCollection>,
+	GeneralizedFormProps<FieldValues, TResourceName>,
 	| 'getApiResourceSpec'
 	| 'getCreateOperationMutationForCollection'
 	| 'getPageQueryHookForCollection'
@@ -22,7 +22,7 @@ export type GeneralizedAdminCreateOperationPageProps<
 	getAdminWebAppRoute: (options: unknown) => string;
 };
 export const GeneralizedAdminCreateOperationPage = <
-	TCollection extends string = string,
+	TResourceName extends string = string,
 >({
 	getAdminWebAppRoute,
 	getApiResourceSpec,
@@ -30,7 +30,7 @@ export const GeneralizedAdminCreateOperationPage = <
 	getPageQueryHookForCollection,
 	getUpdateOperationMutationForCollection,
 	idPrefixByCollection,
-}: GeneralizedAdminCreateOperationPageProps<TCollection>): JSX.Element => {
+}: GeneralizedAdminCreateOperationPageProps<TResourceName>): JSX.Element => {
 	// ==== Hooks ==== //
 
 	// Router
@@ -46,7 +46,9 @@ export const GeneralizedAdminCreateOperationPage = <
 
 	// Router Query Param Values
 	const { collection_id } = query;
-	const isValidCollection = (value: string | undefined): value is TCollection =>
+	const isValidCollection = (
+		value: string | undefined,
+	): value is TResourceName =>
 		value != null && Object.keys(idPrefixByCollection).includes(value);
 	const collectionId = isValidCollection(collection_id) ? collection_id : null;
 

@@ -14,8 +14,8 @@ import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps
  * supporting multiple data types and multi-selection.
  *
  * @template TFieldValues - The type representing all form field values.
- * @template TCollection - TCollection parameter is a string union of the Document Database Collection IDs.
- * @param {GeneralizedFormFieldProps<TFieldValues, TCollection>} props - The properties for configuring the component.
+ * @template TResourceName - TResourceName parameter is a string union of the Document Database Collection IDs.
+ * @param {GeneralizedFormFieldProps<TFieldValues, TResourceName>} props - The properties for configuring the component.
  * @param {unknown} props.control - The control object from `react-hook-form` used to manage form state.
  * @param {string} props.fieldKey - The key for identifying the form field, passed to `useController`.
  * @param {object} props.fieldSpec - Additional specifications for the field, such as meta information about reference collections.
@@ -34,7 +34,7 @@ import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps
  */
 export const DocumentIDReferenceField = <
 	TFieldValues extends FieldValues = FieldValues,
-	TCollection extends string = string,
+	TResourceName extends string = string,
 >({
 	control,
 	fieldKey: name,
@@ -44,7 +44,7 @@ export const DocumentIDReferenceField = <
 	initialFormData,
 	isSubmitting,
 	operation,
-}: GeneralizedFormFieldProps<TFieldValues, TCollection>): JSX.Element => {
+}: GeneralizedFormFieldProps<TFieldValues, TResourceName>): JSX.Element => {
 	// Field variables
 	const { reference_collections = [], type } = fieldSpec?.meta || {};
 	const disabled = isSubmitting;
@@ -53,9 +53,9 @@ export const DocumentIDReferenceField = <
 	const required = isFieldRequired({ fieldSpec, operation });
 
 	// Reference collection query logic
-	const [collectionIdForReference, setCollectionIdForReference] =
-		useState<TCollection | null>(
-			(reference_collections as TCollection[])[0] ?? null,
+	const [collectionIdForReference, seTResourceNameIdForReference] =
+		useState<TResourceName | null>(
+			(reference_collections as TResourceName[])[0] ?? null,
 		);
 	const isPageQueryForReferenceCollectionEnabled =
 		collectionIdForReference != null &&
@@ -182,7 +182,7 @@ export const DocumentIDReferenceField = <
 						defaultValue={collectionIdForReference ?? ''}
 						disabled={disabled}
 						onChange={(e) =>
-							setCollectionIdForReference(e.target.value as TCollection)
+							seTResourceNameIdForReference(e.target.value as TResourceName)
 						}
 					>
 						<option disabled value=''>

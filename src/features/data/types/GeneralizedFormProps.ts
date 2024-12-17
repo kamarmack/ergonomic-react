@@ -14,12 +14,14 @@ import { GeneralizedFirestoreCollectionPage } from '../utils/generalizedFirestor
 
 export type GeneralizedFormProps<
 	TFieldValues extends FieldValues = FieldValues,
-	TCollection extends string = string,
+	TResourceName extends string = string,
 > = {
-	collectionId: TCollection;
-	getApiResourceSpec: (collectionId: TCollection) => GeneralizedApiResourceSpec;
+	collectionId: TResourceName;
+	getApiResourceSpec: (
+		collectionId: TResourceName,
+	) => GeneralizedApiResourceSpec;
 	getCreateOperationMutationForCollection: (
-		collectionId: TCollection,
+		collectionId: TResourceName,
 	) => (
 		options: UseMutationOptions<unknown, GeneralizedError>,
 	) => UseMutationResult;
@@ -29,11 +31,11 @@ export type GeneralizedFormProps<
 		options: GeneralizedUseQueryPageProps<GeneralizedApiResource>,
 	) => UseQueryResult<GeneralizedFirestoreCollectionPage, GeneralizedError>;
 	getUpdateOperationMutationForCollection: (
-		collectionId: TCollection,
+		collectionId: TResourceName,
 	) => (
 		options: UseMutationOptions<unknown, GeneralizedError>,
 	) => UseMutationResult;
-	idPrefixByCollection: Record<TCollection, string>;
+	idPrefixByCollection: Record<TResourceName, string>;
 	onMutationSuccess: () => Promise<void>;
 	operation: 'create' | 'update';
 	updateProps: {

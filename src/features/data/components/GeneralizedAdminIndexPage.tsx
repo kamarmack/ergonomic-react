@@ -7,18 +7,20 @@ import cn from '../../../lib/cn';
 import { GeneralizedFormProps } from '../types/GeneralizedFormProps';
 
 export type GeneralizedAdminIndexPageProps<
-	TCollection extends string = string,
+	TResourceName extends string = string,
 > = Pick<
-	GeneralizedFormProps<FieldValues, TCollection>,
+	GeneralizedFormProps<FieldValues, TResourceName>,
 	'getApiResourceSpec' | 'idPrefixByCollection'
 > & {
 	getAdminWebAppRoute: (options: unknown) => string;
 };
-export const GeneralizedAdminIndexPage = <TCollection extends string = string>({
+export const GeneralizedAdminIndexPage = <
+	TResourceName extends string = string,
+>({
 	getAdminWebAppRoute,
 	getApiResourceSpec,
 	idPrefixByCollection,
-}: GeneralizedAdminIndexPageProps<TCollection>): JSX.Element => {
+}: GeneralizedAdminIndexPageProps<TResourceName>): JSX.Element => {
 	return (
 		<>
 			<div

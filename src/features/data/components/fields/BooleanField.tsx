@@ -6,8 +6,8 @@ import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps
  * BooleanField component renders a checkbox input for handling boolean values within a form.
  *
  * @template TFieldValues - The type representing all form field values.
- * @template TCollection - TCollection parameter is a string union of the Document Database Collection IDs.
- * @param {GeneralizedFormFieldProps<TFieldValues, TCollection>} props - The properties for configuring the component.
+ * @template TResourceName - TResourceName parameter is a string union of the Document Database Collection IDs.
+ * @param {GeneralizedFormFieldProps<TFieldValues, TResourceName>} props - The properties for configuring the component.
  * @param {unknown} props.control - The control object from `react-hook-form` used to manage form state.
  * @param {string} props.fieldKey - The key for identifying the form field, passed to `useController`.
  * @param {boolean} props.isSubmitting - Flag indicating if the form is currently submitting, disabling inputs when true.
@@ -20,12 +20,12 @@ import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps
  */
 export const BooleanField = <
 	TFieldValues extends FieldValues = FieldValues,
-	TCollection extends string = string,
+	TResourceName extends string = string,
 >({
 	control,
 	fieldKey: name,
 	isSubmitting,
-}: GeneralizedFormFieldProps<TFieldValues, TCollection>): JSX.Element => {
+}: GeneralizedFormFieldProps<TFieldValues, TResourceName>): JSX.Element => {
 	const disabled = isSubmitting;
 	const { field } = useController({
 		control,

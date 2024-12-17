@@ -11,9 +11,9 @@ import { GeneralizedFirestoreCollectionPage } from '../utils/generalizedFirestor
 
 export type GeneralizedFormFieldProps<
 	TFieldValues extends FieldValues = FieldValues,
-	TCollection extends string = string,
+	TResourceName extends string = string,
 > = {
-	_object: TCollection;
+	_object: TResourceName;
 	control: Control<TFieldValues, unknown>;
 	fieldErrors: GeneralizedFormFieldErrors<TFieldValues>;
 	fieldKey: Path<TFieldValues>;
@@ -23,7 +23,7 @@ export type GeneralizedFormFieldProps<
 	) => (
 		options: GeneralizedUseQueryPageProps<GeneralizedApiResource>,
 	) => UseQueryResult<GeneralizedFirestoreCollectionPage, GeneralizedError>;
-	idPrefixByCollection: Record<TCollection, string>;
+	idPrefixByCollection: Record<TResourceName, string>;
 	initialFormData: FieldValues | null;
 	isSubmitting: boolean;
 	operation: 'create' | 'update';

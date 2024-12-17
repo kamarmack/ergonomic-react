@@ -12,8 +12,8 @@ import { handleUnitedStatesPhoneNumberFieldKeyUp } from '../../utils/handleUnite
  * UnitedStatesPhoneNumberField component renders an input field for handling phone numbers with a country code selector.
  *
  * @template TFieldValues - The type representing all form field values.
- * @template TCollection - TCollection parameter is a string union of the Document Database Collection IDs.
- * @param {GeneralizedFormFieldProps<TFieldValues, TCollection>} props - The properties for configuring the component.
+ * @template TResourceName - TResourceName parameter is a string union of the Document Database Collection IDs.
+ * @param {GeneralizedFormFieldProps<TFieldValues, TResourceName>} props - The properties for configuring the component.
  * @param {unknown} props.control - The control object from `react-hook-form` used to manage form state.
  * @param {string} props.fieldKey - The key for identifying the form field, passed to `useController`.
  * @param {object} props.fieldSpec - Additional specifications for the field, such as validation rules.
@@ -31,7 +31,7 @@ import { handleUnitedStatesPhoneNumberFieldKeyUp } from '../../utils/handleUnite
  */
 export const UnitedStatesPhoneNumberField = <
 	TFieldValues extends FieldValues = FieldValues,
-	TCollection extends string = string,
+	TResourceName extends string = string,
 >({
 	control,
 	fieldKey: name,
@@ -39,7 +39,7 @@ export const UnitedStatesPhoneNumberField = <
 	isSubmitting,
 	operation,
 	setError,
-}: GeneralizedFormFieldProps<TFieldValues, TCollection>): JSX.Element => {
+}: GeneralizedFormFieldProps<TFieldValues, TResourceName>): JSX.Element => {
 	const disabled = isSubmitting;
 	const { field } = useController({
 		control,

@@ -28,9 +28,9 @@ import { UsdCell } from './cells/UsdCell';
 export const GeneralizedTableCell = <
 	// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint
 	TData extends unknown = unknown,
-	TCollection extends string = string,
+	TResourceName extends string = string,
 >(
-	props: GeneralizedTableCellProps<TData, TCollection>,
+	props: GeneralizedTableCellProps<TData, TResourceName>,
 ): JSX.Element => {
 	const { type } = props?.fieldSpec?.meta || {};
 

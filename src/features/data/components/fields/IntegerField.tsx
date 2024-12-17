@@ -11,8 +11,8 @@ import { getGeneralizedFormFieldLabel as getLabel } from '../../utils/getGeneral
  * IntegerField component renders an input field for handling integer values in a form.
  *
  * @template TFieldValues - The type representing all form field values.
- * @template TCollection - TCollection parameter is a string union of the Document Database Collection IDs.
- * @param {GeneralizedFormFieldProps<TFieldValues, TCollection>} props - The properties for configuring the component.
+ * @template TResourceName - TResourceName parameter is a string union of the Document Database Collection IDs.
+ * @param {GeneralizedFormFieldProps<TFieldValues, TResourceName>} props - The properties for configuring the component.
  * @param {unknown} props.control - The control object from `react-hook-form` used to manage form state.
  * @param {string} props.fieldKey - The key for identifying the form field, passed to `useController`.
  * @param {object} props.fieldSpec - Additional specifications for the field, such as validation rules.
@@ -30,7 +30,7 @@ import { getGeneralizedFormFieldLabel as getLabel } from '../../utils/getGeneral
  */
 export const IntegerField = <
 	TFieldValues extends FieldValues = FieldValues,
-	TCollection extends string = string,
+	TResourceName extends string = string,
 >({
 	control,
 	fieldKey: name,
@@ -38,7 +38,7 @@ export const IntegerField = <
 	isSubmitting,
 	operation,
 	setError,
-}: GeneralizedFormFieldProps<TFieldValues, TCollection>): JSX.Element => {
+}: GeneralizedFormFieldProps<TFieldValues, TResourceName>): JSX.Element => {
 	const disabled = isSubmitting;
 	const { field } = useController({
 		control,

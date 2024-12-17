@@ -40,7 +40,7 @@ export const GeneralizedFormSuspense = () => {
 
 export const GeneralizedForm = <
 	TFieldValues extends FieldValues = FieldValues,
-	TCollection extends string = string,
+	TResourceName extends string = string,
 >({
 	collectionId,
 	getApiResourceSpec,
@@ -51,7 +51,7 @@ export const GeneralizedForm = <
 	onMutationSuccess: onSuccess,
 	operation,
 	updateProps,
-}: GeneralizedFormProps<TFieldValues, TCollection>): JSX.Element => {
+}: GeneralizedFormProps<TFieldValues, TResourceName>): JSX.Element => {
 	const { toast } = useToast();
 
 	// API Resource Spec
