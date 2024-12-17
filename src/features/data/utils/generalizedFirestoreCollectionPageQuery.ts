@@ -25,7 +25,6 @@ export type GeneralizedFirestoreCollectionPage<
 
 export const generalizedFirestoreCollectionPageQuery =
 	<T extends GeneralizedApiResource = GeneralizedApiResource>(
-		collectionId: string,
 		apiResourceSpec: GeneralizedApiResourceSpec,
 	) =>
 	async (
@@ -55,7 +54,9 @@ export const generalizedFirestoreCollectionPageQuery =
 			}
 
 			// Build the query
-			let q = query(collection(firebaseFirestoreInstance, collectionId));
+			let q = query(
+				collection(firebaseFirestoreInstance, apiResourceSpec.collectionId),
+			);
 
 			// Apply where clauses
 			whereClauses.forEach((clause) => {
