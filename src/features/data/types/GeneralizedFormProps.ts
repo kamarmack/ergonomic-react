@@ -35,7 +35,7 @@ export type GeneralizedFormProps<
 	) => (
 		options: UseMutationOptions<unknown, GeneralizedError>,
 	) => UseMutationResult;
-	idPrefixByCollection: Record<TResourceName, string>;
+	idPrefixByResourceName: Record<TResourceName, string>;
 	onMutationSuccess: () => Promise<void>;
 	operation: 'create' | 'update';
 	updateProps: {

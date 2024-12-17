@@ -7,10 +7,10 @@ export const DocumentIDReferenceCell = (
 ): JSX.Element => {
 	const { reference_collections = [], type } = props.fieldSpec?.meta || {};
 	const isMulti = type === 'id_refs';
-	const collections = Object.keys(props.idPrefixByCollection);
+	const collections = Object.keys(props.idPrefixByResourceName);
 	const apiYupHelpers = getApiResourceYupHelpers(
 		collections,
-		props.idPrefixByCollection,
+		props.idPrefixByResourceName,
 	);
 	const isValueValid = (value: unknown) =>
 		reference_collections.some((_object) =>

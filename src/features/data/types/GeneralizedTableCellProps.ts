@@ -8,7 +8,7 @@ export type GeneralizedTableCellProps<
 > = BaseComponent & {
 	_object: TResourceName;
 	fieldSpec: GeneralizedFieldSpec;
-	idPrefixByCollection: Record<TResourceName, string>;
+	idPrefixByResourceName: Record<TResourceName, string>;
 	originalData: Record<string, unknown>;
 	value: TData;
 };

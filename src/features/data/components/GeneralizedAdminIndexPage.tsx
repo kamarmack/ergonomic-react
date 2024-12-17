@@ -10,7 +10,7 @@ export type GeneralizedAdminIndexPageProps<
 	TResourceName extends string = string,
 > = Pick<
 	GeneralizedFormProps<FieldValues, TResourceName>,
-	'getApiResourceSpec' | 'idPrefixByCollection'
+	'getApiResourceSpec' | 'idPrefixByResourceName'
 > & {
 	getAdminWebAppRoute: (options: unknown) => string;
 };
@@ -19,7 +19,7 @@ export const GeneralizedAdminIndexPage = <
 >({
 	getAdminWebAppRoute,
 	getApiResourceSpec,
-	idPrefixByCollection,
+	idPrefixByResourceName,
 }: GeneralizedAdminIndexPageProps<TResourceName>): JSX.Element => {
 	return (
 		<>
@@ -42,7 +42,7 @@ export const GeneralizedAdminIndexPage = <
 						<p className='text-white'>Firestore database (default)</p>
 					</div>
 					<div className={cn('p-2', 'flex flex-col space-y-2')}>
-						{Keys(idPrefixByCollection).map((resourceName, idx) => {
+						{Keys(idPrefixByResourceName).map((resourceName, idx) => {
 							const { collectionId } = getApiResourceSpec(resourceName);
 
 							return (

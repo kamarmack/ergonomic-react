@@ -13,7 +13,7 @@ import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps
  * @param {TResourceName} props._object - Specifies the resource name.
  * @param {unknown} props.control - The control object from `react-hook-form` used to manage the form state.
  * @param {string} props.fieldKey - The key for identifying the form field, passed to `useController`.
- * @param {Record<TResourceName, string>} props.idPrefixByCollection - A map of document ID prefixes for each resource name.
+ * @param {Record<TResourceName, string>} props.idPrefixByResourceName - A map of document ID prefixes for each resource name.
  * @param {boolean} props.isSubmitting - Flag indicating if the form is currently submitting, disabling inputs when true.
  * @param {string} props.operation - The operation type for the form, either 'create' or 'update'.
  *
@@ -32,7 +32,7 @@ export const DocumentIDField = <
 	_object,
 	control,
 	fieldKey: name,
-	idPrefixByCollection,
+	idPrefixByResourceName,
 	isSubmitting,
 	operation,
 }: GeneralizedFormFieldProps<TFieldValues, TResourceName>): JSX.Element => {
@@ -45,7 +45,7 @@ export const DocumentIDField = <
 	const generateNewDocumentId = () =>
 		field.onChange(
 			getDocumentIdString({
-				id_prefix: idPrefixByCollection[_object],
+				id_prefix: idPrefixByResourceName[_object],
 			}),
 		);
 

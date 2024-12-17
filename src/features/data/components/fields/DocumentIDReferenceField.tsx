@@ -19,7 +19,7 @@ import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps
  * @param {unknown} props.control - The control object from `react-hook-form` used to manage form state.
  * @param {string} props.fieldKey - The key for identifying the form field, passed to `useController`.
  * @param {object} props.fieldSpec - Additional specifications for the field, such as meta information about reference collections.
- * @param {Record<string, string>} props.idPrefixByCollection - Map of resource names to their document ID prefixes.
+ * @param {Record<string, string>} props.idPrefixByResourceName - Map of resource names to their document ID prefixes.
  * @param {boolean} props.isSubmitting - Flag indicating if the form is currently submitting, disabling inputs when true.
  * @param {string} props.operation - The operation type for the form, either 'create' or 'update'.
  *
@@ -40,7 +40,7 @@ export const DocumentIDReferenceField = <
 	fieldKey: name,
 	fieldSpec,
 	getPageQueryHookForCollection,
-	idPrefixByCollection,
+	idPrefixByResourceName,
 	initialFormData,
 	isSubmitting,
 	operation,
@@ -59,7 +59,7 @@ export const DocumentIDReferenceField = <
 		);
 	const isPageQueryForReferenceCollectionEnabled =
 		collectionIdForReference != null &&
-		!!idPrefixByCollection[collectionIdForReference];
+		!!idPrefixByResourceName[collectionIdForReference];
 	const pageQueryHookForCollection = getPageQueryHookForCollection(
 		collectionIdForReference as
 			| Parameters<typeof getPageQueryHookForCollection>[0]

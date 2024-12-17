@@ -23,7 +23,7 @@ export type GeneralizedFormFieldProps<
 	) => (
 		options: GeneralizedUseQueryPageProps<GeneralizedApiResource>,
 	) => UseQueryResult<GeneralizedFirestoreCollectionPage, GeneralizedError>;
-	idPrefixByCollection: Record<TResourceName, string>;
+	idPrefixByResourceName: Record<TResourceName, string>;
 	initialFormData: FieldValues | null;
 	isSubmitting: boolean;
 	operation: 'create' | 'update';

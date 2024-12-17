@@ -17,7 +17,7 @@ export type GeneralizedAdminUpdateOperationPageProps<
 	| 'getCreateOperationMutationForCollection'
 	| 'getPageQueryHookForCollection'
 	| 'getUpdateOperationMutationForCollection'
-	| 'idPrefixByCollection'
+	| 'idPrefixByResourceName'
 > & {
 	getAdminWebAppRoute: (options: unknown) => string;
 };
@@ -29,7 +29,7 @@ export const GeneralizedAdminUpdateOperationPage = <
 	getCreateOperationMutationForCollection,
 	getPageQueryHookForCollection,
 	getUpdateOperationMutationForCollection,
-	idPrefixByCollection,
+	idPrefixByResourceName,
 }: GeneralizedAdminUpdateOperationPageProps<TResourceName>): JSX.Element => {
 	// ==== Hooks ==== //
 
@@ -49,7 +49,7 @@ export const GeneralizedAdminUpdateOperationPage = <
 	const isValidCollection = (
 		value: string | undefined,
 	): value is TResourceName =>
-		value != null && Object.keys(idPrefixByCollection).includes(value);
+		value != null && Object.keys(idPrefixByResourceName).includes(value);
 	const collectionId = isValidCollection(resource_name) ? resource_name : null;
 
 	// Data
@@ -130,7 +130,7 @@ export const GeneralizedAdminUpdateOperationPage = <
 				getUpdateOperationMutationForCollection={
 					getUpdateOperationMutationForCollection
 				}
-				idPrefixByCollection={idPrefixByCollection}
+				idPrefixByResourceName={idPrefixByResourceName}
 				operation='update'
 				updateProps={{
 					documentId: document_id,

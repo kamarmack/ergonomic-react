@@ -15,7 +15,7 @@ export const GeneralizedFormFieldContainer = <
 	fieldKey,
 	fieldSpec,
 	getPageQueryHookForCollection,
-	idPrefixByCollection,
+	idPrefixByResourceName,
 	initialFormData,
 	isSubmitting,
 	operation,
@@ -38,7 +38,7 @@ export const GeneralizedFormFieldContainer = <
 					<GeneralizedFormField
 						_object={_object}
 						control={control}
-						idPrefixByCollection={idPrefixByCollection}
+						idPrefixByResourceName={idPrefixByResourceName}
 						fieldErrors={fieldErrors}
 						fieldKey={fieldKey}
 						fieldSpec={fieldSpec}

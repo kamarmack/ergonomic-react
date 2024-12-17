@@ -47,7 +47,7 @@ export const GeneralizedForm = <
 	getCreateOperationMutationForCollection,
 	getPageQueryHookForCollection,
 	getUpdateOperationMutationForCollection,
-	idPrefixByCollection,
+	idPrefixByResourceName,
 	onMutationSuccess: onSuccess,
 	operation,
 	updateProps,
@@ -331,7 +331,7 @@ export const GeneralizedForm = <
 							fieldKey={fieldKey as Path<TFieldValues>}
 							fieldSpec={fieldSpec}
 							getPageQueryHookForCollection={getPageQueryHookForCollection}
-							idPrefixByCollection={idPrefixByCollection}
+							idPrefixByResourceName={idPrefixByResourceName}
 							initialFormData={initialFormData}
 							isSubmitting={isSubmitting}
 							operation={operation}

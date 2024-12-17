@@ -29,7 +29,7 @@ export type GeneralizedAdminCollectionTablePageProps<
 	GeneralizedFormProps<FieldValues, TResourceName>,
 	| 'getApiResourceSpec'
 	| 'getPageQueryHookForCollection'
-	| 'idPrefixByCollection'
+	| 'idPrefixByResourceName'
 > & {
 	getAdminWebAppRoute: (options: unknown) => string;
 };
@@ -39,7 +39,7 @@ export const GeneralizedAdminCollectionTablePage = <
 	getAdminWebAppRoute,
 	getApiResourceSpec,
 	getPageQueryHookForCollection,
-	idPrefixByCollection,
+	idPrefixByResourceName,
 }: GeneralizedAdminCollectionTablePageProps<TResourceName>): JSX.Element => {
 	// ==== Hooks ==== //
 
@@ -56,7 +56,7 @@ export const GeneralizedAdminCollectionTablePage = <
 	const isValidCollection = (
 		value: string | undefined,
 	): value is TResourceName =>
-		value != null && Object.keys(idPrefixByCollection).includes(value);
+		value != null && Object.keys(idPrefixByResourceName).includes(value);
 	const collectionId = isValidCollection(resource_name) ? resource_name : null;
 
 	// Data
@@ -113,7 +113,7 @@ export const GeneralizedAdminCollectionTablePage = <
 						const props: GeneralizedTableCellProps = {
 							_object: collectionId,
 							fieldSpec,
-							idPrefixByCollection,
+							idPrefixByResourceName,
 							originalData: doc,
 							value,
 						};

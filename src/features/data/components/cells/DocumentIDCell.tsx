@@ -5,10 +5,10 @@ import { DefaultCell } from './DefaultCell';
 export const DocumentIDCell = (
 	props: GeneralizedTableCellProps,
 ): JSX.Element => {
-	const collections = Object.keys(props.idPrefixByCollection);
+	const collections = Object.keys(props.idPrefixByResourceName);
 	const apiYupHelpers = getApiResourceYupHelpers(
 		collections,
-		props.idPrefixByCollection,
+		props.idPrefixByResourceName,
 	);
 
 	return (
