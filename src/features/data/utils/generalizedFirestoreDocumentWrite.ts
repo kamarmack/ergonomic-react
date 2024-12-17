@@ -29,7 +29,6 @@ export type FirestoreDocumentCreateResponse<T extends GeneralizedApiResource> =
 	T[];
 export const generalizedFirestoreDocumentCreateOperation =
 	<T extends GeneralizedCreateBody, U extends GeneralizedApiResource>(
-		collectionId: string,
 		apiResourceSpec: GeneralizedApiResourceSpec,
 	) =>
 	async (params: FirestoreDocumentCreateParams<T>): Promise<U[]> => {
@@ -38,7 +37,10 @@ export const generalizedFirestoreDocumentCreateOperation =
 			const responses: U[] = [];
 
 			// Get the Firestore collection reference
-			const collectionRef = collection(firebaseFirestoreInstance, collectionId);
+			const collectionRef = collection(
+				firebaseFirestoreInstance,
+				apiResourceSpec.collectionId,
+			);
 
 			// Normalize to array for handling both single and batch writes
 			const writes = Array.isArray(params) ? params : [params];
@@ -70,11 +72,16 @@ export type FirestoreDocumentUpdateParams<T extends GeneralizedUpdateBody> =
 	| (T & { _id: string })
 	| (T & { _id: string })[];
 export const generalizedFirestoreDocumentUpdateOperation =
-	<T extends GeneralizedUpdateBody>(collectionId: string) =>
+	<T extends GeneralizedUpdateBody>(
+		apiResourceSpec: GeneralizedApiResourceSpec,
+	) =>
 	async (params: FirestoreDocumentUpdateParams<T>): Promise<unknown> => {
 		try {
 			// Get the Firestore collection reference
-			const collectionRef = collection(firebaseFirestoreInstance, collectionId);
+			const collectionRef = collection(
+				firebaseFirestoreInstance,
+				apiResourceSpec.collectionId,
+			);
 
 			// Normalize to array for handling both single and batch writes
 			const writes = Array.isArray(params) ? params : [params];
