@@ -2,10 +2,11 @@ import React from 'react';
 import { BaseComponent } from '../../../types/BaseComponentTypes';
 import { getGeneralizedFormFieldPresentation as getFieldPresentation } from '../utils/getGeneralizedFormFieldPresentation';
 
+export type GeneralizedFormFieldErrorProps = BaseComponent & {
+	fieldErrorMessage: string;
+};
 export const GeneralizedFormFieldError: React.FC<
-	BaseComponent & {
-		fieldErrorMessage: string;
-	}
+	GeneralizedFormFieldErrorProps
 > = ({ className = '', fieldErrorMessage }) => {
 	const fieldPresentation = getFieldPresentation(fieldErrorMessage);
 
