@@ -9,16 +9,15 @@ import {
 	TooltipTrigger,
 } from '../../../components/ui/tooltip';
 import { NODE_ENV } from '../../../config/nodeEnv';
-import { GeneralizedFormFieldProps } from '../types/GeneralizedFormFieldProps';
 import { getGeneralizedFormFieldLabel as getLabel } from '../utils/getGeneralizedFormFieldLabel';
+import { GeneralizedFormFieldLabelProps } from './GeneralizedFormFieldLabel';
 
-export type GeneralizedFormFieldLabelProps = Pick<
-	GeneralizedFormFieldProps,
-	'fieldKey' | 'fieldSpec' | 'operation'
->;
-export const GeneralizedFormFieldLabel: React.FC<
-	GeneralizedFormFieldLabelProps
-> = ({ fieldKey, fieldSpec, operation }) => {
+export type LiteFormFieldLabelProps = GeneralizedFormFieldLabelProps;
+export const LiteFormFieldLabel: React.FC<LiteFormFieldLabelProps> = ({
+	fieldKey,
+	fieldSpec,
+	operation,
+}) => {
 	const label = getLabel(fieldKey, fieldSpec);
 	const required = isFieldRequired({ fieldSpec, operation });
 	return (
