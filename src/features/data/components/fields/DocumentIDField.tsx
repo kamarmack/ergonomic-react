@@ -30,6 +30,7 @@ export const DocumentIDField = <
 	TResourceName extends string = string,
 >({
 	_object,
+	className = '',
 	control,
 	fieldKey: name,
 	idPrefixByResourceName,

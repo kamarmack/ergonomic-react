@@ -22,6 +22,7 @@ export const BooleanField = <
 	TFieldValues extends FieldValues = FieldValues,
 	TResourceName extends string = string,
 >({
+	className = '',
 	control,
 	fieldKey: name,
 	isSubmitting,

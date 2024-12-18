@@ -36,6 +36,7 @@ export const DocumentIDReferenceField = <
 	TFieldValues extends FieldValues = FieldValues,
 	TResourceName extends string = string,
 >({
+	className = '',
 	control,
 	fieldKey: name,
 	fieldSpec,
