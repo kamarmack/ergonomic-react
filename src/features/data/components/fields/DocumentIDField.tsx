@@ -35,7 +35,15 @@ export const DocumentIDField = <
 	idPrefixByResourceName,
 	isSubmitting,
 	operation,
-}: GeneralizedFormFieldProps<TFieldValues, TResourceName>): JSX.Element => {
+}: Pick<
+	GeneralizedFormFieldProps<TFieldValues, TResourceName>,
+	| '_object'
+	| 'control'
+	| 'fieldKey'
+	| 'idPrefixByResourceName'
+	| 'isSubmitting'
+	| 'operation'
+>): JSX.Element => {
 	const disabled = isSubmitting || operation === 'update';
 	const { field } = useController({
 		control,

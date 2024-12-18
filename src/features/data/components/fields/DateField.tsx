@@ -31,7 +31,10 @@ export const DateField = <
 	fieldSpec,
 	isSubmitting,
 	operation,
-}: GeneralizedFormFieldProps<TFieldValues, TResourceName>): JSX.Element => {
+}: Pick<
+	GeneralizedFormFieldProps<TFieldValues, TResourceName>,
+	'control' | 'fieldKey' | 'fieldSpec' | 'isSubmitting' | 'operation'
+>): JSX.Element => {
 	const disabled = isSubmitting;
 	const { field } = useController({
 		control,

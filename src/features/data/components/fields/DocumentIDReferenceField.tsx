@@ -44,7 +44,17 @@ export const DocumentIDReferenceField = <
 	initialFormData,
 	isSubmitting,
 	operation,
-}: GeneralizedFormFieldProps<TFieldValues, TResourceName>): JSX.Element => {
+}: Pick<
+	GeneralizedFormFieldProps<TFieldValues, TResourceName>,
+	| 'control'
+	| 'fieldKey'
+	| 'fieldSpec'
+	| 'getPageQueryHookForResource'
+	| 'idPrefixByResourceName'
+	| 'initialFormData'
+	| 'isSubmitting'
+	| 'operation'
+>): JSX.Element => {
 	// Field variables
 	const { resources = [], type } = fieldSpec?.meta || {};
 	const disabled = isSubmitting;

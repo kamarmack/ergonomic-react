@@ -40,7 +40,15 @@ export const DurationField = <
 	initialFormData,
 	isSubmitting,
 	operation,
-}: GeneralizedFormFieldProps<TFieldValues, TResourceName>): JSX.Element => {
+}: Pick<
+	GeneralizedFormFieldProps<TFieldValues, TResourceName>,
+	| 'control'
+	| 'fieldKey'
+	| 'fieldSpec'
+	| 'initialFormData'
+	| 'isSubmitting'
+	| 'operation'
+>): JSX.Element => {
 	// Field variables
 	const disabled = isSubmitting;
 

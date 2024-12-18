@@ -35,7 +35,15 @@ export const SelectOneField = <
 	initialFormData,
 	isSubmitting,
 	operation,
-}: GeneralizedFormFieldProps<TFieldValues, TResourceName>): JSX.Element => {
+}: Pick<
+	GeneralizedFormFieldProps<TFieldValues, TResourceName>,
+	| 'control'
+	| 'fieldKey'
+	| 'fieldSpec'
+	| 'initialFormData'
+	| 'isSubmitting'
+	| 'operation'
+>): JSX.Element => {
 	const disabled = isSubmitting;
 	const { label_by_enum_option = {} } = fieldSpec?.meta || {};
 	const options = fieldSpec.oneOf;

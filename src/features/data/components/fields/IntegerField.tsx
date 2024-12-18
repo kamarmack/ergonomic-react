@@ -38,7 +38,15 @@ export const IntegerField = <
 	isSubmitting,
 	operation,
 	setError,
-}: GeneralizedFormFieldProps<TFieldValues, TResourceName>): JSX.Element => {
+}: Pick<
+	GeneralizedFormFieldProps<TFieldValues, TResourceName>,
+	| 'control'
+	| 'fieldKey'
+	| 'fieldSpec'
+	| 'isSubmitting'
+	| 'operation'
+	| 'setError'
+>): JSX.Element => {
 	const disabled = isSubmitting;
 	const { field } = useController({
 		control,
