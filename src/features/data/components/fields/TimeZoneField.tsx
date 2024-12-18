@@ -2,6 +2,7 @@ import * as R from 'ramda';
 import { FieldValues, Path, PathValue, useController } from 'react-hook-form';
 import { IanaTimeZoneEnum, isFieldRequired } from 'ergonomic';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
+import { default as cn } from '../../../../lib/cn';
 
 /**
  * TimeZoneField component renders a dropdown for selecting a single option from the list of IANA time zones,
@@ -67,7 +68,7 @@ export const TimeZoneField = <
 	return (
 		<select
 			{...field}
-			className='block w-full p-2 border rounded-md bg-white'
+			className={cn('block w-full p-2 border rounded-md bg-white', className)}
 			required={required}
 		>
 			<option disabled value=''>

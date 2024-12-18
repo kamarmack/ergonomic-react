@@ -3,6 +3,7 @@ import { isFieldRequired } from 'ergonomic';
 import { Textarea } from '../../../../components/ui/textarea';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
 import { getGeneralizedFormFieldLabel as getLabel } from '../../utils/getGeneralizedFormFieldLabel';
+import { default as cn } from '../../../../lib/cn';
 
 /**
  * LongTextField component renders a textarea input field for handling long text values in a form.
@@ -51,5 +52,12 @@ export const LongTextField = <
 	const required = isFieldRequired({ fieldSpec, operation });
 	const label = getLabel(name, fieldSpec);
 
-	return <Textarea {...field} placeholder={label} required={required} />;
+	return (
+		<Textarea
+			{...field}
+			className={cn('block w-full p-2 border rounded-md bg-white', className)}
+			placeholder={label}
+			required={required}
+		/>
+	);
 };

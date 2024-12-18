@@ -12,6 +12,7 @@ import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps
 import { getGeneralizedFormFieldLabel as getLabel } from '../../utils/getGeneralizedFormFieldLabel';
 import { GeneralizedFormFieldError } from '../GeneralizedFormFieldError';
 import { GoPlus, GoXCircle } from 'react-icons/go';
+import { default as cn } from '../../../../lib/cn';
 
 /**
  * ListField component renders a dynamic list of input fields, allowing users to add or remove items,
@@ -104,7 +105,10 @@ export const ListField = <
 								render={({ field: arrayItemField }) => (
 									<Input
 										{...arrayItemField}
-										className='block w-full p-2 border rounded-md bg-white'
+										className={cn(
+											'block w-full p-2 border rounded-md bg-white',
+											className,
+										)}
 										placeholder={label}
 									/>
 								)}

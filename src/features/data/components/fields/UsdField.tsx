@@ -4,6 +4,7 @@ import { FieldValues, useController } from 'react-hook-form';
 import { isFieldRequired } from 'ergonomic';
 import { Input } from '../../../../components/ui/input';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
+import { default as cn } from '../../../../lib/cn';
 
 /**
  * UsdField component renders an input field for handling currency values, formatted in USD cents.
@@ -56,7 +57,7 @@ export const UsdField = <
 	return (
 		<Input
 			{...field}
-			className='block w-full p-2 border rounded-md bg-white'
+			className={cn('block w-full p-2 border rounded-md bg-white', className)}
 			onKeyUp={handleUsdFieldKeyUp({
 				field: R.pick(['onChange'], field),
 				setError,

@@ -7,6 +7,7 @@ import { GeneralizedFieldSpec } from 'ergonomic';
 import { Skeleton } from '../../../../components/ui/skeleton';
 import Select, { MultiValue } from 'react-select';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
+import { default as cn } from '../../../../lib/cn';
 
 type ReactSelectOption = { label: string; value: string };
 const getOptionLabel = (
@@ -126,6 +127,7 @@ export const SelectManyField = <
 
 	return (
 		<Select
+			className={cn('block w-full p-2 border rounded-md bg-white', className)}
 			defaultValue={defaultSelections}
 			isDisabled={field.disabled}
 			isMulti

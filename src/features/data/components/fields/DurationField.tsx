@@ -7,6 +7,7 @@ import { Skeleton } from '../../../../components/ui/skeleton';
 import { useEffect, useState } from 'react';
 import { FieldValues, useController } from 'react-hook-form';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
+import { default as cn } from '../../../../lib/cn';
 
 /**
  * DurationField component renders a series of dropdown selectors to input a duration, divided into years, months,
@@ -141,7 +142,7 @@ export const DurationField = <
 		);
 
 	return (
-		<div className='flex items-center space-x-2'>
+		<div className={cn('flex items-center space-x-2', className)}>
 			{[
 				{
 					defaultValue: duration?.years,

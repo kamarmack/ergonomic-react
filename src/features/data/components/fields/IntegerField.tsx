@@ -6,6 +6,7 @@ import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps
 import { handleIntegerFieldBlur } from '../../utils/handleIntegerFieldBlur';
 import { handleIntegerFieldKeyUp } from '../../utils/handleIntegerFieldKeyUp';
 import { getGeneralizedFormFieldLabel as getLabel } from '../../utils/getGeneralizedFormFieldLabel';
+import { default as cn } from '../../../../lib/cn';
 
 /**
  * IntegerField component renders an input field for handling integer values in a form.
@@ -61,7 +62,7 @@ export const IntegerField = <
 	return (
 		<Input
 			{...field}
-			className='block w-full p-2 border rounded-md bg-white'
+			className={cn('block w-full p-2 border rounded-md bg-white', className)}
 			onBlur={handleIntegerFieldBlur({
 				field: R.pick(['onBlur'], field),
 				setError,

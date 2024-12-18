@@ -180,7 +180,7 @@ export const DocumentIDReferenceField = <
 	}
 
 	return (
-		<div className='flex items-start space-x-2 w-full'>
+		<div className={cn('flex items-start space-x-2 w-full', className)}>
 			{/* Resource selector (not present if there is only one option in `resources`) */}
 			{acceptsMultipleDataTypes && (
 				<div className='flex-1'>

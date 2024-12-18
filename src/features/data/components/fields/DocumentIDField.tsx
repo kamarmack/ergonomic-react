@@ -3,6 +3,7 @@ import { FieldValues, useController } from 'react-hook-form';
 import { getDocumentIdString } from 'ergonomic';
 import { Input } from '../../../../components/ui/input';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
+import { default as cn } from '../../../../lib/cn';
 
 /**
  * DocumentIDField component renders an input field with a button to generate a new unique document ID.
@@ -61,7 +62,10 @@ export const DocumentIDField = <
 
 	return (
 		<div className='relative'>
-			<Input {...field} />
+			<Input
+				{...field}
+				className={cn('block w-full p-2 border rounded-md bg-white', className)}
+			/>
 			{operation === 'create' && (
 				<button
 					className='absolute right-0 -top-5 flex items-center space-x-1.5 text-sm'

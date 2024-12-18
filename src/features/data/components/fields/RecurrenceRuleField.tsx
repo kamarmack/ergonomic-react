@@ -23,6 +23,7 @@ import { Skeleton } from '../../../../components/ui/skeleton';
 import { Input } from '../../../../components/ui/input';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
 import { getDefaultValueForDateFieldFromIsoStringWithMillisecondPrecision } from '../../utils/getDefaultValueForDateFieldFromIsoStringWithMillisecondPrecision';
+import cn from '../../../../lib/cn';
 
 const defaultRecurrenceRule: RecurrenceRuleData = {
 	DTSTART: '',
@@ -157,7 +158,7 @@ export const RecurrenceRuleField = <
 	// Suspense loading state
 	if (isIsoRecurrenceRuleLoading)
 		return (
-			<div className='flex items-center space-x-2'>
+			<div className={cn('flex items-center space-x-2', className)}>
 				{Array.from({ length: 2 }).map(() => (
 					<Skeleton className='flex-1 h-8' />
 				))}
@@ -165,13 +166,150 @@ export const RecurrenceRuleField = <
 		);
 
 	return (
-		<div>
-			<div className='flex items-start space-x-2'>
-				<div className='flex-1'>
-					<p>Start Date</p>
+		<div className={cn('flex items-start space-x-2', className)}>
+			<div className='flex-1'>
+				<p>Start Date</p>
+				<Input
+					defaultValue={getDefaultValueForDateFieldFromIsoStringWithMillisecondPrecision(
+						recurrenceRule?.DTSTART?.slice(0, 8) ?? '',
+					)}
+					disabled={disabled}
+					onBlur={(e) => {
+						const dateString = e.target.value;
+
+						if (!dateString) {
+							setRecurrenceRule((prev) => ({
+								...defaultRecurrenceRule,
+								...(prev ?? {}),
+								DTSTART: '',
+							}));
+							return;
+						}
+
+						const date = new Date(dateString).toISOString();
+						const DTSTART =
+							getRecurrenceRuleFriendlyDateFromIsoDateString(date);
+						setRecurrenceRule((prev) => ({
+							...defaultRecurrenceRule,
+							...(prev ?? {}),
+							DTSTART,
+						}));
+					}}
+					type='datetime-local'
+				/>
+			</div>
+			<div className=''>
+				<p>Repeats</p>
+				<select
+					className='block w-full p-2 border rounded-md bg-white'
+					defaultValue={recurrenceRule?.FREQ ?? 'YEARLY'}
+					disabled={disabled}
+					onChange={(e) => {
+						const FREQ = e.target.value as RecurrenceRuleFrequency;
+						setRecurrenceRule((prev) => ({
+							...defaultRecurrenceRule,
+							...(prev ?? {}),
+							FREQ,
+						}));
+					}}
+				>
+					{RecurrenceRuleFrequencyEnum.arr.map((option) => {
+						return (
+							<option key={option} value={option}>
+								{changeCase.sentenceCase(option)}
+							</option>
+						);
+					})}
+				</select>
+			</div>
+			<div className=''>
+				<p>Ends</p>
+				<select
+					className='block w-full p-2 border rounded-md bg-white'
+					defaultValue={recurrenceRuleEnding}
+					disabled={disabled}
+					onChange={(e) => {
+						const prevEnding = recurrenceRuleEnding;
+						const nextEnding = e.target.value as RecurrenceRuleEnding;
+
+						if (nextEnding !== prevEnding) {
+							if (nextEnding === 'INFINITE') {
+								// remove count and until from recurrence rule
+								setRecurrenceRule((prev) => {
+									if (!prev) return defaultRecurrenceRule;
+
+									const { COUNT: _count, UNTIL: _until, ...rest } = prev;
+									return rest;
+								});
+							} else if (nextEnding === 'COUNT') {
+								// set count to 1
+								setRecurrenceRule((prev) => ({
+									...defaultRecurrenceRule,
+									...(prev ?? {}),
+									COUNT: 1,
+								}));
+							} else if (nextEnding === 'UNTIL') {
+								// set until to 1 year from now
+								const date = new Date();
+								date.setFullYear(date.getFullYear() + 1);
+								const UNTIL = getRecurrenceRuleFriendlyDateFromIsoDateString(
+									date.toISOString(),
+								);
+								setRecurrenceRule((prev) => ({
+									...defaultRecurrenceRule,
+									...(prev ?? {}),
+									UNTIL,
+								}));
+							}
+						}
+
+						setRecurrenceRuleEnding(nextEnding);
+					}}
+				>
+					{RecurrenceRuleEndingEnum.arr.map((option) => {
+						return (
+							<option key={option} value={option}>
+								{
+									{
+										COUNT: 'After',
+										INFINITE: 'Never',
+										UNTIL: 'On',
+									}[option]
+								}
+							</option>
+						);
+					})}
+				</select>
+			</div>
+			{recurrenceRuleEnding === 'COUNT' && (
+				<div className=''>
+					<p>Occurrences</p>
+					<Input
+						defaultValue={
+							typeof recurrenceRule?.COUNT === 'number'
+								? recurrenceRule.COUNT.toString()
+								: ''
+						}
+						disabled={disabled}
+						onChange={(e) => {
+							const count = parseInt(e.target.value, 10);
+							setRecurrenceRule((prev) => ({
+								...defaultRecurrenceRule,
+								...(prev ?? {}),
+								COUNT: count,
+							}));
+						}}
+						step='1'
+						type='number'
+					/>
+				</div>
+			)}
+			{recurrenceRuleEnding === 'UNTIL' && (
+				<div className=''>
+					<p>End Date</p>
 					<Input
 						defaultValue={getDefaultValueForDateFieldFromIsoStringWithMillisecondPrecision(
-							recurrenceRule?.DTSTART?.slice(0, 8) ?? '',
+							recurrenceRule?.UNTIL?.slice(0, 8) ?? '',
 						)}
 						disabled={disabled}
 						onBlur={(e) => {
@@ -181,163 +319,24 @@ export const RecurrenceRuleField = <
 								setRecurrenceRule((prev) => ({
 									...defaultRecurrenceRule,
 									...(prev ?? {}),
-									DTSTART: '',
+									UNTIL: '',
 								}));
 								return;
 							}
 
 							const date = new Date(dateString).toISOString();
-							const DTSTART =
+							const UNTIL =
 								getRecurrenceRuleFriendlyDateFromIsoDateString(date);
 							setRecurrenceRule((prev) => ({
 								...defaultRecurrenceRule,
 								...(prev ?? {}),
-								DTSTART,
+								UNTIL,
 							}));
 						}}
 						type='datetime-local'
 					/>
 				</div>
-				<div className=''>
-					<p>Repeats</p>
-					<select
-						className='block w-full p-2 border rounded-md bg-white'
-						defaultValue={recurrenceRule?.FREQ ?? 'YEARLY'}
-						disabled={disabled}
-						onChange={(e) => {
-							const FREQ = e.target.value as RecurrenceRuleFrequency;
-							setRecurrenceRule((prev) => ({
-								...defaultRecurrenceRule,
-								...(prev ?? {}),
-								FREQ,
-							}));
-						}}
-					>
-						{RecurrenceRuleFrequencyEnum.arr.map((option) => {
-							return (
-								<option key={option} value={option}>
-									{changeCase.sentenceCase(option)}
-								</option>
-							);
-						})}
-					</select>
-				</div>
-				<div className=''>
-					<p>Ends</p>
-					<select
-						className='block w-full p-2 border rounded-md bg-white'
-						defaultValue={recurrenceRuleEnding}
-						disabled={disabled}
-						onChange={(e) => {
-							const prevEnding = recurrenceRuleEnding;
-							const nextEnding = e.target.value as RecurrenceRuleEnding;
-
-							if (nextEnding !== prevEnding) {
-								if (nextEnding === 'INFINITE') {
-									// remove count and until from recurrence rule
-									setRecurrenceRule((prev) => {
-										if (!prev) return defaultRecurrenceRule;
-
-										const { COUNT: _count, UNTIL: _until, ...rest } = prev;
-										return rest;
-									});
-								} else if (nextEnding === 'COUNT') {
-									// set count to 1
-									setRecurrenceRule((prev) => ({
-										...defaultRecurrenceRule,
-										...(prev ?? {}),
-										COUNT: 1,
-									}));
-								} else if (nextEnding === 'UNTIL') {
-									// set until to 1 year from now
-									const date = new Date();
-									date.setFullYear(date.getFullYear() + 1);
-									const UNTIL = getRecurrenceRuleFriendlyDateFromIsoDateString(
-										date.toISOString(),
-									);
-									setRecurrenceRule((prev) => ({
-										...defaultRecurrenceRule,
-										...(prev ?? {}),
-										UNTIL,
-									}));
-								}
-							}
-
-							setRecurrenceRuleEnding(nextEnding);
-						}}
-					>
-						{RecurrenceRuleEndingEnum.arr.map((option) => {
-							return (
-								<option key={option} value={option}>
-									{
-										{
-											COUNT: 'After',
-											INFINITE: 'Never',
-											UNTIL: 'On',
-										}[option]
-									}
-								</option>
-							);
-						})}
-					</select>
-				</div>
-				{recurrenceRuleEnding === 'COUNT' && (
-					<div className=''>
-						<p>Occurrences</p>
-						<Input
-							defaultValue={
-								typeof recurrenceRule?.COUNT === 'number'
-									? recurrenceRule.COUNT.toString()
-									: ''
-							}
-							disabled={disabled}
-							onChange={(e) => {
-								const count = parseInt(e.target.value, 10);
-								setRecurrenceRule((prev) => ({
-									...defaultRecurrenceRule,
-									...(prev ?? {}),
-									COUNT: count,
-								}));
-							}}
-							step='1'
-							type='number'
-						/>
-					</div>
-				)}
-				{recurrenceRuleEnding === 'UNTIL' && (
-					<div className=''>
-						<p>End Date</p>
-						<Input
-							defaultValue={getDefaultValueForDateFieldFromIsoStringWithMillisecondPrecision(
-								recurrenceRule?.UNTIL?.slice(0, 8) ?? '',
-							)}
-							disabled={disabled}
-							onBlur={(e) => {
-								const dateString = e.target.value;
-
-								if (!dateString) {
-									setRecurrenceRule((prev) => ({
-										...defaultRecurrenceRule,
-										...(prev ?? {}),
-										UNTIL: '',
-									}));
-									return;
-								}
-
-								const date = new Date(dateString).toISOString();
-								const UNTIL =
-									getRecurrenceRuleFriendlyDateFromIsoDateString(date);
-								setRecurrenceRule((prev) => ({
-									...defaultRecurrenceRule,
-									...(prev ?? {}),
-									UNTIL,
-								}));
-							}}
-							type='datetime-local'
-						/>
-					</div>
-				)}
-			</div>
+			)}
 		</div>
 	);
 };

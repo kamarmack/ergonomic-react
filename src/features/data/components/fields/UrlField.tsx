@@ -4,6 +4,7 @@ import { isFieldRequired } from 'ergonomic';
 import { Input } from '../../../../components/ui/input';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
 import { handleUrlFieldBlur } from '../../utils/handleUrlFieldBlur';
+import { default as cn } from '../../../../lib/cn';
 
 /**
  * UrlField component renders an input field for handling URL values, with optional guidance for file storage paths.
@@ -68,6 +69,7 @@ export const UrlField = <
 			)}
 			<Input
 				{...field}
+				className={cn('block w-full p-2 border rounded-md bg-white', className)}
 				onBlur={handleUrlFieldBlur({
 					field: R.pick(['onBlur'], field),
 					setError,

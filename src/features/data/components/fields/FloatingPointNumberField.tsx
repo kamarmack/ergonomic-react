@@ -6,6 +6,7 @@ import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps
 import { handleFloatingPointFieldBlur } from '../../utils/handleFloatingPointFieldBlur';
 import { handleFloatingPointFieldKeyUp } from '../../utils/handleFloatingPointFieldKeyUp';
 import { getGeneralizedFormFieldLabel as getLabel } from '../../utils/getGeneralizedFormFieldLabel';
+import cn from '../../../../lib/cn';
 
 /**
  * FloatingPointNumberField component renders an input field for handling floating-point number values in a form.
@@ -60,7 +61,7 @@ export const FloatingPointNumberField = <
 	return (
 		<Input
 			{...field}
-			className='block w-full p-2 border rounded-md bg-white'
+			className={cn('block w-full p-2 border rounded-md bg-white', className)}
 			onBlur={handleFloatingPointFieldBlur({
 				field: R.pick(['onBlur'], field),
 				setError,

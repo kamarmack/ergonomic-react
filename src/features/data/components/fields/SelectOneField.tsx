@@ -3,6 +3,7 @@ import * as changeCase from 'change-case';
 import { FieldValues, Path, PathValue, useController } from 'react-hook-form';
 import { isFieldRequired } from 'ergonomic';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
+import { default as cn } from '../../../../lib/cn';
 
 /**
  * SelectOneField component renders a dropdown for selecting a single option from a predefined list,
@@ -68,7 +69,7 @@ export const SelectOneField = <
 	return (
 		<select
 			{...field}
-			className='block w-full p-2 border rounded-md bg-white'
+			className={cn('block w-full p-2 border rounded-md bg-white', className)}
 			required={required}
 		>
 			<option disabled value=''>

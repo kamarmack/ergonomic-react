@@ -41,6 +41,7 @@ export const BooleanField = <
 		<div className='flex'>
 			<Checkbox
 				{...field}
+				className={className}
 				checked={field.value}
 				onCheckedChange={field.onChange}
 			/>

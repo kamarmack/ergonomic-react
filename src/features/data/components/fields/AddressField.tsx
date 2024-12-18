@@ -3,6 +3,7 @@ import { isFieldRequired, UsaStateCodeEnum } from 'ergonomic';
 import { Input } from '../../../../components/ui/input';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
 import { getGeneralizedFormFieldLabel as getLabel } from '../../utils/getGeneralizedFormFieldLabel';
+import { default as cn } from '../../../../lib/cn';
 
 /**
  * AddressField component renders an input field or a dropdown selection based on the field type,
@@ -57,7 +58,7 @@ export const AddressField = <
 		return (
 			<select
 				{...field}
-				className='block border p-2 rounded-md w-full'
+				className={cn('block border p-2 rounded-md w-full', className)}
 				required={required}
 			>
 				<option disabled value=''>
@@ -76,7 +77,7 @@ export const AddressField = <
 		return (
 			<select
 				{...field}
-				className='block w-full p-2 border rounded-md bg-white'
+				className={cn('block border p-2 rounded-md w-full', className)}
 				required={required}
 			>
 				<option disabled value=''>
@@ -93,5 +94,12 @@ export const AddressField = <
 		);
 	}
 
-	return <Input {...field} placeholder={label} required={required} />;
+	return (
+		<Input
+			{...field}
+			className={cn('block w-full p-2 border rounded-md bg-white', className)}
+			placeholder={label}
+			required={required}
+		/>
+	);
 };

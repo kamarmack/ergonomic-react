@@ -7,6 +7,7 @@ import { FieldValues, useController } from 'react-hook-form';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
 import { handleUnitedStatesPhoneNumberFieldBlur } from '../../utils/handleUnitedStatesPhoneNumberFieldBlur';
 import { handleUnitedStatesPhoneNumberFieldKeyUp } from '../../utils/handleUnitedStatesPhoneNumberFieldKeyUp';
+import { default as cn } from '../../../../lib/cn';
 
 /**
  * UnitedStatesPhoneNumberField component renders an input field for handling phone numbers with a country code selector.
@@ -81,7 +82,10 @@ export const UnitedStatesPhoneNumberField = <
 			<div className='w-full'>
 				<Input
 					{...field}
-					className='block w-full p-2 border rounded-md bg-white'
+					className={cn(
+						'block w-full p-2 border rounded-md bg-white',
+						className,
+					)}
 					onBlur={handleUnitedStatesPhoneNumberFieldBlur({
 						field: R.pick(['onBlur'], field),
 						setError,

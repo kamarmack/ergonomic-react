@@ -91,6 +91,7 @@ export const MarkdownTextField = <
 
 	return (
 		<MarkdownEditor
+			className={className}
 			onChange={(value, _viewUpdate) => {
 				if (disabled) {
 					return;

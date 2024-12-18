@@ -4,6 +4,7 @@ import { isFieldRequired } from 'ergonomic';
 import { Input } from '../../../../components/ui/input';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
 import { handleEmailAddressFieldBlur } from '../../utils/handleEmailAddressFieldBlur';
+import { default as cn } from '../../../../lib/cn';
 
 /**
  * EmailAddressField component renders an input field for handling email address values in a form.
@@ -58,6 +59,7 @@ export const EmailAddressField = <
 	return (
 		<Input
 			{...field}
+			className={cn('block w-full p-2 border rounded-md bg-white', className)}
 			onBlur={handleEmailAddressFieldBlur({
 				field: R.pick(['onBlur'], field),
 				setError,

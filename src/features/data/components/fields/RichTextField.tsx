@@ -93,6 +93,7 @@ export const RichTextField = <
 
 	return (
 		<ReactQuill
+			className={className}
 			onChange={(v) => {
 				if (disabled) {
 					return;

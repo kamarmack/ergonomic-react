@@ -3,6 +3,7 @@ import { Input } from '../../../../components/ui/input';
 import { FieldValues, useController } from 'react-hook-form';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
 import { getGeneralizedFormFieldLabel as getLabel } from '../../utils/getGeneralizedFormFieldLabel';
+import { default as cn } from '../../../../lib/cn';
 
 /**
  * ShortTextField component renders a standard text input field for handling short text values.
@@ -51,5 +52,12 @@ export const ShortTextField = <
 	const required = isFieldRequired({ fieldSpec, operation });
 	const label = getLabel(name, fieldSpec);
 
-	return <Input {...field} placeholder={label} required={required} />;
+	return (
+		<Input
+			{...field}
+			className={cn('block w-full p-2 border rounded-md bg-white', className)}
+			placeholder={label}
+			required={required}
+		/>
+	);
 };

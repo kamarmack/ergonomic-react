@@ -5,6 +5,7 @@ import { Input } from '../../../../components/ui/input';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
 import { getGeneralizedFormFieldLabel as getLabel } from '../../utils/getGeneralizedFormFieldLabel';
 import { handlePercentageFieldKeyUp } from '../../utils/handlePercentageFieldKeyUp';
+import { default as cn } from '../../../../lib/cn';
 
 /**
  * PercentageField component renders an input field for handling percentage values in a form.
@@ -60,6 +61,7 @@ export const PercentageField = <
 	return (
 		<Input
 			{...field}
+			className={cn('block w-full p-2 border rounded-md bg-white', className)}
 			onKeyUp={handlePercentageFieldKeyUp({
 				field: R.pick(['onChange'], field),
 				setError,

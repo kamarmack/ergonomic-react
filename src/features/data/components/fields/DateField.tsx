@@ -2,6 +2,7 @@ import { FieldValues, useController } from 'react-hook-form';
 import { isFieldRequired } from 'ergonomic';
 import { Input } from '../../../../components/ui/input';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
+import { default as cn } from '../../../../lib/cn';
 
 /**
  * DateField component renders an input field for handling date and time values in a form.
@@ -49,5 +50,12 @@ export const DateField = <
 	});
 	const required = isFieldRequired({ fieldSpec, operation });
 
-	return <Input {...field} type='datetime-local' required={required} />;
+	return (
+		<Input
+			{...field}
+			className={cn('block w-full p-2 border rounded-md bg-white', className)}
+			type='datetime-local'
+			required={required}
+		/>
+	);
 };

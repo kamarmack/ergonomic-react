@@ -6,6 +6,7 @@ import { Skeleton } from '../../../../components/ui/skeleton';
 import { Input } from '../../../../components/ui/input';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
 import { getDefaultValueForDateFieldFromIsoStringWithMillisecondPrecision } from '../../utils/getDefaultValueForDateFieldFromIsoStringWithMillisecondPrecision';
+import cn from '../../../../lib/cn';
 
 /**
  * IntervalField component renders a pair of date-time input fields for specifying a start and end date-time,
@@ -114,7 +115,7 @@ export const IntervalField = <
 	// Suspense loading state
 	if (isIsoIntervalLoading)
 		return (
-			<div className='flex items-center space-x-2'>
+			<div className={cn('flex items-center space-x-2', className)}>
 				{Array.from({ length: 2 }).map(() => (
 					<Skeleton className='flex-1 h-8' />
 				))}
@@ -122,7 +123,7 @@ export const IntervalField = <
 		);
 
 	return (
-		<div className='flex items-center space-x-2'>
+		<div className={cn('flex items-center space-x-2', className)}>
 			{[
 				{
 					label: 'Start Date',
