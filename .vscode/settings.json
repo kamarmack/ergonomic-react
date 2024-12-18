@@ -23,10 +23,10 @@
 	},
 	"jest.runMode": "on-demand",
 	"terminal.integrated.confirmOnExit": "always",
-	"testing.openTesting": "neverOpen",
+	"testing.automaticallyOpenTestResults": "neverOpen",
 	"workbench.colorCustomizations": {
 		"editorIndentGuide.background1": "#8CA58B8F",
 		"editorIndentGuide.activeBackground1": "#39FF148F",
 		"tree.indentGuidesStroke": "#39FF148F"
-	}
+	},
 }
