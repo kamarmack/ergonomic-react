@@ -5,7 +5,7 @@ import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps
 import { default as cn } from '../../../../lib/cn';
 
 /**
- * DateField component renders an input field for handling date values in a form (without time).
+ * DateTimeField component renders an input field for handling date and time values in a form.
  *
  * @template TFieldValues - The type representing all form field values.
  * @template TResourceName - TResourceName parameter is a string union of the API resource names.
@@ -16,14 +16,14 @@ import { default as cn } from '../../../../lib/cn';
  * @param {boolean} props.isSubmitting - Flag indicating if the form is currently submitting, disabling inputs when true.
  * @param {string} props.operation - The operation type for the form, either 'create' or 'update'.
  *
- * @returns {JSX.Element} The rendered DateField component, which is an input field for selecting date.
+ * @returns {JSX.Element} The rendered DateTimeField component, which is an input field for selecting date and time.
  *
  * @description
- * The `DateField` component integrates with `react-hook-form` to manage an input field for date values.
+ * The `DateTimeField` component integrates with `react-hook-form` to manage an input field for date and time values.
  * It dynamically sets the required attribute based on `fieldSpec` and `operation` and disables input during form submission.
- * The component renders an input of type `date` for date selection.
+ * The component renders an input of type `datetime-local` for date and time selection.
  */
-export const DateField = <
+export const DateTimeField = <
 	TFieldValues extends FieldValues = FieldValues,
 	TResourceName extends string = string,
 >({
@@ -54,7 +54,7 @@ export const DateField = <
 		<Input
 			{...field}
 			className={cn('block w-full p-2 border rounded-md bg-white', className)}
-			type='date'
+			type='datetime-local'
 			required={required}
 		/>
 	);
