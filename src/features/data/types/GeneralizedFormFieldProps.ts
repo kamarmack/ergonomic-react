@@ -24,6 +24,7 @@ export type GeneralizedFormFieldProps<
 	) => (
 		options: GeneralizedUseQueryPageProps<GeneralizedApiResource>,
 	) => UseQueryResult<GeneralizedFirestoreCollectionPage, GeneralizedError>;
+	hideRequiredIndicator?: boolean;
 	idPrefixByResourceName: Record<TResourceName, string>;
 	initialFormData: FieldValues | null;
 	isSubmitting: boolean;

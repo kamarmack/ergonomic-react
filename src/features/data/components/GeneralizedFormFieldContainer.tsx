@@ -15,6 +15,7 @@ export const GeneralizedFormFieldContainer = <
 	fieldKey,
 	fieldSpec,
 	getPageQueryHookForResource,
+	hideRequiredIndicator,
 	idPrefixByResourceName,
 	initialFormData,
 	isSubmitting,
@@ -31,6 +32,7 @@ export const GeneralizedFormFieldContainer = <
 					<GeneralizedFormFieldLabel
 						fieldKey={fieldKey}
 						fieldSpec={fieldSpec}
+						hideRequiredIndicator={hideRequiredIndicator}
 						operation={operation}
 					/>
 				</div>

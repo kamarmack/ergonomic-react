@@ -13,11 +13,16 @@ import { LiteFormFieldProps } from '../types/LiteFormFieldProps';
 
 export type LiteFormFieldLabelProps = Pick<
 	LiteFormFieldProps,
-	'fieldKey' | 'fieldSpec' | 'operation' | 'renderTooltipContent'
+	| 'fieldKey'
+	| 'fieldSpec'
+	| 'hideRequiredIndicator'
+	| 'operation'
+	| 'renderTooltipContent'
 >;
 export const LiteFormFieldLabel: React.FC<LiteFormFieldLabelProps> = ({
 	fieldKey,
 	fieldSpec,
+	hideRequiredIndicator = false,
 	operation,
 	renderTooltipContent,
 }) => {
@@ -28,7 +33,9 @@ export const LiteFormFieldLabel: React.FC<LiteFormFieldLabelProps> = ({
 			<div>
 				<p>
 					{label}
-					{required && <span className='text-red-700 font-semibold'>*</span>}
+					{required && !hideRequiredIndicator && (
+						<span className='text-red-700 font-semibold'>*</span>
+					)}
 				</p>
 			</div>
 			{renderTooltipContent != null && (

@@ -14,11 +14,11 @@ import { getGeneralizedFormFieldLabel as getLabel } from '../utils/getGeneralize
 
 export type GeneralizedFormFieldLabelProps = Pick<
 	GeneralizedFormFieldProps,
-	'fieldKey' | 'fieldSpec' | 'operation'
+	'fieldKey' | 'fieldSpec' | 'hideRequiredIndicator' | 'operation'
 >;
 export const GeneralizedFormFieldLabel: React.FC<
 	GeneralizedFormFieldLabelProps
-> = ({ fieldKey, fieldSpec, operation }) => {
+> = ({ fieldKey, fieldSpec, hideRequiredIndicator, operation }) => {
 	const label = getLabel(fieldKey, fieldSpec);
 	const required = isFieldRequired({ fieldSpec, operation });
 	return (
@@ -26,7 +26,9 @@ export const GeneralizedFormFieldLabel: React.FC<
 			<div>
 				<p>
 					{label}
-					{required && <span className='text-red-700 font-semibold'>*</span>}
+					{required && !hideRequiredIndicator && (
+						<span className='text-red-700 font-semibold'>*</span>
+					)}
 				</p>
 			</div>
 			{(NODE_ENV === 'development' ||

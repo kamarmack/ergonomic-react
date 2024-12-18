@@ -11,6 +11,7 @@ export const LiteFormFieldContainer = <T extends FieldValues = FieldValues>({
 	fieldErrors,
 	fieldKey,
 	fieldSpec,
+	hideRequiredIndicator,
 	initialFormData,
 	isSubmitting,
 	operation,
@@ -27,6 +28,7 @@ export const LiteFormFieldContainer = <T extends FieldValues = FieldValues>({
 					<LiteFormFieldLabel
 						fieldKey={fieldKey}
 						fieldSpec={fieldSpec}
+						hideRequiredIndicator={hideRequiredIndicator}
 						operation={operation}
 						renderTooltipContent={renderTooltipContent}
 					/>
