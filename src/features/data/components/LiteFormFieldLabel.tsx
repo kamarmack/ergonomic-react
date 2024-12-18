@@ -16,6 +16,7 @@ export type LiteFormFieldLabelProps = Pick<
 	| 'fieldKey'
 	| 'fieldSpec'
 	| 'hideRequiredIndicator'
+	| 'labelSubtitle'
 	| 'operation'
 	| 'renderTooltipContent'
 >;
@@ -23,6 +24,7 @@ export const LiteFormFieldLabel: React.FC<LiteFormFieldLabelProps> = ({
 	fieldKey,
 	fieldSpec,
 	hideRequiredIndicator = false,
+	labelSubtitle,
 	operation,
 	renderTooltipContent,
 }) => {
@@ -38,6 +40,11 @@ export const LiteFormFieldLabel: React.FC<LiteFormFieldLabelProps> = ({
 					)}
 				</p>
 			</div>
+			{labelSubtitle != null && (
+				<div className='mt-0.5'>
+					<p className='text-gray-500 text-xs'>{labelSubtitle}</p>
+				</div>
+			)}
 			{renderTooltipContent != null && (
 				<div>
 					<TooltipProvider>

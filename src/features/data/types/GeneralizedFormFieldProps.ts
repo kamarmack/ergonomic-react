@@ -28,6 +28,7 @@ export type GeneralizedFormFieldProps<
 	idPrefixByResourceName: Record<TResourceName, string>;
 	initialFormData: FieldValues | null;
 	isSubmitting: boolean;
+	labelSubtitle?: string;
 	operation: 'create' | 'update';
 	setError: (message: string) => void;
 };

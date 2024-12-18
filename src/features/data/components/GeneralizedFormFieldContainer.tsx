@@ -19,6 +19,7 @@ export const GeneralizedFormFieldContainer = <
 	idPrefixByResourceName,
 	initialFormData,
 	isSubmitting,
+	labelSubtitle,
 	operation,
 	setError,
 }: GeneralizedFormFieldProps<T>): JSX.Element => {
@@ -33,6 +34,7 @@ export const GeneralizedFormFieldContainer = <
 						fieldKey={fieldKey}
 						fieldSpec={fieldSpec}
 						hideRequiredIndicator={hideRequiredIndicator}
+						labelSubtitle={labelSubtitle}
 						operation={operation}
 					/>
 				</div>
