@@ -13,4 +13,6 @@ export type LiteFormFieldProps<TFieldValues extends FieldValues = FieldValues> =
 		| 'isSubmitting'
 		| 'operation'
 		| 'setError'
-	>;
+	> & {
+		renderTooltipContent?: () => JSX.Element;
+	};

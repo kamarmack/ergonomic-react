@@ -14,6 +14,7 @@ export const LiteFormFieldContainer = <T extends FieldValues = FieldValues>({
 	initialFormData,
 	isSubmitting,
 	operation,
+	renderTooltipContent,
 	setError,
 }: LiteFormFieldProps<T>): JSX.Element => {
 	const { type } = fieldSpec?.meta || {};
@@ -27,6 +28,7 @@ export const LiteFormFieldContainer = <T extends FieldValues = FieldValues>({
 						fieldKey={fieldKey}
 						fieldSpec={fieldSpec}
 						operation={operation}
+						renderTooltipContent={renderTooltipContent}
 					/>
 				</div>
 				<div>
@@ -46,6 +48,7 @@ export const LiteFormFieldContainer = <T extends FieldValues = FieldValues>({
 						fieldKey={fieldKey}
 						fieldSpec={fieldSpec}
 						operation={operation}
+						renderTooltipContent={renderTooltipContent}
 					/>
 				</div>
 			</div>

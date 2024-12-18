@@ -8,15 +8,18 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from '../../../components/ui/tooltip';
-import { NODE_ENV } from '../../../config/nodeEnv';
 import { getGeneralizedFormFieldLabel as getLabel } from '../utils/getGeneralizedFormFieldLabel';
-import { GeneralizedFormFieldLabelProps } from './GeneralizedFormFieldLabel';
+import { LiteFormFieldProps } from '../types/LiteFormFieldProps';
 
-export type LiteFormFieldLabelProps = GeneralizedFormFieldLabelProps;
+export type LiteFormFieldLabelProps = Pick<
+	LiteFormFieldProps,
+	'fieldKey' | 'fieldSpec' | 'operation' | 'renderTooltipContent'
+>;
 export const LiteFormFieldLabel: React.FC<LiteFormFieldLabelProps> = ({
 	fieldKey,
 	fieldSpec,
 	operation,
+	renderTooltipContent,
 }) => {
 	const label = getLabel(fieldKey, fieldSpec);
 	const required = isFieldRequired({ fieldSpec, operation });
@@ -28,11 +31,7 @@ export const LiteFormFieldLabel: React.FC<LiteFormFieldLabelProps> = ({
 					{required && <span className='text-red-700 font-semibold'>*</span>}
 				</p>
 			</div>
-			{(NODE_ENV === 'development' ||
-				['true', 'yes', 'TRUE', 'YES', '1'].includes(
-					process.env
-						.NEXT_PUBLIC_SHOW_SCHEMA_TOOLTIP_ON_GENERALIZED_INPUT_LABELS ?? '',
-				)) && (
+			{renderTooltipContent != null && (
 				<div>
 					<TooltipProvider>
 						<Tooltip>
@@ -41,20 +40,7 @@ export const LiteFormFieldLabel: React.FC<LiteFormFieldLabelProps> = ({
 									<GoInfo />
 								</button>
 							</TooltipTrigger>
-							<TooltipContent>
-								<div>
-									<p className='font-semibold text-sm'>Schema</p>
-									<pre className='text-xs font-light text-gray-500 max-w-xs mt-1'>
-										{JSON.stringify(
-											typeof fieldSpec === 'object' && fieldSpec != null
-												? fieldSpec
-												: {},
-											null,
-											'\t',
-										)}
-									</pre>
-								</div>
-							</TooltipContent>
+							<TooltipContent>{renderTooltipContent()}</TooltipContent>
 						</Tooltip>
 					</TooltipProvider>
 				</div>
