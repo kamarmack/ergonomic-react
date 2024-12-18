@@ -39,6 +39,7 @@ export const EmailAddressField = <
 	setError,
 }: Pick<
 	GeneralizedFormFieldProps<TFieldValues, TResourceName>,
+	| 'className'
 	| 'control'
 	| 'fieldKey'
 	| 'fieldSpec'

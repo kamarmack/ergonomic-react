@@ -40,6 +40,7 @@ export const FloatingPointNumberField = <
 	setError,
 }: Pick<
 	GeneralizedFormFieldProps<TFieldValues, TResourceName>,
+	| 'className'
 	| 'control'
 	| 'fieldKey'
 	| 'fieldSpec'

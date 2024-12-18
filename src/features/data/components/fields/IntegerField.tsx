@@ -41,6 +41,7 @@ export const IntegerField = <
 	setError,
 }: Pick<
 	GeneralizedFormFieldProps<TFieldValues, TResourceName>,
+	| 'className'
 	| 'control'
 	| 'fieldKey'
 	| 'fieldSpec'

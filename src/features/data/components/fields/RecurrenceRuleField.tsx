@@ -75,6 +75,7 @@ export const RecurrenceRuleField = <
 	operation,
 }: Pick<
 	GeneralizedFormFieldProps<TFieldValues, TResourceName>,
+	| 'className'
 	| 'control'
 	| 'fieldKey'
 	| 'fieldSpec'

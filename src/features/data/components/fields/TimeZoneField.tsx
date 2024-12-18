@@ -37,6 +37,7 @@ export const TimeZoneField = <
 	operation,
 }: Pick<
 	GeneralizedFormFieldProps<TFieldValues, TResourceName>,
+	| 'className'
 	| 'control'
 	| 'fieldKey'
 	| 'fieldSpec'

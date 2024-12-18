@@ -47,7 +47,12 @@ export const ListField = <
 	isSubmitting,
 }: Pick<
 	GeneralizedFormFieldProps<TFieldValues, TResourceName>,
-	'control' | 'fieldErrors' | 'fieldKey' | 'fieldSpec' | 'isSubmitting'
+	| 'className'
+	| 'control'
+	| 'fieldErrors'
+	| 'fieldKey'
+	| 'fieldSpec'
+	| 'isSubmitting'
 >): JSX.Element => {
 	// Field variables
 	const disabled = isSubmitting;

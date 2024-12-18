@@ -39,6 +39,7 @@ export const DocumentIDField = <
 }: Pick<
 	GeneralizedFormFieldProps<TFieldValues, TResourceName>,
 	| '_object'
+	| 'className'
 	| 'control'
 	| 'fieldKey'
 	| 'idPrefixByResourceName'
