@@ -3,6 +3,7 @@ import { GeneralizedFormFieldProps } from '../types/GeneralizedFormFieldProps';
 import { AddressField } from './fields/AddressField';
 import { BooleanField } from './fields/BooleanField';
 import { DateField } from './fields/DateField';
+import { DateTimeField } from './fields/DateTimeField';
 import { DocumentIDField } from './fields/DocumentIDField';
 import { DocumentIDReferenceField } from './fields/DocumentIDReferenceField';
 import { DomainField } from './fields/DomainField';
@@ -40,6 +41,9 @@ export const GeneralizedFormField = <T extends FieldValues = FieldValues>(
 
 		case 'date':
 			return <DateField {...props} />;
+
+		case 'date_time':
+			return <DateTimeField {...props} />;
 
 		case 'domain':
 			return <DomainField {...props} />;

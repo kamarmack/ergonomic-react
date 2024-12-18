@@ -2,6 +2,7 @@ import { GeneralizedTableCellProps } from '../types/GeneralizedTableCellProps';
 import { AddressCell } from './cells/AddressCell';
 import { BooleanCell } from './cells/BooleanCell';
 import { DateCell } from './cells/DateCell';
+import { DateTimeCell } from './cells/DateTimeCell';
 import { DocumentIDCell } from './cells/DocumentIDCell';
 import { DocumentIDReferenceCell } from './cells/DocumentIDReferenceCell';
 import { DomainCell } from './cells/DomainCell';
@@ -43,6 +44,9 @@ export const GeneralizedTableCell = <
 
 		case 'date':
 			return <DateCell {...props} />;
+
+		case 'date_time':
+			return <DateTimeCell {...props} />;
 
 		case 'domain':
 			return <DomainCell {...props} />;

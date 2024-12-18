@@ -83,7 +83,7 @@ export const GeneralizedForm = <
 		)
 		.map(([fieldKey]) => fieldKey);
 	const dateTimeLocalFieldKeys = Object.entries(fieldSpecByFieldKey)
-		.filter(([_, fieldSpec]) => fieldSpec.meta?.type === 'date')
+		.filter(([_, fieldSpec]) => fieldSpec.meta?.type === 'date_time')
 		.map(([fieldKey]) => fieldKey);
 	const floatingPointNumberFieldKeys = Object.entries(fieldSpecByFieldKey)
 		.filter(

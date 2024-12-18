@@ -3,6 +3,7 @@ import { LiteFormFieldProps } from '../types/LiteFormFieldProps';
 import { AddressField } from './fields/AddressField';
 import { BooleanField } from './fields/BooleanField';
 import { DateField } from './fields/DateField';
+import { DateTimeField } from './fields/DateTimeField';
 import { DomainField } from './fields/DomainField';
 import { DurationField } from './fields/DurationField';
 import { EmailAddressField } from './fields/EmailAddressField';
@@ -38,6 +39,9 @@ export const LiteFormField = <T extends FieldValues = FieldValues>(
 
 		case 'date':
 			return <DateField {...props} />;
+
+		case 'date_time':
+			return <DateTimeField {...props} />;
 
 		case 'domain':
 			return <DomainField {...props} />;
