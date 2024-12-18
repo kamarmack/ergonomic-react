@@ -4,6 +4,7 @@ import { GeneralizedFormFieldProps } from './GeneralizedFormFieldProps';
 export type LiteFormFieldProps<TFieldValues extends FieldValues = FieldValues> =
 	Pick<
 		GeneralizedFormFieldProps<TFieldValues>,
+		| 'className'
 		| 'control'
 		| 'fieldErrors'
 		| 'fieldKey'

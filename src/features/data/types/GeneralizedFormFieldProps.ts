@@ -14,6 +14,7 @@ export type GeneralizedFormFieldProps<
 	TResourceName extends string = string,
 > = {
 	_object: TResourceName;
+	className?: string;
 	control: Control<TFieldValues, unknown>;
 	fieldErrors: GeneralizedFormFieldErrors<TFieldValues>;
 	fieldKey: Path<TFieldValues>;
