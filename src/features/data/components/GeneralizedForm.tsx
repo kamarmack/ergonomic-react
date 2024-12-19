@@ -230,10 +230,13 @@ export const GeneralizedForm = <
 		operation === 'create' ? createOperationMutation : updateOperationMutation;
 
 	const onSubmit = handleSubmit((data) => {
-		const serverData = {
-			...getGeneralizedServerDataFromFormData(data, dataTransformationOptions),
-			_id: updateProps?.documentId as string,
-		};
+		const serverData = getGeneralizedServerDataFromFormData(
+			data,
+			dataTransformationOptions,
+		);
+		if (operation === 'update') {
+			(serverData as Record<string, unknown>)._id = updateProps?.documentId;
+		}
 		console.log(serverData);
 		writeMutation(serverData);
 	}) as () => void;
