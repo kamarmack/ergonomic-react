@@ -1,6 +1,6 @@
 import { isFieldRequired } from 'ergonomic';
 import { GoInfo } from 'react-icons/go';
-import React from 'react';
+import { Fragment } from 'react';
 import { Label } from '../../../components/ui/label';
 import {
 	Tooltip,
@@ -30,34 +30,36 @@ export const LiteFormFieldLabel: React.FC<LiteFormFieldLabelProps> = ({
 	const labelSubtitle = fieldSpec.meta?.label_message_user_text;
 	const required = isFieldRequired({ fieldSpec, operation });
 	return (
-		<Label className='flex items-center space-x-1'>
-			<div>
-				<p>
-					{label}
-					{required && !hideRequiredIndicator && (
-						<span className='text-red-700 font-semibold'>*</span>
-					)}
-				</p>
-			</div>
+		<Fragment>
+			<Label className='flex items-center space-x-1'>
+				<div>
+					<p>
+						{label}
+						{required && !hideRequiredIndicator && (
+							<span className='text-red-700 font-semibold'>*</span>
+						)}
+					</p>
+				</div>
+				{renderTooltipContent != null && (
+					<div>
+						<TooltipProvider>
+							<Tooltip>
+								<TooltipTrigger asChild>
+									<button type='button'>
+										<GoInfo />
+									</button>
+								</TooltipTrigger>
+								<TooltipContent>{renderTooltipContent()}</TooltipContent>
+							</Tooltip>
+						</TooltipProvider>
+					</div>
+				)}
+			</Label>
 			{labelSubtitle != null && (
-				<div className='text-gray-500 font-light text-sm'>
+				<div className='font-light mt-0.5 text-gray-500 text-sm'>
 					<p>{labelSubtitle}</p>
 				</div>
 			)}
-			{renderTooltipContent != null && (
-				<div>
-					<TooltipProvider>
-						<Tooltip>
-							<TooltipTrigger asChild>
-								<button type='button'>
-									<GoInfo />
-								</button>
-							</TooltipTrigger>
-							<TooltipContent>{renderTooltipContent()}</TooltipContent>
-						</Tooltip>
-					</TooltipProvider>
-				</div>
-			)}
-		</Label>
+		</Fragment>
 	);
 };
