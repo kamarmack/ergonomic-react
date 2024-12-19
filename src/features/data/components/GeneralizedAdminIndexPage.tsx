@@ -56,7 +56,7 @@ export const GeneralizedAdminIndexPage = <
 									<div>
 										<Link
 											href={getAdminWebAppRoute({
-												origin,
+												origin: null,
 												includeOrigin: false,
 												routeStaticId:
 													'ADMIN_WEB_APP__/RESOURCE/[RESOURCE_NAME]/ALL',
@@ -82,7 +82,7 @@ export const GeneralizedAdminIndexPage = <
 											<Link
 												className='flex space-x-0.5'
 												href={getAdminWebAppRoute({
-													origin,
+													origin: null,
 													includeOrigin: false,
 													routeStaticId:
 														'ADMIN_WEB_APP__/RESOURCE/[RESOURCE_NAME]/CREATE',
@@ -103,7 +103,7 @@ export const GeneralizedAdminIndexPage = <
 											<Link
 												className='flex space-x-0.5'
 												href={getAdminWebAppRoute({
-													origin,
+													origin: null,
 													includeOrigin: false,
 													routeStaticId:
 														'ADMIN_WEB_APP__/RESOURCE/[RESOURCE_NAME]/ALL',

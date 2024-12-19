@@ -56,7 +56,7 @@ export const GeneralizedAdminCreateOperationPage = <
 
 	// Resource URL
 	const resourceHref = getAdminWebAppRoute({
-		origin,
+		origin: null,
 		includeOrigin: false,
 		routeStaticId: 'ADMIN_WEB_APP__/RESOURCE/[RESOURCE_NAME]/ALL',
 		queryParams: { resource_name },
@@ -82,7 +82,7 @@ export const GeneralizedAdminCreateOperationPage = <
 					<Link
 						className='flex space-x-0.5'
 						href={getAdminWebAppRoute({
-							origin,
+							origin: null,
 							includeOrigin: false,
 							routeStaticId: 'ADMIN_WEB_APP__/RESOURCE/[RESOURCE_NAME]/ALL',
 							queryParams: { resource_name },

@@ -143,7 +143,7 @@ export const GeneralizedAdminResourceTablePage = <
 					<Link
 						className='flex space-x-0.5'
 						href={getAdminWebAppRoute({
-							origin,
+							origin: null,
 							includeOrigin: false,
 							routeStaticId: 'ADMIN_WEB_APP__/INDEX',
 							queryParams: {},
@@ -162,7 +162,7 @@ export const GeneralizedAdminResourceTablePage = <
 						<Link
 							className='flex space-x-0.5 border border-gray-200 rounded px-2 py-1'
 							href={getAdminWebAppRoute({
-								origin,
+								origin: null,
 								includeOrigin: false,
 								routeStaticId:
 									'ADMIN_WEB_APP__/RESOURCE/[RESOURCE_NAME]/CREATE',
@@ -208,7 +208,7 @@ export const GeneralizedAdminResourceTablePage = <
 										const editHref =
 											cellIdx === 0
 												? getAdminWebAppRoute({
-														origin,
+														origin: null,
 														includeOrigin: false,
 														routeStaticId:
 															'ADMIN_WEB_APP__/RESOURCE/[RESOURCE_NAME]/[DOCUMENT_ID]/EDIT',

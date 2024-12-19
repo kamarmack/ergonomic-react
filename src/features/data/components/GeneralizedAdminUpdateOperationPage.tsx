@@ -79,7 +79,7 @@ export const GeneralizedAdminUpdateOperationPage = <
 
 	// Resource URL
 	const resourceHref = getAdminWebAppRoute({
-		origin,
+		origin: null,
 		includeOrigin: false,
 		routeStaticId: 'ADMIN_WEB_APP__/RESOURCE/[RESOURCE_NAME]/ALL',
 		queryParams: { resource_name },
