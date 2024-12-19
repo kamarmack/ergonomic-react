@@ -85,7 +85,7 @@ export const DocumentIDReferenceField = <
 		isMulti ? [] : [{ label: 'None', value: '' }]
 	).concat(
 		documentPage.map(({ _id, name }) => ({
-			label: name,
+			label: name || _id,
 			value: _id,
 		})),
 	);
@@ -131,7 +131,7 @@ export const DocumentIDReferenceField = <
 			);
 			setInitialValue(() =>
 				matches.map(({ _id, name }) => ({
-					label: name,
+					label: name || _id,
 					value: _id,
 				})),
 			);
@@ -150,7 +150,10 @@ export const DocumentIDReferenceField = <
 			return;
 		}
 
-		setInitialValue(() => ({ label: match.name, value: valuesAsString }));
+		setInitialValue(() => ({
+			label: match.name || match._id,
+			value: valuesAsString,
+		}));
 	}, [
 		isMulti,
 		isInitialValueReady,
