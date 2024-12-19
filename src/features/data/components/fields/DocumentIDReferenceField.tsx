@@ -102,6 +102,7 @@ export const DocumentIDReferenceField = <
 		if (isInitialValueReady) return;
 		if (operation === 'create') {
 			setInitialValue(isMulti ? [] : undefined);
+			return;
 		}
 
 		if (isDocumentPageDataLoading) return;
@@ -156,6 +157,7 @@ export const DocumentIDReferenceField = <
 		isDocumentPageDataLoading,
 		documentPage,
 		name,
+		operation,
 		initialFormData,
 	]);
 
