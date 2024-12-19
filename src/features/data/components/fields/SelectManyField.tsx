@@ -127,7 +127,7 @@ export const SelectManyField = <
 
 	return (
 		<Select
-			className={cn('block w-full p-2 border rounded-md bg-white', className)}
+			className={cn('block w-full rounded-md bg-white', className)}
 			defaultValue={defaultSelections}
 			isDisabled={field.disabled}
 			isMulti
