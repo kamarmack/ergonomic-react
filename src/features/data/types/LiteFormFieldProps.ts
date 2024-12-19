@@ -12,7 +12,6 @@ export type LiteFormFieldProps<TFieldValues extends FieldValues = FieldValues> =
 		| 'hideRequiredIndicator'
 		| 'initialFormData'
 		| 'isSubmitting'
-		| 'labelSubtitle'
 		| 'operation'
 		| 'setError'
 	> & {
