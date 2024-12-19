@@ -27,6 +27,9 @@ export const LiteFormFieldLabel: React.FC<LiteFormFieldLabelProps> = ({
 	renderTooltipContent,
 }) => {
 	const label = getLabel(fieldKey, fieldSpec);
+	const labelSubtitle =
+		fieldSpec.meta?.label_message_admin_text ??
+		fieldSpec.meta?.label_message_user_text;
 	const required = isFieldRequired({ fieldSpec, operation });
 	return (
 		<Label className='flex items-center space-x-1'>
@@ -38,6 +41,11 @@ export const LiteFormFieldLabel: React.FC<LiteFormFieldLabelProps> = ({
 					)}
 				</p>
 			</div>
+			{labelSubtitle != null && (
+				<div className='text-gray-500 font-light text-sm'>
+					<p>{labelSubtitle}</p>
+				</div>
+			)}
 			{renderTooltipContent != null && (
 				<div>
 					<TooltipProvider>

@@ -20,6 +20,9 @@ export const GeneralizedFormFieldLabel: React.FC<
 	GeneralizedFormFieldLabelProps
 > = ({ fieldKey, fieldSpec, hideRequiredIndicator, operation }) => {
 	const label = getLabel(fieldKey, fieldSpec);
+	const labelSubtitle =
+		fieldSpec.meta?.label_message_admin_text ??
+		fieldSpec.meta?.label_message_user_text;
 	const required = isFieldRequired({ fieldSpec, operation });
 	return (
 		<Label className='flex items-center space-x-1'>
@@ -31,6 +34,11 @@ export const GeneralizedFormFieldLabel: React.FC<
 					)}
 				</p>
 			</div>
+			{labelSubtitle != null && (
+				<div className='text-gray-500 font-light text-sm'>
+					<p>{labelSubtitle}</p>
+				</div>
+			)}
 			{(NODE_ENV === 'development' ||
 				['true', 'yes', 'TRUE', 'YES', '1'].includes(
 					process.env
