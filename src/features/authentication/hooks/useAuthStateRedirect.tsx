@@ -43,14 +43,14 @@ export const useAuthStateRedirect = (
 	const { client_token } = query;
 
 	// Redirect Options
-	const { allowAuthStates = DEFAULT_ALLOW_AUTH_STATES } = options;
+	const {
+		authSiteOrigin = process.env.NEXT_PUBLIC_SITE_URL_SSO_WEB_APP ?? '',
+		allowAuthStates = DEFAULT_ALLOW_AUTH_STATES,
+	} = options;
 
 	// Auth State Flags
 	const allowGuestUsers = allowAuthStates.includes('guest');
 	const allowAuthenticatedUsers = allowAuthStates.includes('authenticated');
-
-	// ==== Hooks ==== //
-	const authSiteOrigin = process.env.NEXT_PUBLIC_SITE_URL_SSO_WEB_APP ?? '';
 
 	// ==== Effects ==== //
 

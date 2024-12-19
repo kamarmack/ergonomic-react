@@ -10,13 +10,11 @@ export const useAuthenticatedRouteRedirect = (
 	const [authStateIsLoading, setAuthStateIsLoading] = useState(true);
 
 	// ==== Hooks ==== //
-	const authSiteOrigin = process.env.NEXT_PUBLIC_SITE_URL_SSO_WEB_APP ?? '';
 	const allowAuthStates = authStateIsLoading
 		? ['authenticated' as const, 'guest' as const]
 		: ['authenticated' as const];
 	useAuthStateRedirect({
 		allowAuthStates,
-		authSiteOrigin,
 		...options,
 	});
 
