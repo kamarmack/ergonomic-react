@@ -93,6 +93,11 @@ export const Page: React.FC<PageProps> = ({
 		<>
 			<Head>
 				<title>{fullTitle}</title>
+				<meta charSet='UTF-8' />
+				<meta
+					content='width=device-width, initial-scale=1.0, minimum-scale=1.0'
+					name='viewport'
+				/>
 				<meta name='description' content={metaDescription} />
 				<meta name='author' content={OPEN_GRAPH_CONFIG.author} />
 				<meta name='og:description' content={metaDescription} />
