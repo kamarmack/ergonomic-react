@@ -44,7 +44,7 @@ export const useAuthStateRedirect = (
 
 	// Redirect Options
 	const {
-		authSiteOrigin = process.env.NEXT_PUBLIC_SITE_URL_SSO_WEB_APP ?? '',
+		authSiteOrigin = process.env.NEXT_PUBLIC_SITE_URL_SSO_SITE ?? '',
 		allowAuthStates = DEFAULT_ALLOW_AUTH_STATES,
 	} = options;
 

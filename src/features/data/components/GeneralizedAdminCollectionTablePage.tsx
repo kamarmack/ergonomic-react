@@ -31,12 +31,12 @@ export type GeneralizedAdminResourceTablePageProps<
 	| 'getPageQueryHookForResource'
 	| 'idPrefixByResourceName'
 > & {
-	getAdminWebAppRoute: (options: unknown) => string;
+	getAdminSiteRoute: (options: unknown) => string;
 };
 export const GeneralizedAdminResourceTablePage = <
 	TResourceName extends string = string,
 >({
-	getAdminWebAppRoute,
+	getAdminSiteRoute,
 	getApiResourceSpec,
 	getPageQueryHookForResource,
 	idPrefixByResourceName,
@@ -142,10 +142,10 @@ export const GeneralizedAdminResourceTablePage = <
 				<div>
 					<Link
 						className='flex space-x-0.5'
-						href={getAdminWebAppRoute({
+						href={getAdminSiteRoute({
 							origin: null,
 							includeOrigin: false,
-							routeStaticId: 'ADMIN_WEB_APP__/INDEX',
+							routeStaticId: 'ADMIN_SITE__/INDEX',
 							queryParams: {},
 						})}
 					>
@@ -161,11 +161,10 @@ export const GeneralizedAdminResourceTablePage = <
 					<div>
 						<Link
 							className='flex space-x-0.5 border border-gray-200 rounded px-2 py-1'
-							href={getAdminWebAppRoute({
+							href={getAdminSiteRoute({
 								origin: null,
 								includeOrigin: false,
-								routeStaticId:
-									'ADMIN_WEB_APP__/RESOURCE/[RESOURCE_NAME]/CREATE',
+								routeStaticId: 'ADMIN_SITE__/RESOURCE/[RESOURCE_NAME]/CREATE',
 								queryParams: { resource_name: resourceName },
 							})}
 						>
@@ -207,11 +206,11 @@ export const GeneralizedAdminResourceTablePage = <
 										)._id;
 										const editHref =
 											cellIdx === 0
-												? getAdminWebAppRoute({
+												? getAdminSiteRoute({
 														origin: null,
 														includeOrigin: false,
 														routeStaticId:
-															'ADMIN_WEB_APP__/RESOURCE/[RESOURCE_NAME]/[DOCUMENT_ID]/EDIT',
+															'ADMIN_SITE__/RESOURCE/[RESOURCE_NAME]/[DOCUMENT_ID]/EDIT',
 														queryParams: {
 															resource_name: resourceName,
 															document_id: documentId,

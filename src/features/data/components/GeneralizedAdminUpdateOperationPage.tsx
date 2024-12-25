@@ -19,12 +19,12 @@ export type GeneralizedAdminUpdateOperationPageProps<
 	| 'getUpdateOperationMutationForResource'
 	| 'idPrefixByResourceName'
 > & {
-	getAdminWebAppRoute: (options: unknown) => string;
+	getAdminSiteRoute: (options: unknown) => string;
 };
 export const GeneralizedAdminUpdateOperationPage = <
 	TResourceName extends string = string,
 >({
-	getAdminWebAppRoute,
+	getAdminSiteRoute,
 	getApiResourceSpec,
 	getCreateOperationMutationForResource,
 	getPageQueryHookForResource,
@@ -78,10 +78,10 @@ export const GeneralizedAdminUpdateOperationPage = <
 		documentData !== null;
 
 	// Resource URL
-	const resourceHref = getAdminWebAppRoute({
+	const resourceHref = getAdminSiteRoute({
 		origin: null,
 		includeOrigin: false,
-		routeStaticId: 'ADMIN_WEB_APP__/RESOURCE/[RESOURCE_NAME]/ALL',
+		routeStaticId: 'ADMIN_SITE__/RESOURCE/[RESOURCE_NAME]/ALL',
 		queryParams: { resource_name },
 	});
 

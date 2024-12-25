@@ -12,12 +12,12 @@ export type GeneralizedAdminIndexPageProps<
 	GeneralizedFormProps<FieldValues, TResourceName>,
 	'getApiResourceSpec' | 'idPrefixByResourceName'
 > & {
-	getAdminWebAppRoute: (options: unknown) => string;
+	getAdminSiteRoute: (options: unknown) => string;
 };
 export const GeneralizedAdminIndexPage = <
 	TResourceName extends string = string,
 >({
-	getAdminWebAppRoute,
+	getAdminSiteRoute,
 	getApiResourceSpec,
 	idPrefixByResourceName,
 }: GeneralizedAdminIndexPageProps<TResourceName>): JSX.Element => {
@@ -55,11 +55,11 @@ export const GeneralizedAdminIndexPage = <
 								>
 									<div>
 										<Link
-											href={getAdminWebAppRoute({
+											href={getAdminSiteRoute({
 												origin: null,
 												includeOrigin: false,
 												routeStaticId:
-													'ADMIN_WEB_APP__/RESOURCE/[RESOURCE_NAME]/ALL',
+													'ADMIN_SITE__/RESOURCE/[RESOURCE_NAME]/ALL',
 												queryParams: {
 													resource_name: resourceName,
 												},
@@ -81,11 +81,11 @@ export const GeneralizedAdminIndexPage = <
 										<div>
 											<Link
 												className='flex space-x-0.5'
-												href={getAdminWebAppRoute({
+												href={getAdminSiteRoute({
 													origin: null,
 													includeOrigin: false,
 													routeStaticId:
-														'ADMIN_WEB_APP__/RESOURCE/[RESOURCE_NAME]/CREATE',
+														'ADMIN_SITE__/RESOURCE/[RESOURCE_NAME]/CREATE',
 													queryParams: {
 														resource_name: resourceName,
 													},
@@ -102,11 +102,11 @@ export const GeneralizedAdminIndexPage = <
 										<div>
 											<Link
 												className='flex space-x-0.5'
-												href={getAdminWebAppRoute({
+												href={getAdminSiteRoute({
 													origin: null,
 													includeOrigin: false,
 													routeStaticId:
-														'ADMIN_WEB_APP__/RESOURCE/[RESOURCE_NAME]/ALL',
+														'ADMIN_SITE__/RESOURCE/[RESOURCE_NAME]/ALL',
 													queryParams: {
 														resource_name: resourceName,
 													},
