@@ -16,15 +16,12 @@ import { AuthContext } from '../providers/AuthProvider';
 const DEFAULT_ALLOW_AUTH_STATES = ['authenticated' as const, 'guest' as const];
 
 export type UseAuthStateRedirectOptions = {
-	allowAuthStates?: ('authenticated' | 'guest')[];
+	allowAuthStates: ('authenticated' | 'guest')[];
+	shouldPauseFirebaseAuthRedirects: boolean;
 } & Partial<Omit<RedirectToLoginPageParams, 'router'>> &
 	Omit<RedirectToAuthenticatedUserWelcomePageParams, 'router'>;
 
-export const useAuthStateRedirect = (
-	options: UseAuthStateRedirectOptions = {
-		allowAuthStates: DEFAULT_ALLOW_AUTH_STATES,
-	},
-) => {
+export const useAuthStateRedirect = (options: UseAuthStateRedirectOptions) => {
 	// ==== Hooks ==== //
 
 	// Router
@@ -46,6 +43,7 @@ export const useAuthStateRedirect = (
 	const {
 		authSiteOrigin = process.env.NEXT_PUBLIC_SITE_URL_SSO_SITE ?? '',
 		allowAuthStates = DEFAULT_ALLOW_AUTH_STATES,
+		shouldPauseFirebaseAuthRedirects,
 	} = options;
 
 	// Auth State Flags
@@ -61,7 +59,7 @@ export const useAuthStateRedirect = (
 
 		if (authContext.user) {
 			if (allowAuthenticatedUsers) return;
-			if (localStorage.getItem('pause_firebase_auth_redirects')) return;
+			if (shouldPauseFirebaseAuthRedirects) return;
 
 			redirectToAuthenticatedUserWelcomePage({ ...options, router });
 			return;
@@ -91,7 +89,13 @@ export const useAuthStateRedirect = (
 			router,
 		});
 		return;
-	}, [authContext.user, client_token, router.isReady, allowAuthStates.join()]);
+	}, [
+		shouldPauseFirebaseAuthRedirects,
+		authContext.user,
+		client_token,
+		router.isReady,
+		allowAuthStates.join(),
+	]);
 
 	return { ...authContext };
 };

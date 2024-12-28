@@ -4,7 +4,9 @@ import { useAuthStateRedirect } from './useAuthStateRedirect';
 import { RedirectToAuthenticatedUserWelcomePageParams } from '../utils/redirectToAuthenticatedUserWelcomePage';
 
 export const useGuestRouteRedirect = (
-	options: Omit<RedirectToAuthenticatedUserWelcomePageParams, 'router'> = {},
+	options: Omit<RedirectToAuthenticatedUserWelcomePageParams, 'router'> & {
+		shouldPauseFirebaseAuthRedirects: boolean;
+	},
 ) => {
 	// ==== Component State ==== //
 	const [authStateIsLoading, setAuthStateIsLoading] = useState(true);

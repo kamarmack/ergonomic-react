@@ -4,7 +4,9 @@ import { useAuthStateRedirect } from './useAuthStateRedirect';
 import { RedirectToLoginPageParams } from '../utils/redirectToLoginPage';
 
 export const useAuthenticatedRouteRedirect = (
-	options: Partial<Omit<RedirectToLoginPageParams, 'router'>> = {},
+	options: Partial<Omit<RedirectToLoginPageParams, 'router'>> & {
+		shouldPauseFirebaseAuthRedirects: boolean;
+	},
 ) => {
 	// ==== Component State ==== //
 	const [authStateIsLoading, setAuthStateIsLoading] = useState(true);
