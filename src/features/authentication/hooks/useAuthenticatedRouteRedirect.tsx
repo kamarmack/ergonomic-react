@@ -18,6 +18,8 @@ export const useAuthenticatedRouteRedirect = (
 	useAuthStateRedirect({
 		allowAuthStates,
 		...options,
+		shouldPauseFirebaseAuthRedirects:
+			options.shouldPauseFirebaseAuthRedirects || authStateIsLoading,
 	});
 
 	// ==== Effects ==== //
@@ -29,8 +31,8 @@ export const useAuthenticatedRouteRedirect = (
 				// Check the auth state
 				await firebaseAuthInstance.authStateReady();
 
-				// Wait 1 second
-				await new Promise((resolve) => setTimeout(resolve, 1000));
+				// Wait 1.5 seconds
+				await new Promise((resolve) => setTimeout(resolve, 1500));
 			} catch (error) {
 				console.error(error);
 			} finally {

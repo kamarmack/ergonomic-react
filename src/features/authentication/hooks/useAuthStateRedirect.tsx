@@ -82,6 +82,7 @@ export const useAuthStateRedirect = (options: UseAuthStateRedirectOptions) => {
 		}
 
 		if (allowGuestUsers) return;
+		if (shouldPauseFirebaseAuthRedirects) return;
 
 		redirectToLoginPage({
 			...options,

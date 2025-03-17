@@ -18,6 +18,8 @@ export const useGuestRouteRedirect = (
 	useAuthStateRedirect({
 		allowAuthStates,
 		...options,
+		shouldPauseFirebaseAuthRedirects:
+			options.shouldPauseFirebaseAuthRedirects || authStateIsLoading,
 	});
 
 	// ==== Effects ==== //
