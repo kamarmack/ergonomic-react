@@ -1,7 +1,7 @@
 import {
 	getRecurrenceRuleData,
 	getHumanFriendlyRecurrenceRuleString,
-	YupHelpers,
+	yupX,
 } from 'ergonomic';
 import { GeneralizedTableCellProps } from '../../types/GeneralizedTableCellProps';
 import { DefaultCell } from './DefaultCell';
@@ -20,7 +20,7 @@ export const RecurrenceRuleCell = (
 			return getHumanFriendlyRecurrenceRuleString(data);
 		}}
 		isValid={(value: unknown): boolean =>
-			YupHelpers.recurrenceRule().isValidSync(value)
+			yupX.recurrenceRule().isValidSync(value)
 		}
 	/>
 );

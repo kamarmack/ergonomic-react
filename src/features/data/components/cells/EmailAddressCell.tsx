@@ -1,4 +1,4 @@
-import { YupHelpers } from 'ergonomic';
+import { yupX } from 'ergonomic';
 import { GeneralizedTableCellProps } from '../../types/GeneralizedTableCellProps';
 import { DefaultCell } from './DefaultCell';
 
@@ -8,7 +8,7 @@ export const EmailAddressCell = (
 	<DefaultCell
 		{...props}
 		isValid={(value: unknown): boolean =>
-			YupHelpers.emailAddress().isValidSync(value)
+			yupX.emailAddress().isValidSync(value)
 		}
 	/>
 );

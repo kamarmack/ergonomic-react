@@ -1,5 +1,5 @@
 import { ControllerRenderProps, FieldValues, Path } from 'react-hook-form';
-import { YupHelpers } from 'ergonomic';
+import { yupX } from 'ergonomic';
 
 export const handleUrlFieldBlur =
 	<TFieldValues extends FieldValues = FieldValues>(params: {
@@ -15,7 +15,7 @@ export const handleUrlFieldBlur =
 		params.field.onBlur();
 
 		const value = e.target.value;
-		if (!value || YupHelpers.url().isValidSync(value)) {
+		if (!value || yupX.url().isValidSync(value)) {
 			params.setError('');
 		} else {
 			params.setError('Please enter a valid URL, e.g. https://example.com');

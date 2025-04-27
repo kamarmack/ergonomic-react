@@ -1,5 +1,5 @@
 import { ControllerRenderProps, FieldValues, Path } from 'react-hook-form';
-import { YupHelpers } from 'ergonomic';
+import { yupX } from 'ergonomic';
 
 export const handleUnitedStatesPhoneNumberFieldBlur =
 	<TFieldValues extends FieldValues = FieldValues>(params: {
@@ -15,7 +15,7 @@ export const handleUnitedStatesPhoneNumberFieldBlur =
 		params.field.onBlur();
 
 		const value = e.target.value.replace(/[^0-9]/g, '');
-		if (YupHelpers.unitedStatesPhoneNumber().isValidSync(value)) {
+		if (yupX.unitedStatesPhoneNumber().isValidSync(value)) {
 			params.setError('');
 		} else {
 			params.setError(

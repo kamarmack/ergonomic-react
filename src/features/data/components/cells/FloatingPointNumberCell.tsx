@@ -1,4 +1,4 @@
-import { YupHelpers } from 'ergonomic';
+import { yupX } from 'ergonomic';
 import { GeneralizedTableCellProps } from '../../types/GeneralizedTableCellProps';
 import { DefaultCell } from './DefaultCell';
 
@@ -14,7 +14,7 @@ export const FloatingPointNumberCell = (
 			}).format(num);
 		}}
 		isValid={(value: unknown): boolean =>
-			YupHelpers.floatingPointNumber().isValidSync(value)
+			yupX.floatingPointNumber().isValidSync(value)
 		}
 	/>
 );

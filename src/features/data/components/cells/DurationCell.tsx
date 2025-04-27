@@ -1,5 +1,5 @@
 import { Duration } from 'luxon';
-import { YupHelpers } from 'ergonomic';
+import { yupX } from 'ergonomic';
 import { GeneralizedTableCellProps } from '../../types/GeneralizedTableCellProps';
 import { DefaultCell } from './DefaultCell';
 
@@ -10,8 +10,6 @@ export const DurationCell = (props: GeneralizedTableCellProps): JSX.Element => (
 			const duration = value as string;
 			return Duration.fromISO(duration).toHuman();
 		}}
-		isValid={(value: unknown): boolean =>
-			YupHelpers.duration().isValidSync(value)
-		}
+		isValid={(value: unknown): boolean => yupX.duration().isValidSync(value)}
 	/>
 );

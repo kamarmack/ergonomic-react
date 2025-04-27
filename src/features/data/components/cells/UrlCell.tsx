@@ -1,10 +1,10 @@
-import { YupHelpers } from 'ergonomic';
+import { yupX } from 'ergonomic';
 import { GeneralizedTableCellProps } from '../../types/GeneralizedTableCellProps';
 import { DefaultCell } from './DefaultCell';
 
 export const UrlCell = (props: GeneralizedTableCellProps): JSX.Element => (
 	<DefaultCell
 		{...props}
-		isValid={(value: unknown): boolean => YupHelpers.url().isValidSync(value)}
+		isValid={(value: unknown): boolean => yupX.url().isValidSync(value)}
 	/>
 );

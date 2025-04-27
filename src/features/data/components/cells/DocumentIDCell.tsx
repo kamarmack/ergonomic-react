@@ -1,4 +1,4 @@
-import { getApiResourceYupHelpers } from 'ergonomic';
+import { getApiResourceYupFields } from 'ergonomic';
 import { GeneralizedTableCellProps } from '../../types/GeneralizedTableCellProps';
 import { DefaultCell } from './DefaultCell';
 
@@ -6,7 +6,7 @@ export const DocumentIDCell = (
 	props: GeneralizedTableCellProps,
 ): JSX.Element => {
 	const allResourceNames = Object.keys(props.idPrefixByResourceName);
-	const apiYupHelpers = getApiResourceYupHelpers(
+	const apiYupFields = getApiResourceYupFields(
 		allResourceNames,
 		props.idPrefixByResourceName,
 	);
@@ -15,7 +15,7 @@ export const DocumentIDCell = (
 		<DefaultCell
 			{...props}
 			isValid={(value: unknown): boolean =>
-				apiYupHelpers.id(props._object).isValidSync(value)
+				apiYupFields.id(props._object).isValidSync(value)
 			}
 		/>
 	);

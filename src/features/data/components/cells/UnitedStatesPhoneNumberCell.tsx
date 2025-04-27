@@ -1,4 +1,4 @@
-import { YupHelpers } from 'ergonomic';
+import { yupX } from 'ergonomic';
 import { GeneralizedTableCellProps } from '../../types/GeneralizedTableCellProps';
 import { DefaultCell } from './DefaultCell';
 import { getFormattedPhoneNumberFromE164 } from '../../utils/getFormattedPhoneNumberFromE164';
@@ -13,7 +13,7 @@ export const UnitedStatesPhoneNumberCell = (
 			return getFormattedPhoneNumberFromE164(phoneNumberE164);
 		}}
 		isValid={(value: unknown): boolean =>
-			YupHelpers.unitedStatesPhoneNumber().isValidSync(value)
+			yupX.unitedStatesPhoneNumber().isValidSync(value)
 		}
 	/>
 );

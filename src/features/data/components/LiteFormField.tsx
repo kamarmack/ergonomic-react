@@ -113,8 +113,8 @@ export const LiteFormField = <T extends FieldValues = FieldValues>(
 			// return <DocumentIDField {...props} />;
 			throw new Error(`Unsupported field type: ${type ?? ''}`);
 
-		case 'id_ref':
-		case 'id_refs':
+		case 'foreign_key':
+		case 'foreign_keys':
 			// return <DocumentIDReferenceField {...props} />;
 			throw new Error(`Unsupported field type: ${type ?? ''}`);
 

@@ -1,5 +1,5 @@
 import { ControllerRenderProps, FieldValues, Path } from 'react-hook-form';
-import { YupHelpers } from 'ergonomic';
+import { yupX } from 'ergonomic';
 
 export const handleEmailAddressFieldBlur =
 	<TFieldValues extends FieldValues = FieldValues>(params: {
@@ -15,7 +15,7 @@ export const handleEmailAddressFieldBlur =
 		params.field.onBlur();
 
 		const value = e.target.value;
-		if (!value || YupHelpers.emailAddress().isValidSync(value)) {
+		if (!value || yupX.emailAddress().isValidSync(value)) {
 			params.setError('');
 		} else {
 			params.setError(

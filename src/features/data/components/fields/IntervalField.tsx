@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import { useEffect, useState } from 'react';
 import { FieldValues, useController } from 'react-hook-form';
-import { YupHelpers } from 'ergonomic';
+import { yupX } from 'ergonomic';
 import { Skeleton } from '../../../../components/ui/skeleton';
 import { Input } from '../../../../components/ui/input';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
@@ -89,7 +89,7 @@ export const IntervalField = <
 				: defaultValueStringForUpdateOperation;
 		const isDefaultValueStringAValidInterval =
 			defaultValueString !== '' &&
-			YupHelpers.interval().isValidSync(defaultValueString);
+			yupX.interval().isValidSync(defaultValueString);
 
 		if (isDefaultValueStringAValidInterval) {
 			const [start, end] = defaultValueString.split('/') as [string, string];

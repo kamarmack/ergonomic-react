@@ -1,4 +1,4 @@
-import { YupHelpers } from 'ergonomic';
+import { yupX } from 'ergonomic';
 import { GeneralizedTableCellProps } from '../../types/GeneralizedTableCellProps';
 import { DefaultCell } from './DefaultCell';
 
@@ -9,8 +9,6 @@ export const IntegerCell = (props: GeneralizedTableCellProps): JSX.Element => (
 			const num = value as number;
 			return new Intl.NumberFormat().format(num);
 		}}
-		isValid={(value: unknown): boolean =>
-			YupHelpers.integer().isValidSync(value)
-		}
+		isValid={(value: unknown): boolean => yupX.integer().isValidSync(value)}
 	/>
 );

@@ -2,7 +2,7 @@
 
 import * as R from 'ramda';
 import { Duration, DurationLikeObject } from 'luxon';
-import { YupHelpers } from 'ergonomic';
+import { yupX } from 'ergonomic';
 import { Skeleton } from '../../../../components/ui/skeleton';
 import { useEffect, useState } from 'react';
 import { FieldValues, useController } from 'react-hook-form';
@@ -96,7 +96,7 @@ export const DurationField = <
 				: defaultValueStringForUpdateOperation;
 		const isDefaultValueStringAValidDuration =
 			defaultValueString !== '' &&
-			YupHelpers.duration().isValidSync(defaultValueString);
+			yupX.duration().isValidSync(defaultValueString);
 
 		if (isDefaultValueStringAValidDuration) {
 			const {

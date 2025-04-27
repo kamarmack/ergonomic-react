@@ -1,5 +1,5 @@
 import { DateTime, Interval } from 'luxon';
-import { YupHelpers } from 'ergonomic';
+import { yupX } from 'ergonomic';
 import { GeneralizedTableCellProps } from '../../types/GeneralizedTableCellProps';
 import { DefaultCell } from './DefaultCell';
 
@@ -13,8 +13,6 @@ export const IntervalCell = (props: GeneralizedTableCellProps): JSX.Element => (
 			const end = isoInterval.end.toLocaleString(DateTime.DATETIME_MED);
 			return `${start} - ${end}`;
 		}}
-		isValid={(value: unknown): boolean =>
-			YupHelpers.interval().isValidSync(value)
-		}
+		isValid={(value: unknown): boolean => yupX.interval().isValidSync(value)}
 	/>
 );

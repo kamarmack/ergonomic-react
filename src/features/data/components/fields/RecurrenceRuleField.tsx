@@ -15,7 +15,7 @@ import {
 	RecurrenceRuleFrequencyEnum,
 	RecurrenceRuleEnding,
 	RecurrenceRuleEndingEnum,
-	YupHelpers,
+	yupX,
 	getRecurrenceRuleData,
 	getRecurrenceRuleString,
 } from 'ergonomic';
@@ -124,7 +124,7 @@ export const RecurrenceRuleField = <
 				: defaultValueStringForUpdateOperation;
 		const isDefaultValueStringAValidRecurrenceRule =
 			defaultValueString !== '' &&
-			YupHelpers.recurrenceRule().isValidSync(defaultValueString);
+			yupX.recurrenceRule().isValidSync(defaultValueString);
 
 		if (isDefaultValueStringAValidRecurrenceRule) {
 			initialRecurrenceRule =

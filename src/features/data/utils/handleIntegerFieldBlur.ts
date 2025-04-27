@@ -1,5 +1,5 @@
 import { ControllerRenderProps, FieldValues, Path } from 'react-hook-form';
-import { YupHelpers } from 'ergonomic';
+import { yupX } from 'ergonomic';
 
 export const handleIntegerFieldBlur =
 	<TFieldValues extends FieldValues = FieldValues>(params: {
@@ -16,7 +16,7 @@ export const handleIntegerFieldBlur =
 
 		const value = e.target.value.replace(/[^0-9-]/g, '');
 		const num = Number(value);
-		if (value === '' || YupHelpers.integer().isValidSync(num)) {
+		if (value === '' || yupX.integer().isValidSync(num)) {
 			params.setError('');
 		} else {
 			params.setError('Please enter a number without any decimal places.');

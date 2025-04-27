@@ -1,4 +1,4 @@
-import { YupHelpers, getCurrencyUsdStringFromCents } from 'ergonomic';
+import { yupX, getCurrencyUsdStringFromCents } from 'ergonomic';
 import { GeneralizedTableCellProps } from '../../types/GeneralizedTableCellProps';
 import { DefaultCell } from './DefaultCell';
 
@@ -9,6 +9,6 @@ export const UsdCell = (props: GeneralizedTableCellProps): JSX.Element => (
 			const cents = value as number;
 			return getCurrencyUsdStringFromCents(cents);
 		}}
-		isValid={(value: unknown): boolean => YupHelpers.usd().isValidSync(value)}
+		isValid={(value: unknown): boolean => yupX.usd().isValidSync(value)}
 	/>
 );
