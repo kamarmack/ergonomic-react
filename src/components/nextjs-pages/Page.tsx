@@ -16,6 +16,7 @@ import { MobileResponsivePageComingSoon } from './MobileResponsivePageComingSoon
 export type PageStaticProps = BaseComponentWithChildren & {
 	description?: string | React.ReactNode;
 	hideMobileResponsiveVersion?: boolean;
+	metaElements?: React.ReactNode;
 	routeStaticId: string;
 	routeId?: string;
 	title: string | React.ReactNode;
@@ -35,6 +36,7 @@ export const Page: React.FC<PageProps> = ({
 	children,
 	description = OPEN_GRAPH_CONFIG.siteDescription,
 	hideMobileResponsiveVersion = false,
+	metaElements = null,
 	routeId,
 	routeStaticId,
 	title,
@@ -111,6 +113,7 @@ export const Page: React.FC<PageProps> = ({
 				<meta property='og:title' content={metaTitle} />
 				<meta property='og:type' content='website' />
 				<meta property='og:url' content={metaUrl} />
+				{metaElements}
 			</Head>
 			<MobileResponsivePageComingSoon
 				className={cn(
