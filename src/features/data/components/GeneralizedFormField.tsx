@@ -63,12 +63,12 @@ export const GeneralizedFormField = <T extends FieldValues = FieldValues>(
 		case 'floating_point_number':
 			return <FloatingPointNumberField {...props} />;
 
+		case 'foreign_key':
+		case 'foreign_keys':
+			return <DocumentIDReferenceField {...props} />;
+
 		case 'id':
 			return <DocumentIDField {...props} />;
-
-		case 'id_ref':
-		case 'id_refs':
-			return <DocumentIDReferenceField {...props} />;
 
 		case 'integer':
 			return <IntegerField {...props} />;

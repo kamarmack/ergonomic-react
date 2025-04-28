@@ -66,12 +66,12 @@ export const GeneralizedTableCell = <
 		case 'floating_point_number':
 			return <FloatingPointNumberCell {...props} />;
 
+		case 'foreign_key':
+		case 'foreign_keys':
+			return <DocumentIDReferenceCell {...props} />;
+
 		case 'id':
 			return <DocumentIDCell {...props} />;
-
-		case 'id_ref':
-		case 'id_refs':
-			return <DocumentIDReferenceCell {...props} />;
 
 		case 'integer':
 			return <IntegerCell {...props} />;

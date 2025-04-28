@@ -60,7 +60,7 @@ export const DocumentIDReferenceField = <
 	// Field variables
 	const { resources = [], type } = fieldSpec?.meta || {};
 	const disabled = isSubmitting;
-	const isMulti = type === 'id_refs';
+	const isMulti = type === 'foreign_keys';
 	const acceptsMultipleDataTypes = resources.length > 1;
 	const required = isFieldRequired({ fieldSpec, operation });
 
