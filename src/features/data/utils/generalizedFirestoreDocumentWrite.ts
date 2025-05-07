@@ -1,3 +1,4 @@
+import { DateTime } from 'luxon';
 import { collection, doc, writeBatch } from 'firebase/firestore';
 import {
 	GeneralizedApiResource,
@@ -93,7 +94,12 @@ export const generalizedFirestoreDocumentUpdateOperation =
 
 				for (const { _id, ...updateParams } of writeChunk) {
 					const documentRef = doc(collectionRef, _id);
-					batch.update(documentRef, updateParams);
+					const timestamp = DateTime.now().toUTC().toISO();
+					const updatePayload: GeneralizedUpdateBody = {
+						_date_last_modified: timestamp,
+						...updateParams,
+					};
+					batch.update(documentRef, updatePayload);
 				}
 
 				await batch.commit();
