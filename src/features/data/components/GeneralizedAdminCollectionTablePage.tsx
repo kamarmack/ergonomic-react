@@ -1,6 +1,6 @@
 import * as changeCase from 'change-case';
 import { useRouter } from 'next/router';
-import { getFieldSpecByFieldKey } from 'ergonomic';
+import { getFieldSpecByFieldKey, Keys } from 'ergonomic';
 import Link from 'next/link';
 import { FieldValues } from 'react-hook-form';
 import { GoChevronLeft, GoPlus } from 'react-icons/go';
@@ -84,7 +84,9 @@ export const GeneralizedAdminResourceTablePage = <
 	// Field Spec by Field Key
 	const fieldSpecByFieldKey = getFieldSpecByFieldKey(
 		apiResourceSpec?.apiResourceJsonSchema,
-		apiResourceSpec?.apiResourceFieldEnum.arr,
+		apiResourceSpec?.apiResourceJsonSchema
+			? Keys(apiResourceSpec.properties)
+			: [],
 	);
 	const isApiResourceSpecInitialized =
 		Object.keys(fieldSpecByFieldKey).length > 0 && apiResourceSpec != null;
