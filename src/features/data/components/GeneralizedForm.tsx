@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import { getFieldSpecByFieldKey, getGeneralizedError } from 'ergonomic';
+import { getFieldSpecByFieldKey, getGeneralizedError, Keys } from 'ergonomic';
 import { useEffect, useState } from 'react';
 import { GoInfo } from 'react-icons/go';
 import { FieldValues, Path, UseFormSetError, useForm } from 'react-hook-form';
@@ -51,7 +51,16 @@ export const GeneralizedForm = <
 	operation,
 	resourceName,
 	updateProps,
-}: GeneralizedFormProps<TFieldValues, TResourceName>): JSX.Element => {
+}: // createOperationSchema,
+// updateOperationSchema,
+// createOperationFieldEnum,
+// updateOperationFieldEnum,
+GeneralizedFormProps<TFieldValues, TResourceName> & {
+	// createOperationSchema: Record<string, unknown>;
+	// updateOperationSchema: Record<string, unknown>;
+	// createOperationFieldEnum: Record<string, unknown>;
+	// updateOperationFieldEnum: Record<string, unknown>;
+}): JSX.Element => {
 	const { toast } = useToast();
 
 	// API Resource Spec
@@ -60,21 +69,25 @@ export const GeneralizedForm = <
 		: undefined;
 
 	// Field Spec by Field Key
-	const createOperationSchema = apiResourceSpec?.createParamsJsonSchema ?? null;
-	const updateOperationSchema = apiResourceSpec?.updateParamsJsonSchema ?? null;
-	const writeOperationSchema =
-		operation === 'create' ? createOperationSchema : updateOperationSchema;
-	const createOperationFieldEnum =
-		apiResourceSpec?.createParamsFieldEnum ?? null;
-	const updateOperationFieldEnum =
-		apiResourceSpec?.updateParamsFieldEnum ?? null;
-	const writeOperationFieldEnum =
-		operation === 'create'
-			? createOperationFieldEnum
-			: updateOperationFieldEnum;
+	// const createOperationSchema = apiResourceSpec?.createParamsJsonSchema ?? null;
+	// const updateOperationSchema = apiResourceSpec?.updateParamsJsonSchema ?? null;
+	// const writeOperationSchema =
+	// 	operation === 'create' ? createOperationSchema : updateOperationSchema;
+	// const createOperationFieldEnum =
+	// 	apiResourceSpec?.createParamsFieldEnum ?? null;
+	// const updateOperationFieldEnum =
+	// 	apiResourceSpec?.updateParamsFieldEnum ?? null;
+	// const writeOperationFieldEnum =
+	// 	operation === 'create'
+	// 		? createOperationFieldEnum
+	// 		: updateOperationFieldEnum;
 	const fieldSpecByFieldKey = getFieldSpecByFieldKey(
-		writeOperationSchema ?? undefined,
-		writeOperationFieldEnum?.arr ?? undefined,
+		// writeOperationSchema ?? undefined,
+		// writeOperationFieldEnum?.arr ?? undefined,
+		apiResourceSpec?.apiResourceJsonSchema,
+		apiResourceSpec?.apiResourceJsonSchema
+			? Keys(apiResourceSpec.properties)
+			: [],
 	);
 	const currencyFieldKeys = Object.entries(fieldSpecByFieldKey)
 		.filter(
@@ -113,10 +126,13 @@ export const GeneralizedForm = <
 	};
 
 	// Resolver
-	const resolver = useYupValidationResolver(
-		writeOperationSchema,
-		dataTransformationOptions,
-	);
+	const resolver = apiResourceSpec?.apiResourceJsonSchema
+		? useYupValidationResolver(
+				// writeOperationSchema,
+				apiResourceSpec.apiResourceJsonSchema,
+				dataTransformationOptions,
+		  )
+		: undefined;
 
 	// Initialize the useForm hook
 	const {
@@ -150,7 +166,12 @@ export const GeneralizedForm = <
 
 			const data = error?.data ?? getGeneralizedError().error.data;
 			const errors = Object.entries(data).filter(
-				([k]) => apiResourceSpec?.createParamsFieldEnum.isMember(k) ?? false,
+				// ([k]) => apiResourceSpec?.createParamsFieldEnum.isMember(k) ?? false,
+				([k]) =>
+					(apiResourceSpec?.apiResourceJsonSchema
+						? Keys(apiResourceSpec.properties)
+						: []
+					).includes(k) ?? false,
 			);
 
 			toast({
@@ -197,7 +218,12 @@ export const GeneralizedForm = <
 
 			const data = error?.data ?? getGeneralizedError().error.data;
 			const errors = Object.entries(data).filter(
-				([k]) => apiResourceSpec?.updateParamsFieldEnum.isMember(k) ?? false,
+				// ([k]) => apiResourceSpec?.updateParamsFieldEnum.isMember(k) ?? false,
+				([k]) =>
+					(apiResourceSpec?.apiResourceJsonSchema
+						? Keys(apiResourceSpec.properties)
+						: []
+					).includes(k) ?? false,
 			);
 
 			toast({
@@ -252,7 +278,8 @@ export const GeneralizedForm = <
 		if (isDefaultValuesInitialized) return;
 
 		const defaultValues =
-			apiResourceSpec.createParamsJsonSchema.getDefault() as TFieldValues;
+			// apiResourceSpec.createParamsJsonSchema.getDefault() as TFieldValues;
+			apiResourceSpec.apiResourceJsonSchema.getDefault() as TFieldValues;
 		const formDefaultVales = getGeneralizedFormDataFromServerData(
 			defaultValues,
 			dataTransformationOptions,
@@ -281,7 +308,10 @@ export const GeneralizedForm = <
 		if (isDefaultValuesInitialized) return;
 
 		const defaultValues = R.pick(
-			updateOperationFieldEnum?.arr ?? [],
+			// updateOperationFieldEnum?.arr ?? [],
+			apiResourceSpec?.apiResourceJsonSchema
+				? Keys(apiResourceSpec.properties)
+				: [],
 			updateProps.initialFieldValues,
 		) as TFieldValues;
 		const formDefaultVales = getGeneralizedFormDataFromServerData(

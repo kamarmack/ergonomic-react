@@ -129,10 +129,10 @@
 		"url": "git://github.com/kamarmack/ergonomic-react.git"
 	},
 	"scripts": {
-		"build": "tsc --noEmit",
+		"build": "echo 'No build script configured'",
 		"clean": "echo 'No clean script configured'",
 		"format": "doctoc . && prettier --write .",
-		"lint": "eslint . --ext .ts,.tsx",
+		"lint": "eslint . --ext .ts,.tsx && tsc --noEmit",
 		"prepare": "(husky install && chmod +x .husky/*) || true",
 		"test": "echo 'No test script configured'"
 	},
