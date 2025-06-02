@@ -18,6 +18,7 @@ import { handleInternationalPhoneNumberFieldKeyUp } from '../../utils/handleInte
 import { default as cn } from '../../../../lib/cn';
 import { useEffect, useState } from 'react';
 import { Skeleton } from '../../../../components/ui/skeleton';
+import { baseLocalStorageUtil } from '../../../../lib/localStorage';
 
 /**
  * InternationalPhoneNumberField component renders an input field for handling phone numbers with a country code selector.
@@ -73,8 +74,9 @@ export const InternationalPhoneNumberField = <
 
 	useEffect(() => {
 		const phoneNumberRegion =
-			localStorage.getItem('phoneNumberRegion') ||
-			defaultCountry.two_letter_country_code;
+			baseLocalStorageUtil.retrieveFromLocalStorage({
+				key: 'phoneNumberRegion',
+			}) || defaultCountry.two_letter_country_code;
 		const selectedCountry =
 			countries.find(
 				(country) => country.two_letter_country_code === phoneNumberRegion,
@@ -107,8 +109,10 @@ export const InternationalPhoneNumberField = <
 							: null;
 						if (selectedCountry) {
 							setPhoneNumberCountry(() => selectedCountry);
-							const phoneNumberRegion = selectedCountry.two_letter_country_code;
-							localStorage.setItem('phoneNumberRegion', phoneNumberRegion);
+							baseLocalStorageUtil.saveToLocalStorage({
+								key: 'phoneNumberRegion',
+								value: selectedCountry.two_letter_country_code,
+							});
 						}
 					}}
 				>
