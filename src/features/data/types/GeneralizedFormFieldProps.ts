@@ -4,8 +4,7 @@ import {
 	GeneralizedFieldSpec,
 } from 'ergonomic';
 import { UseQueryResult } from '@tanstack/react-query';
-import { Control, FieldValues, Path } from 'react-hook-form';
-import { GeneralizedFormFieldErrors } from './GeneralizedFormFieldErrors';
+import { Control, FieldErrors, FieldValues, Path } from 'react-hook-form';
 import { GeneralizedUseQueryPageProps } from '../../../lib/tanstackQuery';
 import { GeneralizedFirestoreCollectionPage } from '../utils/generalizedFirestoreCollectionPageQuery';
 
@@ -17,7 +16,7 @@ export type GeneralizedFormFieldProps<
 	className?: string;
 	control: Control<TFieldValues, unknown>;
 	disabled: boolean;
-	fieldErrors: GeneralizedFormFieldErrors<TFieldValues>;
+	fieldErrors: FieldErrors<TFieldValues>;
 	fieldKey: Path<TFieldValues>;
 	fieldSpec: GeneralizedFieldSpec;
 	getPageQueryHookForResource: (

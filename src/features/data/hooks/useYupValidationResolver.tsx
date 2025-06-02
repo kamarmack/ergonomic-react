@@ -76,7 +76,7 @@ export const useYupValidationResolver = <T extends FieldValues>(
 					errors: errors.inner.reduce(
 						(allErrors, currentError) => ({
 							...allErrors,
-							[currentError?.path ?? 'general']: {
+							[currentError?.path ?? 'root']: {
 								type: currentError.type ?? 'validation',
 								message: currentError.message,
 							},

@@ -22,7 +22,7 @@ import { GeneralizedFormFieldContainer } from './GeneralizedFormFieldContainer';
 // import { getGeneralizedServerDataFromFormData } from '../utils/getGeneralizedServerDataFromFormData';
 // import { getGeneralizedFormDataFromServerData } from '../utils/getGeneralizedFormDataFromServerData';
 import { useYupValidationResolver } from '../hooks/useYupValidationResolver';
-import { getGeneralizedFormFieldErrors } from '../utils/getGeneralizedFormFieldErrors';
+// import { getGeneralizedFormFieldErrors } from '../utils/getGeneralizedFormFieldErrors';
 // import { GeneralizedFormDataTransformationOptions } from '../types/GeneralizedFormDataTransformationOptions';
 import { GeneralizedFormProps } from '../types/GeneralizedFormProps';
 import { convertFormDataToServerData } from '../utils/convertFormDataToServerData';
@@ -199,7 +199,7 @@ GeneralizedFormProps<TFieldValues, TResourceName> & {
 					});
 				});
 			} else {
-				setError('general' as Parameters<UseFormSetError<TFieldValues>>[0], {
+				setError('root' as Parameters<UseFormSetError<TFieldValues>>[0], {
 					type: 'value',
 					message,
 				});
@@ -251,7 +251,7 @@ GeneralizedFormProps<TFieldValues, TResourceName> & {
 					});
 				});
 			} else {
-				setError('general' as Parameters<UseFormSetError<TFieldValues>>[0], {
+				setError('root' as Parameters<UseFormSetError<TFieldValues>>[0], {
 					type: 'value',
 					message,
 				});
@@ -340,7 +340,7 @@ GeneralizedFormProps<TFieldValues, TResourceName> & {
 	]);
 
 	const formValues = watch();
-	const fieldErrors = getGeneralizedFormFieldErrors(formState);
+	const fieldErrors = formState.errors;
 	const isWriteOperationLoading =
 		operation === 'create'
 			? isCreateOperationLoading
@@ -360,7 +360,7 @@ GeneralizedFormProps<TFieldValues, TResourceName> & {
 							_object={resourceName}
 							control={control}
 							disabled={isSubmitting}
-							fieldErrors={fieldErrors}
+							fieldErrors={formState.errors}
 							fieldKey={fieldKey as Path<TFieldValues>}
 							fieldSpec={fieldSpec}
 							getPageQueryHookForResource={getPageQueryHookForResource}
@@ -455,9 +455,7 @@ GeneralizedFormProps<TFieldValues, TResourceName> & {
 			)}
 
 			<p className='font-semibold text-red-700 text-xs'>
-				{getGeneralizedFormFieldErrors(
-					formState,
-				).general?.message?.toString?.()}
+				{fieldErrors.root?.message?.toString?.()}
 			</p>
 		</form>
 	);
