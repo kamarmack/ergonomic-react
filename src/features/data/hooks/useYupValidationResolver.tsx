@@ -1,11 +1,11 @@
 import * as yup from 'yup';
 import { FieldValues } from 'react-hook-form';
 import { useCallback } from 'react';
-import { getGeneralizedServerDataFromFormData } from '../utils/getGeneralizedServerDataFromFormData';
 import {
-	defaultGeneralizedFormDataTransformationOptions,
-	GeneralizedFormDataTransformationOptions,
-} from '../types/GeneralizedFormDataTransformationOptions';
+	getFormDataConversionOptions,
+	FormDataConversionOptions,
+} from 'ergonomic';
+import { convertServerDataToFormData } from '../utils/convertServerDataToFormData';
 
 /**
  * Custom hook to use Yup as a resolver for React Hook Form
@@ -33,27 +33,29 @@ import {
  */
 export const useYupValidationResolver = <T extends FieldValues>(
 	validationSchema: yup.ObjectSchema<T> | null,
-	options: GeneralizedFormDataTransformationOptions = defaultGeneralizedFormDataTransformationOptions,
+	options: FormDataConversionOptions = getFormDataConversionOptions(),
+	verbose = false,
 ) =>
 	useCallback(
 		async (formData: FieldValues) => {
-			const data = getGeneralizedServerDataFromFormData(formData, options);
+			const serverData = convertServerDataToFormData(formData, options);
 
 			if (!validationSchema) {
-				console.warn('No validation schema provided, skipping validation');
+				verbose &&
+					console.warn('No validation schema provided, skipping validation');
 
 				return {
-					values: data,
+					values: serverData,
 					errors: {},
 				};
 			}
 
 			try {
-				const values = await validationSchema.validate(data, {
+				const values = await validationSchema.validate(serverData, {
 					abortEarly: false,
 				});
 
-				console.log('Validation success:', values);
+				verbose && console.log('Validation success:', values);
 
 				return {
 					values,
@@ -62,7 +64,12 @@ export const useYupValidationResolver = <T extends FieldValues>(
 			} catch (err) {
 				const errors = err as yup.ValidationError;
 
-				console.error('Validation error:', { inner: errors.inner, data });
+				verbose &&
+					console.error('Validation error:', {
+						inner: errors.inner,
+						formData,
+						serverData,
+					});
 
 				return {
 					values: {},

@@ -1,5 +1,10 @@
 import * as R from 'ramda';
-import { getFieldSpecByFieldKey, getGeneralizedError, Keys } from 'ergonomic';
+import {
+	FormDataConversionOptions,
+	getFieldSpecByFieldKey,
+	getGeneralizedError,
+	Keys,
+} from 'ergonomic';
 import { useEffect, useState } from 'react';
 import { GoInfo } from 'react-icons/go';
 import { FieldValues, Path, UseFormSetError, useForm } from 'react-hook-form';
@@ -14,12 +19,14 @@ import {
 import { NODE_ENV } from '../../../config/nodeEnv';
 import { default as cn } from '../../../lib/cn';
 import { GeneralizedFormFieldContainer } from './GeneralizedFormFieldContainer';
-import { getGeneralizedServerDataFromFormData } from '../utils/getGeneralizedServerDataFromFormData';
-import { getGeneralizedFormDataFromServerData } from '../utils/getGeneralizedFormDataFromServerData';
+// import { getGeneralizedServerDataFromFormData } from '../utils/getGeneralizedServerDataFromFormData';
+// import { getGeneralizedFormDataFromServerData } from '../utils/getGeneralizedFormDataFromServerData';
 import { useYupValidationResolver } from '../hooks/useYupValidationResolver';
 import { getGeneralizedFormFieldErrors } from '../utils/getGeneralizedFormFieldErrors';
-import { GeneralizedFormDataTransformationOptions } from '../types/GeneralizedFormDataTransformationOptions';
+// import { GeneralizedFormDataTransformationOptions } from '../types/GeneralizedFormDataTransformationOptions';
 import { GeneralizedFormProps } from '../types/GeneralizedFormProps';
+import { convertFormDataToServerData } from '../utils/convertFormDataToServerData';
+import { convertServerDataToFormData } from '../utils/convertServerDataToFormData';
 
 export const GeneralizedFormSuspense = () => {
 	return (
@@ -116,7 +123,7 @@ GeneralizedFormProps<TFieldValues, TResourceName> & {
 				['united_states_phone_number'].includes(fieldSpec.meta?.type),
 		)
 		.map(([fieldKey]) => fieldKey);
-	const dataTransformationOptions: GeneralizedFormDataTransformationOptions = {
+	const dataTransformationOptions: FormDataConversionOptions = {
 		currencyFieldKeys,
 		dateTimeLocalFieldKeys,
 		floatingPointNumberFieldKeys,
@@ -256,7 +263,7 @@ GeneralizedFormProps<TFieldValues, TResourceName> & {
 		operation === 'create' ? createOperationMutation : updateOperationMutation;
 
 	const onSubmit = handleSubmit((data) => {
-		const serverData = getGeneralizedServerDataFromFormData(
+		const serverData = convertFormDataToServerData(
 			data,
 			dataTransformationOptions,
 		);
@@ -280,7 +287,7 @@ GeneralizedFormProps<TFieldValues, TResourceName> & {
 		const defaultValues =
 			// apiResourceSpec.createParamsJsonSchema.getDefault() as TFieldValues;
 			apiResourceSpec.apiResourceJsonSchema.getDefault() as TFieldValues;
-		const formDefaultVales = getGeneralizedFormDataFromServerData(
+		const formDefaultVales = convertServerDataToFormData(
 			defaultValues,
 			dataTransformationOptions,
 		);
@@ -314,7 +321,7 @@ GeneralizedFormProps<TFieldValues, TResourceName> & {
 				: [],
 			updateProps.initialFieldValues,
 		) as TFieldValues;
-		const formDefaultVales = getGeneralizedFormDataFromServerData(
+		const formDefaultVales = convertServerDataToFormData(
 			defaultValues,
 			dataTransformationOptions,
 		);
@@ -416,7 +423,7 @@ GeneralizedFormProps<TFieldValues, TResourceName> & {
 										<code>
 											{JSON.stringify(
 												typeof formValues === 'object' && formValues != null
-													? getGeneralizedServerDataFromFormData(
+													? convertFormDataToServerData(
 															formValues,
 															dataTransformationOptions,
 													  )
