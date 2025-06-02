@@ -1,7 +1,6 @@
-import { yupX } from 'ergonomic';
+import { getPercentageFromFloatingPointNumber, yupX } from 'ergonomic';
 import { GeneralizedTableCellProps } from '../../types/GeneralizedTableCellProps';
 import { DefaultCell } from './DefaultCell';
-import { getFormattedPercentageStringFromFloatingPointNumber } from '../../utils/getFormattedPercentageStringFromFloatingPointNumber';
 
 export const PercentageCell = (
 	props: GeneralizedTableCellProps,
@@ -10,7 +9,7 @@ export const PercentageCell = (
 		{...props}
 		formatValue={(value: unknown): string => {
 			const num = value as number;
-			return getFormattedPercentageStringFromFloatingPointNumber(num);
+			return getPercentageFromFloatingPointNumber(num);
 		}}
 		isValid={(value: unknown): boolean => yupX.percentage().isValidSync(value)}
 	/>

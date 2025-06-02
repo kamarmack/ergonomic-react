@@ -18,11 +18,11 @@ import {
 	yupX,
 	getRecurrenceRuleData,
 	getRecurrenceRuleString,
+	getDateWithMinutePrecision,
 } from 'ergonomic';
 import { Skeleton } from '../../../../components/ui/skeleton';
 import { Input } from '../../../../components/ui/input';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
-import { getDefaultValueForDateFieldFromIsoStringWithMillisecondPrecision } from '../../utils/getDefaultValueForDateFieldFromIsoStringWithMillisecondPrecision';
 import cn from '../../../../lib/cn';
 
 const defaultRecurrenceRule: RecurrenceRuleData = {
@@ -170,7 +170,7 @@ export const RecurrenceRuleField = <
 			<div className='flex-1'>
 				<p>Start Date</p>
 				<Input
-					defaultValue={getDefaultValueForDateFieldFromIsoStringWithMillisecondPrecision(
+					defaultValue={getDateWithMinutePrecision(
 						recurrenceRule?.DTSTART?.slice(0, 8) ?? '',
 					)}
 					disabled={disabled}
@@ -308,7 +308,7 @@ export const RecurrenceRuleField = <
 				<div className=''>
 					<p>End Date</p>
 					<Input
-						defaultValue={getDefaultValueForDateFieldFromIsoStringWithMillisecondPrecision(
+						defaultValue={getDateWithMinutePrecision(
 							recurrenceRule?.UNTIL?.slice(0, 8) ?? '',
 						)}
 						disabled={disabled}

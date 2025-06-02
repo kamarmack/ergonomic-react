@@ -1,22 +1,22 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { type getGeneralizedServerDataFromFormData } from './getGeneralizedServerDataFromFormData';
+import { type convertFormDataToServerData } from './convertFormDataToServerData';
 
 import { v4 } from 'uuid';
-import { getCurrencyUsdStringFromCents } from 'ergonomic';
 import {
-	defaultGeneralizedFormDataTransformationOptions,
-	GeneralizedFormDataTransformationOptions,
-} from '../types/GeneralizedFormDataTransformationOptions';
-import { getDefaultValueForDateFieldFromIsoStringWithMillisecondPrecision } from './getDefaultValueForDateFieldFromIsoStringWithMillisecondPrecision';
-import { getFormattedPercentageStringFromFloatingPointNumber } from './getFormattedPercentageStringFromFloatingPointNumber';
-import { getFormattedPhoneNumberFromE164 } from './getFormattedPhoneNumberFromE164';
+	FormDataConversionOptions,
+	getCurrencyUsdStringFromCents,
+	getDateWithMinutePrecision,
+	getFormDataConversionOptions,
+	getPercentageFromFloatingPointNumber,
+	getHumanFriendlyPhoneNumber,
+} from 'ergonomic';
 
 /**
  * Transforms form data from the server into a format compatible with React Hook Form, handling both string arrays and currency fields.
  *
  * React Hook Form requires arrays to be in a specific format, where each item is an object with "id" and "value" properties rather than simple strings. This function converts string arrays accordingly. Additionally, specified fields representing values that need special handling, such as currency fields, are transformed into a more user-friendly format.
  *
- * This function is the inverse of {@link getGeneralizedServerDataFromFormData}.
+ * This function is the inverse of {@link convertFormDataToServerData}.
  *
  * @param obj - The server data object to be transformed.
  * @param options - An object containing options for the transformation.
@@ -41,7 +41,7 @@ import { getFormattedPhoneNumberFromE164 } from './getFormattedPhoneNumberFromE1
  * 	 interest_rate: 0.05,
  * 	 cell_number: '+14155552671,
  * };
- * const formData = getGeneralizedFormDataFromServerData(
+ * const formData = convertServerDataToFormData(
  * 	serverData,
  * 	{
  * 		currencyFieldKeys: ['salary'],
@@ -69,11 +69,9 @@ import { getFormattedPhoneNumberFromE164 } from './getFormattedPhoneNumberFromE1
  * // }
  * ```
  */
-export const getGeneralizedFormDataFromServerData = <
-	T extends Record<string, unknown>,
->(
+export const convertServerDataToFormData = <T extends Record<string, unknown>>(
 	obj: T,
-	options: GeneralizedFormDataTransformationOptions = defaultGeneralizedFormDataTransformationOptions,
+	options: FormDataConversionOptions = getFormDataConversionOptions(),
 ): T => {
 	const populatedObj = {} as T;
 
@@ -98,10 +96,7 @@ export const getGeneralizedFormDataFromServerData = <
 			}
 		} else if (options?.dateTimeLocalFieldKeys?.includes(key)) {
 			if (typeof value === 'string') {
-				const localDateTime =
-					getDefaultValueForDateFieldFromIsoStringWithMillisecondPrecision(
-						value,
-					);
+				const localDateTime = getDateWithMinutePrecision(value);
 				populatedObj[key] = localDateTime as T[Extract<keyof T, string>];
 			} else {
 				populatedObj[key] = null as T[Extract<keyof T, string>];
@@ -122,14 +117,13 @@ export const getGeneralizedFormDataFromServerData = <
 			if (value == null || typeof value !== 'number' || isNaN(value)) {
 				populatedObj[key] = null as T[Extract<keyof T, string>];
 			} else {
-				const formattedValue =
-					getFormattedPercentageStringFromFloatingPointNumber(value);
+				const formattedValue = getPercentageFromFloatingPointNumber(value);
 				populatedObj[key] = formattedValue as T[Extract<keyof T, string>];
 			}
 		} else if (options?.phoneNumberFieldKeys?.includes(key)) {
 			if (typeof value === 'string') {
 				const formattedPhoneNumber = value
-					? getFormattedPhoneNumberFromE164(value)
+					? getHumanFriendlyPhoneNumber(value)
 					: '';
 				populatedObj[key] = formattedPhoneNumber as T[Extract<keyof T, string>];
 			} else {

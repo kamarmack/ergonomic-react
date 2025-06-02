@@ -1,11 +1,10 @@
 import * as R from 'ramda';
 import { useEffect, useState } from 'react';
 import { FieldValues, useController } from 'react-hook-form';
-import { yupX } from 'ergonomic';
+import { getDateWithMinutePrecision, yupX } from 'ergonomic';
 import { Skeleton } from '../../../../components/ui/skeleton';
 import { Input } from '../../../../components/ui/input';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
-import { getDefaultValueForDateFieldFromIsoStringWithMillisecondPrecision } from '../../utils/getDefaultValueForDateFieldFromIsoStringWithMillisecondPrecision';
 import cn from '../../../../lib/cn';
 
 /**
@@ -149,9 +148,7 @@ export const IntervalField = <
 				<div className='flex-1' key={index}>
 					<p>{label}</p>
 					<Input
-						defaultValue={getDefaultValueForDateFieldFromIsoStringWithMillisecondPrecision(
-							value,
-						)}
+						defaultValue={getDateWithMinutePrecision(value)}
 						disabled={disabled}
 						type='datetime-local'
 						onBlur={onBlur}
