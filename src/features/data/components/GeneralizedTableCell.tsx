@@ -10,6 +10,7 @@ import { DurationCell } from './cells/DurationCell';
 import { EmailAddressCell } from './cells/EmailAddressCell';
 import { FloatingPointNumberCell } from './cells/FloatingPointNumberCell';
 import { IntegerCell } from './cells/IntegerCell';
+import { InternationalPhoneNumberCell } from './cells/InternationalPhoneNumberCell';
 import { IntervalCell } from './cells/IntervalCell';
 import { ListCell } from './cells/ListCell';
 import { LongTextCell } from './cells/LongTextCell';
@@ -75,6 +76,9 @@ export const GeneralizedTableCell = <
 
 		case 'integer':
 			return <IntegerCell {...props} />;
+
+		case 'international_phone_number':
+			return <InternationalPhoneNumberCell {...props} />;
 
 		case 'interval':
 			return <IntervalCell {...props} />;

@@ -9,6 +9,7 @@ import { DurationField } from './fields/DurationField';
 import { EmailAddressField } from './fields/EmailAddressField';
 import { FloatingPointNumberField } from './fields/FloatingPointNumberField';
 import { IntegerField } from './fields/IntegerField';
+import { InternationalPhoneNumberField } from './fields/InternationalPhoneNumberField';
 import { IntervalField } from './fields/IntervalField';
 import { ListField } from './fields/ListField';
 import { LongTextField } from './fields/LongTextField';
@@ -63,6 +64,9 @@ export const LiteFormField = <T extends FieldValues = FieldValues>(
 
 		case 'integer':
 			return <IntegerField {...props} />;
+
+		case 'international_phone_number':
+			return <InternationalPhoneNumberField {...props} />;
 
 		case 'interval':
 			return <IntervalField {...props} />;

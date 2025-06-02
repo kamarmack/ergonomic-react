@@ -2,7 +2,7 @@ import { ControllerRenderProps, FieldValues, Path } from 'react-hook-form';
 import { AsYouTypeFormatter } from 'google-libphonenumber';
 import { Digits } from 'ergonomic';
 
-export const handleUnitedStatesPhoneNumberFieldKeyUp =
+export const handleInternationalPhoneNumberFieldKeyUp =
 	<TFieldValues extends FieldValues = FieldValues>(params: {
 		field: Pick<
 			ControllerRenderProps<TFieldValues, Path<TFieldValues>>,
