@@ -9,8 +9,8 @@ import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps
  * @template TResourceName - TResourceName parameter is a string union of the API resource names.
  * @param {GeneralizedFormFieldProps<TFieldValues, TResourceName>} props - The properties for configuring the component.
  * @param {unknown} props.control - The control object from `react-hook-form` used to manage form state.
+ * @param {boolean} props.disabled - Flag indicating whether or not to disable the input, e.g. during submission.
  * @param {string} props.fieldKey - The key for identifying the form field, passed to `useController`.
- * @param {boolean} props.isSubmitting - Flag indicating if the form is currently submitting, disabling inputs when true.
  *
  * @returns {JSX.Element} The rendered BooleanField component, which is a checkbox input to handle boolean values.
  *

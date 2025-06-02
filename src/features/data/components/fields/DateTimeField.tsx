@@ -11,9 +11,9 @@ import { default as cn } from '../../../../lib/cn';
  * @template TResourceName - TResourceName parameter is a string union of the API resource names.
  * @param {GeneralizedFormFieldProps<TFieldValues, TResourceName>} props - The properties for configuring the component.
  * @param {unknown} props.control - The control object from `react-hook-form` used to manage form state.
+ * @param {boolean} props.disabled - Flag indicating whether or not to disable the input, e.g. during submission.
  * @param {string} props.fieldKey - The key for identifying the form field, passed to `useController`.
  * @param {object} props.fieldSpec - Additional specifications for the field, such as default value or validation rules.
- * @param {boolean} props.isSubmitting - Flag indicating if the form is currently submitting, disabling inputs when true.
  * @param {string} props.operation - The operation type for the form, either 'create' or 'update'.
  *
  * @returns {JSX.Element} The rendered DateTimeField component, which is an input field for selecting date and time.

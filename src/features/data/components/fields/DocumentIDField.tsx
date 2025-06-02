@@ -13,9 +13,9 @@ import { default as cn } from '../../../../lib/cn';
  * @param {GeneralizedFormFieldProps<T>} props - The properties for configuring the component.
  * @param {TResourceName} props._object - Specifies the resource name.
  * @param {unknown} props.control - The control object from `react-hook-form` used to manage the form state.
+ * @param {boolean} props.disabled - Flag indicating whether or not to disable the input, e.g. during submission.
  * @param {string} props.fieldKey - The key for identifying the form field, passed to `useController`.
  * @param {Record<TResourceName, string>} props.idPrefixByResourceName - A map of document ID prefixes for each resource name.
- * @param {boolean} props.isSubmitting - Flag indicating if the form is currently submitting, disabling inputs when true.
  * @param {string} props.operation - The operation type for the form, either 'create' or 'update'.
  *
  * @returns {JSX.Element} The rendered DocumentIDField component, with an input and button for changing the document ID.
