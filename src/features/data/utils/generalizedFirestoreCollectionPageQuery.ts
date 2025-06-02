@@ -14,6 +14,7 @@ import {
 	handleFirestoreOperationError,
 } from '../../../lib/firebase';
 import { FirestoreCollectionQueryOptions } from '../types/FirestoreQueryTypes';
+import { CastOptions } from 'yup/lib/schema';
 
 export type GeneralizedFirestoreCollectionPage<
 	T extends GeneralizedApiResource = GeneralizedApiResource,
@@ -22,13 +23,17 @@ export type GeneralizedFirestoreCollectionPage<
 	documents: T[];
 	nextPageStartAfterDocumentReference: DocumentReference | null | undefined;
 };
-
+const defaultCastOptions: CastOptions = {
+	stripUnknown: true,
+	assert: true,
+};
 export const generalizedFirestoreCollectionPageQuery =
 	<T extends GeneralizedApiResource = GeneralizedApiResource>(
 		apiResourceSpec: GeneralizedApiResourceSpec,
 	) =>
 	async (
 		queryOptions: FirestoreCollectionQueryOptions,
+		castOptions = defaultCastOptions,
 	): Promise<GeneralizedFirestoreCollectionPage<T>> => {
 		try {
 			const {
@@ -70,10 +75,10 @@ export const generalizedFirestoreCollectionPageQuery =
 				.map((doc): T | null => {
 					const data = doc.data();
 					try {
-						return apiResourceSpec.apiResourceJsonSchema.cast(data, {
-							stripUnknown: true,
-							assert: true,
-						}) as T;
+						return apiResourceSpec.apiResourceJsonSchema.cast(
+							data,
+							castOptions,
+						) as T;
 					} catch (err) {
 						console.error(
 							'ERROR: Detected data in the Firestore collection that does not conform to the schema.',
