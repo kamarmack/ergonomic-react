@@ -23,7 +23,7 @@ export type GeneralizedFirestoreCollectionPage<
 	documents: T[];
 	nextPageStartAfterDocumentReference: DocumentReference | null | undefined;
 };
-const defaultCastOptions: CastOptions = {
+export const defaultApiResourceCastOptions: CastOptions = {
 	stripUnknown: true,
 	assert: true,
 };
@@ -33,7 +33,7 @@ export const generalizedFirestoreCollectionPageQuery =
 	) =>
 	async (
 		queryOptions: FirestoreCollectionQueryOptions,
-		castOptions = defaultCastOptions,
+		castOptions = defaultApiResourceCastOptions,
 	): Promise<GeneralizedFirestoreCollectionPage<T>> => {
 		try {
 			const {
