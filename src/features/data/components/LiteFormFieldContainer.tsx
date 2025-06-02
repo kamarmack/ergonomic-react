@@ -8,12 +8,12 @@ import { LiteFormFieldError } from './LiteFormFieldError';
 
 export const LiteFormFieldContainer = <T extends FieldValues = FieldValues>({
 	control,
+	disabled,
 	fieldErrors,
 	fieldKey,
 	fieldSpec,
 	hideRequiredIndicator,
 	initialFormData,
-	isSubmitting,
 	operation,
 	renderTooltipContent,
 	setError,
@@ -36,11 +36,11 @@ export const LiteFormFieldContainer = <T extends FieldValues = FieldValues>({
 				<div>
 					<LiteFormField
 						control={control}
+						disabled={disabled}
 						fieldErrors={fieldErrors}
 						fieldKey={fieldKey}
 						fieldSpec={fieldSpec}
 						initialFormData={initialFormData}
-						isSubmitting={isSubmitting}
 						operation={operation}
 						setError={setError}
 					/>

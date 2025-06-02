@@ -31,22 +31,21 @@ export const TimeZoneField = <
 >({
 	className = '',
 	control,
+	disabled,
 	fieldKey: name,
 	fieldSpec,
 	initialFormData,
-	isSubmitting,
 	operation,
 }: Pick<
 	GeneralizedFormFieldProps<TFieldValues, TResourceName>,
 	| 'className'
 	| 'control'
+	| 'disabled'
 	| 'fieldKey'
 	| 'fieldSpec'
 	| 'initialFormData'
-	| 'isSubmitting'
 	| 'operation'
 >): JSX.Element => {
-	const disabled = isSubmitting;
 	const { label_by_enum_option = {} } = fieldSpec?.meta || {};
 	const options = IanaTimeZoneEnum.arr;
 	const defaultValueFromSpec = fieldSpec.default?.toString();

@@ -33,22 +33,21 @@ export const UrlField = <
 >({
 	className = '',
 	control,
+	disabled,
 	fieldKey: name,
 	fieldSpec,
-	isSubmitting,
 	operation,
 	setError,
 }: Pick<
 	GeneralizedFormFieldProps<TFieldValues, TResourceName>,
 	| 'className'
 	| 'control'
+	| 'disabled'
 	| 'fieldKey'
 	| 'fieldSpec'
-	| 'isSubmitting'
 	| 'operation'
 	| 'setError'
 >): JSX.Element => {
-	const disabled = isSubmitting;
 	const { type } = fieldSpec?.meta || {};
 	const { field } = useController({
 		control,

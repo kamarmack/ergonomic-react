@@ -359,13 +359,13 @@ GeneralizedFormProps<TFieldValues, TResourceName> & {
 						<GeneralizedFormFieldContainer
 							_object={resourceName}
 							control={control}
+							disabled={isSubmitting}
 							fieldErrors={fieldErrors}
 							fieldKey={fieldKey as Path<TFieldValues>}
 							fieldSpec={fieldSpec}
 							getPageQueryHookForResource={getPageQueryHookForResource}
 							idPrefixByResourceName={idPrefixByResourceName}
 							initialFormData={initialFormData}
-							isSubmitting={isSubmitting}
 							operation={operation}
 							setError={(message) =>
 								setError(

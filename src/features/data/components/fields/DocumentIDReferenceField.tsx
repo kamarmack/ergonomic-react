@@ -38,28 +38,27 @@ export const DocumentIDReferenceField = <
 >({
 	className = '',
 	control,
+	disabled,
 	fieldKey: name,
 	fieldSpec,
 	getPageQueryHookForResource,
 	idPrefixByResourceName,
 	initialFormData,
-	isSubmitting,
 	operation,
 }: Pick<
 	GeneralizedFormFieldProps<TFieldValues, TResourceName>,
 	| 'className'
 	| 'control'
+	| 'disabled'
 	| 'fieldKey'
 	| 'fieldSpec'
 	| 'getPageQueryHookForResource'
 	| 'idPrefixByResourceName'
 	| 'initialFormData'
-	| 'isSubmitting'
 	| 'operation'
 >): JSX.Element => {
 	// Field variables
 	const { resources = [], type } = fieldSpec?.meta || {};
-	const disabled = isSubmitting;
 	const isMulti = type === 'foreign_keys';
 	const acceptsMultipleDataTypes = resources.length > 1;
 	const required = isFieldRequired({ fieldSpec, operation });

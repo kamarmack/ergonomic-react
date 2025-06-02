@@ -16,6 +16,7 @@ export type GeneralizedFormFieldProps<
 	_object: TResourceName;
 	className?: string;
 	control: Control<TFieldValues, unknown>;
+	disabled: boolean;
 	fieldErrors: GeneralizedFormFieldErrors<TFieldValues>;
 	fieldKey: Path<TFieldValues>;
 	fieldSpec: GeneralizedFieldSpec;
@@ -27,7 +28,6 @@ export type GeneralizedFormFieldProps<
 	hideRequiredIndicator?: boolean;
 	idPrefixByResourceName: Record<TResourceName, string>;
 	initialFormData: FieldValues | null;
-	isSubmitting: boolean;
 	operation: 'create' | 'update';
 	setError: (message: string) => void;
 };

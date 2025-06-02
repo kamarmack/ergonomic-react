@@ -6,12 +6,12 @@ export type LiteFormFieldProps<TFieldValues extends FieldValues = FieldValues> =
 		GeneralizedFormFieldProps<TFieldValues>,
 		| 'className'
 		| 'control'
+		| 'disabled'
 		| 'fieldErrors'
 		| 'fieldKey'
 		| 'fieldSpec'
 		| 'hideRequiredIndicator'
 		| 'initialFormData'
-		| 'isSubmitting'
 		| 'operation'
 		| 'setError'
 	> & {

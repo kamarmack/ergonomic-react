@@ -42,21 +42,20 @@ export const ListField = <
 >({
 	className = '',
 	control,
+	disabled,
 	fieldErrors,
 	fieldKey,
 	fieldSpec,
-	isSubmitting,
 }: Pick<
 	GeneralizedFormFieldProps<TFieldValues, TResourceName>,
 	| 'className'
 	| 'control'
+	| 'disabled'
 	| 'fieldErrors'
 	| 'fieldKey'
 	| 'fieldSpec'
-	| 'isSubmitting'
 >): JSX.Element => {
 	// Field variables
-	const disabled = isSubmitting;
 	const { type } = fieldSpec?.meta || {};
 	const name = fieldKey as FieldArrayPath<TFieldValues>;
 

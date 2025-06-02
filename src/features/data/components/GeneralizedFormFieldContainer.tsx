@@ -11,6 +11,7 @@ export const GeneralizedFormFieldContainer = <
 >({
 	_object,
 	control,
+	disabled,
 	fieldErrors,
 	fieldKey,
 	fieldSpec,
@@ -18,7 +19,6 @@ export const GeneralizedFormFieldContainer = <
 	hideRequiredIndicator,
 	idPrefixByResourceName,
 	initialFormData,
-	isSubmitting,
 	operation,
 	setError,
 }: GeneralizedFormFieldProps<T>): JSX.Element => {
@@ -40,13 +40,13 @@ export const GeneralizedFormFieldContainer = <
 					<GeneralizedFormField
 						_object={_object}
 						control={control}
+						disabled={disabled}
 						idPrefixByResourceName={idPrefixByResourceName}
 						fieldErrors={fieldErrors}
 						fieldKey={fieldKey}
 						fieldSpec={fieldSpec}
 						getPageQueryHookForResource={getPageQueryHookForResource}
 						initialFormData={initialFormData}
-						isSubmitting={isSubmitting}
 						operation={operation}
 						setError={setError}
 					/>

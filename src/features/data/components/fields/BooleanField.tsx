@@ -24,13 +24,12 @@ export const BooleanField = <
 >({
 	className = '',
 	control,
+	disabled,
 	fieldKey: name,
-	isSubmitting,
 }: Pick<
 	GeneralizedFormFieldProps<TFieldValues, TResourceName>,
-	'className' | 'control' | 'fieldKey' | 'isSubmitting'
+	'className' | 'control' | 'disabled' | 'fieldKey'
 >): JSX.Element => {
-	const disabled = isSubmitting;
 	const { field } = useController({
 		control,
 		disabled,

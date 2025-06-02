@@ -33,24 +33,23 @@ export const DocumentIDField = <
 	_object,
 	className = '',
 	control,
+	disabled,
 	fieldKey: name,
 	idPrefixByResourceName,
-	isSubmitting,
 	operation,
 }: Pick<
 	GeneralizedFormFieldProps<TFieldValues, TResourceName>,
 	| '_object'
 	| 'className'
 	| 'control'
+	| 'disabled'
 	| 'fieldKey'
 	| 'idPrefixByResourceName'
-	| 'isSubmitting'
 	| 'operation'
 >): JSX.Element => {
-	const disabled = isSubmitting || operation === 'update';
 	const { field } = useController({
 		control,
-		disabled,
+		disabled: disabled || operation === 'update',
 		name,
 	});
 	const generateNewDocumentId = () =>

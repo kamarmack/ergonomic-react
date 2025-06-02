@@ -37,24 +37,21 @@ export const DurationField = <
 >({
 	className = '',
 	control,
+	disabled,
 	fieldKey: name,
 	fieldSpec,
 	initialFormData,
-	isSubmitting,
 	operation,
 }: Pick<
 	GeneralizedFormFieldProps<TFieldValues, TResourceName>,
 	| 'className'
 	| 'control'
+	| 'disabled'
 	| 'fieldKey'
 	| 'fieldSpec'
 	| 'initialFormData'
-	| 'isSubmitting'
 	| 'operation'
 >): JSX.Element => {
-	// Field variables
-	const disabled = isSubmitting;
-
 	// Duration computation logic
 	const [duration, setDuration] = useState<DurationLikeObject | null>(null);
 	const isIsoDurationLoading = duration == null;

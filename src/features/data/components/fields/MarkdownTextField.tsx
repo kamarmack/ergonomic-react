@@ -30,24 +30,21 @@ export const MarkdownTextField = <
 >({
 	className = '',
 	control,
+	disabled,
 	fieldKey: name,
 	fieldSpec,
 	initialFormData,
-	isSubmitting,
 	operation,
 }: Pick<
 	GeneralizedFormFieldProps<TFieldValues, TResourceName>,
 	| 'className'
 	| 'control'
+	| 'disabled'
 	| 'fieldKey'
 	| 'fieldSpec'
 	| 'initialFormData'
-	| 'isSubmitting'
 	| 'operation'
 >): JSX.Element => {
-	// Field variables
-	const disabled = isSubmitting;
-
 	// Markdown editor variables
 	const [markdown, setMarkdown] = useState<string | null>(null);
 	const isMarkdownLoading = markdown == null;

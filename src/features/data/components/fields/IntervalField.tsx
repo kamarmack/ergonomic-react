@@ -35,24 +35,21 @@ export const IntervalField = <
 >({
 	className = '',
 	control,
+	disabled,
 	fieldKey: name,
 	fieldSpec,
 	initialFormData,
-	isSubmitting,
 	operation,
 }: Pick<
 	GeneralizedFormFieldProps<TFieldValues, TResourceName>,
 	| 'className'
 	| 'control'
+	| 'disabled'
 	| 'fieldKey'
 	| 'fieldSpec'
 	| 'initialFormData'
-	| 'isSubmitting'
 	| 'operation'
 >): JSX.Element => {
-	// Field variables
-	const disabled = isSubmitting;
-
 	// Interval computation logic
 	const [interval, setInterval] = useState<IntervalLikeObject | null>(null);
 	const isIsoIntervalLoading = interval == null;
