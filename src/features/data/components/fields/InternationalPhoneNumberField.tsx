@@ -1,7 +1,15 @@
 // Make this more robust w.r.t country codes. Currently, it only works for +1.
 
 import * as R from 'ramda';
-import { countries, isFieldRequired, Country } from 'ergonomic';
+import {
+	countries,
+	isFieldRequired,
+	Country,
+	defaultCountry,
+	defaultCountryPhoneNumberRegionDisplayValue,
+	getCountryPhoneNumberRegionDisplayValue,
+	countriesSorted,
+} from 'ergonomic';
 import { Input } from '../../../../components/ui/input';
 import { FieldValues, useController } from 'react-hook-form';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
@@ -10,23 +18,6 @@ import { handleInternationalPhoneNumberFieldKeyUp } from '../../utils/handleInte
 import { default as cn } from '../../../../lib/cn';
 import { useEffect, useState } from 'react';
 import { Skeleton } from '../../../../components/ui/skeleton';
-
-const defaultCountry: Country = countries.find(function (country) {
-	return country.two_letter_country_code === 'US';
-})!;
-const defaultCountryValue = `${defaultCountry.flag_emoji} ${defaultCountry.phone_number_prefix}`;
-const defaultCountryCodes = ['US', 'CA', 'GB', 'AU', 'NZ'];
-const defaultCountries: Country[] = countries.filter(function (country) {
-	return defaultCountryCodes.includes(country.two_letter_country_code);
-});
-const restOfCountriesUnsorted: Country[] = countries.filter(function (country) {
-	return !defaultCountryCodes.includes(country.two_letter_country_code);
-});
-restOfCountriesUnsorted.sort(function (a, b) {
-	return a.country_name.localeCompare(b.country_name);
-});
-const restOfCountries: Country[] = restOfCountriesUnsorted.slice();
-const countriesSorted = [...defaultCountries, ...restOfCountries];
 
 /**
  * InternationalPhoneNumberField component renders an input field for handling phone numbers with a country code selector.
@@ -108,7 +99,7 @@ export const InternationalPhoneNumberField = <
 			<div>
 				<select
 					className='block w-16 p-2 border rounded-md bg-white text-center'
-					defaultValue={defaultCountryValue}
+					defaultValue={defaultCountryPhoneNumberRegionDisplayValue}
 					disabled={disabled}
 					onChange={(e) => {
 						const [flagEmoji] = e.target.value.split(' '); // get the flag emoji, e.g. "🇸🇬"
@@ -125,16 +116,14 @@ export const InternationalPhoneNumberField = <
 					<option disabled value=''>
 						Select one
 					</option>
-					{countriesSorted.map(
-						({ two_letter_country_code, flag_emoji, phone_number_prefix }) => {
-							const value = `${flag_emoji} ${phone_number_prefix}`;
-							return (
-								<option key={two_letter_country_code} value={value}>
-									{value}
-								</option>
-							);
-						},
-					)}
+					{countriesSorted.map((country) => {
+						const value = getCountryPhoneNumberRegionDisplayValue(country);
+						return (
+							<option key={country.two_letter_country_code} value={value}>
+								{value}
+							</option>
+						);
+					})}
 				</select>
 			</div>
 			<div className='w-full'>
