@@ -13,4 +13,6 @@ export const ExternalLink = ({ href, children }: ExternalLinkProps) => {
 };
 
 export type ExLinkProps = ExternalLinkProps;
-export const ExLink = ExternalLink;
+export function ExLink({ href, children }: ExLinkProps) {
+	return <ExternalLink href={href}>{children}</ExternalLink>;
+}
