@@ -1,67 +1,65 @@
 import { getUserLocale } from 'get-user-locale';
+import { EnumMember, getEnum } from 'ergonomic';
+import { baseLocalStorageUtil } from '../lib/localStorage';
+import { isDomAvailable } from '../utils/isDomAvailable';
 
-type SupportedLocale =
-	| 'ar'
-	| 'de'
-	| 'en'
-	| 'es'
-	| 'fr'
-	| 'he'
-	| 'hi'
-	| 'id'
-	| 'it'
-	| 'ja'
-	| 'ko'
-	| 'nl'
-	| 'pl'
-	| 'pt'
-	| 'ru'
-	| 'sv'
-	| 'tr'
-	| 'uk'
-	| 'vi'
-	| 'zh';
+export const BaseLanguageEnum = getEnum(['en', 'es']);
+export type BaseLanguage = EnumMember<typeof BaseLanguageEnum>;
 
-const SUPPORTED_LOCALES = new Set([
-	'ar',
-	'de',
-	'en',
-	'es',
-	'fr',
-	'he',
-	'hi',
-	'id',
-	'it',
-	'ja',
-	'ko',
-	'nl',
-	'pl',
-	'pt',
-	'ru',
-	'sv',
-	'tr',
-	'uk',
-	'vi',
-	'zh',
-]);
-
-export const useLocalizedCopyEdit = <
-	T extends Record<SupportedLocale, unknown>,
+/**
+ * Hook to get localized copy edit
+ *
+ * @param translations - A record mapping languages to their translations for each entry.
+ * @returns A record of translations for the current language, falling back to English if necessary.
+ *
+ * @example
+ * ```tsx
+ * const translations = {
+ * 	en: {
+ * 		greeting: 'Hello',
+ * 		farewell: 'Goodbye',
+ * 	},
+ * 	es: {
+ * 		greeting: 'Hola',
+ * 		farewell: 'Adiós',
+ * 	},
+ * } as const;
+ * const { greeting } = useLocalization(translations);
+ * return (
+ * 	<div>
+ * 		<p>{greeting}</p>
+ * 	</div>
+ * );
+ *```
+ */
+export const useLocalization = <
+	TKey extends string,
+	TTranslations extends Record<string, Record<TKey, string>> & // allow any lang
+		Record<BaseLanguage, Record<TKey, string>>, // but require en + es
 >(
-	copyEdit: T,
-): T[SupportedLocale] => {
-	const englishCopyEdit = copyEdit.en;
+	translations: TTranslations,
+): Record<TKey, string> => {
+	const englishTranslations = translations.en;
 	try {
-		const userLocale = getUserLocale({ fallbackLocale: 'en' });
-		const userLocaleWithoutRegionCode = (
-			(userLocale?.includes('-') ? userLocale?.split('-')?.[0] : userLocale) ??
-			'en'
-		)?.toLowerCase?.();
-		const safeUserLocale = SUPPORTED_LOCALES.has(userLocaleWithoutRegionCode)
-			? userLocaleWithoutRegionCode
-			: 'en';
-		return copyEdit[safeUserLocale as keyof typeof copyEdit];
-	} catch (err) {
-		return englishCopyEdit;
+		// 1. get previously saved language, if any
+		const cachedLanguage = isDomAvailable()
+			? baseLocalStorageUtil.retrieveFromLocalStorage({ key: 'language' })
+			: null;
+
+		// 2. get language from the browser
+		const browserLocale = getUserLocale({ fallbackLocale: 'en' });
+		const browserLanguage = browserLocale.split('-')[0] ?? 'en';
+
+		// 3. language selection: stored > browser > 'en'
+		const language: keyof typeof translations =
+			cachedLanguage && cachedLanguage in translations
+				? cachedLanguage
+				: browserLanguage in translations
+				? browserLanguage
+				: 'en';
+
+		return translations[language];
+	} catch (_) {
+		return englishTranslations;
 	}
 };
