@@ -25,7 +25,7 @@ export type GeneralizedFirestoreCollectionPage<
 };
 export const defaultApiResourceCastOptions: CastOptions = {
 	stripUnknown: true,
-	assert: true,
+	assert: false,
 };
 export const generalizedFirestoreCollectionPageQuery =
 	<T extends GeneralizedApiResource = GeneralizedApiResource>(
