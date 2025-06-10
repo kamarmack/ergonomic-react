@@ -85,7 +85,7 @@ export function getLabelByOption(
 	label_by_enum_option:
 		| Record<'en' | 'es', Record<string, string>>
 		| Record<string, string>,
-) {
+): Record<string, string> {
 	let labelType: 'single_language' | 'localized' = 'single_language';
 	if (
 		language in label_by_enum_option &&
@@ -98,4 +98,17 @@ export function getLabelByOption(
 		localized: label_by_enum_option[language] || {},
 	}[labelType] as Record<string, string>;
 	return labelByOption;
+}
+
+export function getLabelSubtitle(
+	language: 'en' | 'es',
+	label_message_user_text: Record<'en' | 'es', string> | string | undefined,
+): string {
+	if (label_message_user_text == null) {
+		return '';
+	}
+	if (typeof label_message_user_text === 'string') {
+		return label_message_user_text;
+	}
+	return label_message_user_text[language];
 }

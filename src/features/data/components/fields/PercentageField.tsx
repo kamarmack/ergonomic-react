@@ -6,6 +6,10 @@ import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps
 import { getGeneralizedFormFieldLabel as getLabel } from '../../utils/getGeneralizedFormFieldLabel';
 import { handlePercentageFieldKeyUp } from '../../utils/handlePercentageFieldKeyUp';
 import { default as cn } from '../../../../lib/cn';
+import {
+	baseTranslations,
+	useLanguage,
+} from '../../../../hooks/useLocalization';
 
 /**
  * PercentageField component renders an input field for handling percentage values in a form.
@@ -55,7 +59,8 @@ export const PercentageField = <
 		name,
 	});
 	const required = isFieldRequired({ fieldSpec, operation });
-	const label = getLabel(name, fieldSpec);
+	const { language } = useLanguage(baseTranslations);
+	const label = getLabel(language, name, fieldSpec);
 
 	return (
 		<Input

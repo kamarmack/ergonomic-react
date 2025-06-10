@@ -4,6 +4,10 @@ import { FieldValues, useController } from 'react-hook-form';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
 import { getGeneralizedFormFieldLabel as getLabel } from '../../utils/getGeneralizedFormFieldLabel';
 import { default as cn } from '../../../../lib/cn';
+import {
+	baseTranslations,
+	useLanguage,
+} from '../../../../hooks/useLocalization';
 
 /**
  * ShortTextField component renders a standard text input field for handling short text values.
@@ -44,7 +48,8 @@ export const ShortTextField = <
 		name,
 	});
 	const required = isFieldRequired({ fieldSpec, operation });
-	const label = getLabel(name, fieldSpec);
+	const { language } = useLanguage(baseTranslations);
+	const label = getLabel(language, name, fieldSpec);
 
 	return (
 		<Input

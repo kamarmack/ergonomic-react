@@ -7,6 +7,10 @@ import { handleFloatingPointFieldBlur } from '../../utils/handleFloatingPointFie
 import { handleFloatingPointFieldKeyUp } from '../../utils/handleFloatingPointFieldKeyUp';
 import { getGeneralizedFormFieldLabel as getLabel } from '../../utils/getGeneralizedFormFieldLabel';
 import cn from '../../../../lib/cn';
+import {
+	baseTranslations,
+	useLanguage,
+} from '../../../../hooks/useLocalization';
 
 /**
  * FloatingPointNumberField component renders an input field for handling floating-point number values in a form.
@@ -55,7 +59,8 @@ export const FloatingPointNumberField = <
 		name,
 	});
 	const required = isFieldRequired({ fieldSpec, operation });
-	const label = getLabel(name, fieldSpec);
+	const { language } = useLanguage(baseTranslations);
+	const label = getLabel(language, name, fieldSpec);
 
 	return (
 		<Input

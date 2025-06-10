@@ -20,6 +20,7 @@ import { GeneralizedFormProps } from '../types/GeneralizedFormProps';
 import { GeneralizedTableCellProps } from '../types/GeneralizedTableCellProps';
 import { getGeneralizedFormFieldLabel } from '../utils/getGeneralizedFormFieldLabel';
 import { GeneralizedTableCell } from './GeneralizedTableCell';
+import { baseTranslations, useLanguage } from '../../../hooks/useLocalization';
 
 type RouteQueryParams = { resource_name?: string };
 
@@ -45,6 +46,9 @@ export const GeneralizedAdminResourceTablePage = <
 
 	// Router
 	const router = useRouter();
+
+	// Localization
+	const { language } = useLanguage(baseTranslations);
 
 	// ==== Constants ==== //
 
@@ -106,7 +110,7 @@ export const GeneralizedAdminResourceTablePage = <
 	const tableHeaderData = !isDocumentPageReady
 		? []
 		: fieldSpecEntries.map(([fieldKey, fieldSpec]) => ({
-				name: getGeneralizedFormFieldLabel(fieldKey, fieldSpec),
+				name: getGeneralizedFormFieldLabel(language, fieldKey, fieldSpec),
 		  }));
 	const tableData = documentPage.map((doc): GeneralizedTableCellProps[] => {
 		const data = !isDocumentPageReady

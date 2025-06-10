@@ -7,6 +7,10 @@ import { handleIntegerFieldBlur } from '../../utils/handleIntegerFieldBlur';
 import { handleIntegerFieldKeyUp } from '../../utils/handleIntegerFieldKeyUp';
 import { getGeneralizedFormFieldLabel as getLabel } from '../../utils/getGeneralizedFormFieldLabel';
 import { default as cn } from '../../../../lib/cn';
+import {
+	baseTranslations,
+	useLanguage,
+} from '../../../../hooks/useLocalization';
 
 /**
  * IntegerField component renders an input field for handling integer values in a form.
@@ -56,7 +60,8 @@ export const IntegerField = <
 		name,
 	});
 	const required = isFieldRequired({ fieldSpec, operation });
-	const label = getLabel(name, fieldSpec);
+	const { language } = useLanguage(baseTranslations);
+	const label = getLabel(language, name, fieldSpec);
 
 	return (
 		<Input

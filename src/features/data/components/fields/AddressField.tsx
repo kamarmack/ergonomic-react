@@ -4,6 +4,10 @@ import { Input } from '../../../../components/ui/input';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
 import { getGeneralizedFormFieldLabel as getLabel } from '../../utils/getGeneralizedFormFieldLabel';
 import { default as cn } from '../../../../lib/cn';
+import {
+	baseTranslations,
+	useLanguage,
+} from '../../../../hooks/useLocalization';
 
 /**
  * AddressField component renders an input field or a dropdown selection based on the field type,
@@ -46,7 +50,8 @@ export const AddressField = <
 		name,
 	});
 	const required = isFieldRequired({ fieldSpec, operation });
-	const label = getLabel(name, fieldSpec);
+	const { language } = useLanguage(baseTranslations);
+	const label = getLabel(language, name, fieldSpec);
 
 	if (name.endsWith('state')) {
 		return (

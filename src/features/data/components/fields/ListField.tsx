@@ -13,6 +13,10 @@ import { getGeneralizedFormFieldLabel as getLabel } from '../../utils/getGeneral
 import { GeneralizedFormFieldError } from '../GeneralizedFormFieldError';
 import { GoPlus, GoXCircle } from 'react-icons/go';
 import { default as cn } from '../../../../lib/cn';
+import {
+	baseTranslations,
+	useLanguage,
+} from '../../../../hooks/useLocalization';
 
 /**
  * ListField component renders a dynamic list of input fields, allowing users to add or remove items,
@@ -73,6 +77,7 @@ export const ListField = <
 			TFieldValues,
 			FieldArrayPath<TFieldValues>
 		>);
+	const { language } = useLanguage(baseTranslations);
 
 	return (
 		<div>
@@ -92,7 +97,7 @@ export const ListField = <
 						''
 					)?.toString() ?? '';
 				const handleRemoveArrayItem = () => remove(index);
-				const label = getLabel(name, fieldSpec);
+				const label = getLabel(language, name, fieldSpec);
 
 				return (
 					<>

@@ -11,6 +11,11 @@ import {
 import { NODE_ENV } from '../../../config/nodeEnv';
 import { GeneralizedFormFieldProps } from '../types/GeneralizedFormFieldProps';
 import { getGeneralizedFormFieldLabel as getLabel } from '../utils/getGeneralizedFormFieldLabel';
+import {
+	baseTranslations,
+	useLanguage,
+	getLabelSubtitle,
+} from '../../../hooks/useLocalization';
 
 export type GeneralizedFormFieldLabelProps = Pick<
 	GeneralizedFormFieldProps,
@@ -19,10 +24,13 @@ export type GeneralizedFormFieldLabelProps = Pick<
 export const GeneralizedFormFieldLabel: React.FC<
 	GeneralizedFormFieldLabelProps
 > = ({ fieldKey, fieldSpec, hideRequiredIndicator, operation }) => {
-	const label = getLabel(fieldKey, fieldSpec);
-	const labelSubtitle =
+	const { language } = useLanguage(baseTranslations);
+	const label = getLabel(language, fieldKey, fieldSpec);
+	const labelSubtitle = getLabelSubtitle(
+		language,
 		fieldSpec.meta?.label_message_admin_text ??
-		fieldSpec.meta?.label_message_user_text;
+			fieldSpec.meta?.label_message_user_text,
+	);
 	const required = isFieldRequired({ fieldSpec, operation });
 	return (
 		<Fragment>

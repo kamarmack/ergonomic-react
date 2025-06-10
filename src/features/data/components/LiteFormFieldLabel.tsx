@@ -10,6 +10,11 @@ import {
 } from '../../../components/ui/tooltip';
 import { getGeneralizedFormFieldLabel as getLabel } from '../utils/getGeneralizedFormFieldLabel';
 import { LiteFormFieldProps } from '../types/LiteFormFieldProps';
+import {
+	baseTranslations,
+	useLanguage,
+	getLabelSubtitle,
+} from '../../../hooks/useLocalization';
 
 export type LiteFormFieldLabelProps = Pick<
 	LiteFormFieldProps,
@@ -26,8 +31,12 @@ export const LiteFormFieldLabel: React.FC<LiteFormFieldLabelProps> = ({
 	operation,
 	renderTooltipContent,
 }) => {
-	const label = getLabel(fieldKey, fieldSpec);
-	const labelSubtitle = fieldSpec.meta?.label_message_user_text;
+	const { language } = useLanguage(baseTranslations);
+	const label = getLabel(language, fieldKey, fieldSpec);
+	const labelSubtitle = getLabelSubtitle(
+		language,
+		fieldSpec.meta?.label_message_user_text,
+	);
 	const required = isFieldRequired({ fieldSpec, operation });
 	return (
 		<Fragment>
