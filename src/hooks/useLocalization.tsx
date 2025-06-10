@@ -79,3 +79,23 @@ export const useLocalization = <
 		return englishTranslations;
 	}
 };
+
+export function getLabelByOption(
+	language: 'en' | 'es',
+	label_by_enum_option:
+		| Record<'en' | 'es', Record<string, string>>
+		| Record<string, string>,
+) {
+	let labelType: 'single_language' | 'localized' = 'single_language';
+	if (
+		language in label_by_enum_option &&
+		typeof label_by_enum_option[language] === 'object'
+	) {
+		labelType = 'localized';
+	}
+	const labelByOption = {
+		single_language: label_by_enum_option,
+		localized: label_by_enum_option[language] || {},
+	}[labelType] as Record<string, string>;
+	return labelByOption;
+}

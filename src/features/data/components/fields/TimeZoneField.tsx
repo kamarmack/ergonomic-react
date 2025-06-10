@@ -3,6 +3,11 @@ import { FieldValues, Path, PathValue, useController } from 'react-hook-form';
 import { IanaTimeZoneEnum, isFieldRequired } from 'ergonomic';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
 import { default as cn } from '../../../../lib/cn';
+import {
+	baseTranslations,
+	useLanguage,
+	getLabelByOption,
+} from '../../../../hooks/useLocalization';
 
 /**
  * TimeZoneField component renders a dropdown for selecting a single option from the list of IANA time zones,
@@ -47,6 +52,8 @@ export const TimeZoneField = <
 	| 'operation'
 >): JSX.Element => {
 	const { label_by_enum_option = {} } = fieldSpec?.meta || {};
+	const { language } = useLanguage(baseTranslations);
+	const labelByOption = getLabelByOption(language, label_by_enum_option);
 	const options = IanaTimeZoneEnum.arr;
 	const defaultValueFromSpec = fieldSpec.default?.toString();
 	const defaultValue = (
@@ -75,7 +82,7 @@ export const TimeZoneField = <
 			</option>
 			{options.map((option) => (
 				<option key={option} value={option}>
-					{label_by_enum_option[option] ?? option}
+					{labelByOption[option] ?? option}
 				</option>
 			))}
 		</select>

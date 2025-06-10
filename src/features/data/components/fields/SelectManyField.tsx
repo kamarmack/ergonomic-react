@@ -8,16 +8,32 @@ import { Skeleton } from '../../../../components/ui/skeleton';
 import Select, { MultiValue } from 'react-select';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
 import { default as cn } from '../../../../lib/cn';
+import {
+	baseTranslations,
+	useLanguage,
+	getLabelByOption,
+} from '../../../../hooks/useLocalization';
 
 type ReactSelectOption = { label: string; value: string };
 const getOptionLabel = (
 	option: string,
-	labelByEnumOption: Record<string, string>,
-) => labelByEnumOption[option] ?? changeCase.sentenceCase(option);
+	language: 'en' | 'es',
+	labelByEnumOption:
+		| Record<'en' | 'es', Record<string, string>>
+		| Record<string, string>,
+) => {
+	const labelByOption = getLabelByOption(language, labelByEnumOption);
+	return labelByOption[option] ?? changeCase.sentenceCase(option);
+};
 const getOption =
-	(labelByEnumOption: Record<string, string>) =>
+	(
+		language: 'en' | 'es',
+		labelByEnumOption:
+			| Record<'en' | 'es', Record<string, string>>
+			| Record<string, string>,
+	) =>
 	(option: string): ReactSelectOption => ({
-		label: getOptionLabel(option, labelByEnumOption),
+		label: getOptionLabel(option, language, labelByEnumOption),
 		value: option,
 	});
 
@@ -69,7 +85,8 @@ export const SelectManyField = <
 	const innerOneOf = innerType.oneOf ?? [];
 	const innerMeta = innerType.meta ?? ({} as GeneralizedFieldSpec['meta']);
 	const innerLabelByEnumOption = innerMeta?.label_by_enum_option ?? {};
-	const options = innerOneOf.map(getOption(innerLabelByEnumOption));
+	const { language } = useLanguage(baseTranslations);
+	const options = innerOneOf.map(getOption(language, innerLabelByEnumOption));
 
 	// Selections computation logic
 	const [defaultSelections, setDefaultSelections] = useState<
@@ -106,7 +123,7 @@ export const SelectManyField = <
 				: defaultValueForUpdateOperations.map(({ value }) => value)
 		).filter((s) => innerOneOf.includes(s));
 		setDefaultSelections(() =>
-			selections.map(getOption(innerLabelByEnumOption)),
+			selections.map(getOption(language, innerLabelByEnumOption)),
 		);
 	}, [
 		operation,
@@ -114,6 +131,7 @@ export const SelectManyField = <
 		isDefaultSelectionsLoading,
 		name,
 		initialFormData,
+		language,
 	]);
 
 	// Suspense loading state

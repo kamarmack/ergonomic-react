@@ -4,6 +4,11 @@ import { FieldValues, Path, PathValue, useController } from 'react-hook-form';
 import { isFieldRequired } from 'ergonomic';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
 import { default as cn } from '../../../../lib/cn';
+import {
+	baseTranslations,
+	useLanguage,
+	getLabelByOption,
+} from '../../../../hooks/useLocalization';
 
 /**
  * SelectOneField component renders a dropdown for selecting a single option from a predefined list,
@@ -48,6 +53,8 @@ export const SelectOneField = <
 	| 'operation'
 >): JSX.Element => {
 	const { label_by_enum_option = {} } = fieldSpec?.meta || {};
+	const { language } = useLanguage(baseTranslations);
+	const labelByOption = getLabelByOption(language, label_by_enum_option);
 	const options = fieldSpec.oneOf;
 	const defaultValueFromSpec = fieldSpec.default?.toString();
 	const defaultValue = (
@@ -76,7 +83,7 @@ export const SelectOneField = <
 			</option>
 			{options.map((option) => (
 				<option key={option} value={option}>
-					{label_by_enum_option[option] ?? changeCase.sentenceCase(option)}
+					{labelByOption[option] ?? changeCase.sentenceCase(option)}
 				</option>
 			))}
 		</select>
