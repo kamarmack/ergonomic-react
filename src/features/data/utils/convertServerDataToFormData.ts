@@ -123,7 +123,7 @@ export const convertServerDataToFormData = <T extends Record<string, unknown>>(
 		} else if (options?.phoneNumberFieldKeys?.includes(key)) {
 			if (typeof value === 'string') {
 				const formattedPhoneNumber = value
-					? getHumanFriendlyPhoneNumber(value)
+					? getHumanFriendlyPhoneNumber(value, 'national')
 					: '';
 				populatedObj[key] = formattedPhoneNumber as T[Extract<keyof T, string>];
 			} else {

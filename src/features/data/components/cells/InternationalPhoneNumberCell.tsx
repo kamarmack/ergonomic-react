@@ -9,7 +9,7 @@ export const InternationalPhoneNumberCell = (
 		{...props}
 		formatValue={(value: unknown): string => {
 			const phoneNumberE164 = value as string;
-			return getHumanFriendlyPhoneNumber(phoneNumberE164);
+			return getHumanFriendlyPhoneNumber(phoneNumberE164, 'international');
 		}}
 		isValid={(value: unknown): boolean =>
 			yupX.internationalPhoneNumber().isValidSync(value)
