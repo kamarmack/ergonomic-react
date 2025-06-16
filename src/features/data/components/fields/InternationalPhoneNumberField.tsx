@@ -99,7 +99,7 @@ export const InternationalPhoneNumberField = <
 		<div className='flex items-center space-x-2'>
 			<div>
 				<select
-					className='block w-16 p-2 border rounded-md bg-white text-center'
+					className='block w-24 p-2 border rounded-md bg-white text-center'
 					defaultValue={defaultCountryPhoneNumberRegionDisplayValue}
 					disabled={disabled}
 					onChange={(e) => {
