@@ -2,7 +2,8 @@ import { isFieldRequired } from 'ergonomic';
 import { Input } from '../../../../components/ui/input';
 import { FieldValues, useController } from 'react-hook-form';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
-import { getGeneralizedFormFieldLabel as getLabel } from '../../utils/getGeneralizedFormFieldLabel';
+// import { getGeneralizedFormFieldLabel as getLabel } from '../../utils/getGeneralizedFormFieldLabel';
+import { getGeneralizedFormFieldPlaceholder as getPlaceholder } from '../../utils/getGeneralizedFormFieldLabel';
 import { default as cn } from '../../../../lib/cn';
 import {
 	baseTranslations,
@@ -49,13 +50,13 @@ export const ShortTextField = <
 	});
 	const required = isFieldRequired({ fieldSpec, operation });
 	const { language } = useLanguage(baseTranslations);
-	const label = getLabel(language, name, fieldSpec);
+	const placeholder = getPlaceholder(language, name, fieldSpec);
 
 	return (
 		<Input
 			{...field}
 			className={cn('block w-full p-2 border rounded-md bg-white', className)}
-			placeholder={label}
+			placeholder={placeholder}
 			required={required}
 		/>
 	);

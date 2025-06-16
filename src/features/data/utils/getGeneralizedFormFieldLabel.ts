@@ -10,3 +10,12 @@ export const getGeneralizedFormFieldLabel = (
 		? fieldSpec.meta.localized_label[language]
 		: fieldSpec.label ??
 		  changeCase.sentenceCase((fieldKey ?? '').replace(/^ref_/, ''));
+
+export const getGeneralizedFormFieldPlaceholder = (
+	language: 'en' | 'es',
+	fieldKey: string,
+	fieldSpec: GeneralizedFieldSpec,
+): string =>
+	fieldSpec.meta?.localized_placeholder
+		? fieldSpec.meta.localized_placeholder[language]
+		: getGeneralizedFormFieldLabel(language, fieldKey, fieldSpec);

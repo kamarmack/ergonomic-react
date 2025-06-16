@@ -9,7 +9,8 @@ import {
 } from 'react-hook-form';
 import { v4 } from 'uuid';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
-import { getGeneralizedFormFieldLabel as getLabel } from '../../utils/getGeneralizedFormFieldLabel';
+// import { getGeneralizedFormFieldLabel as getLabel } from '../../utils/getGeneralizedFormFieldLabel';
+import { getGeneralizedFormFieldPlaceholder as getPlaceholder } from '../../utils/getGeneralizedFormFieldLabel';
 import { GeneralizedFormFieldError } from '../GeneralizedFormFieldError';
 import { GoPlus, GoXCircle } from 'react-icons/go';
 import { default as cn } from '../../../../lib/cn';
@@ -97,7 +98,7 @@ export const ListField = <
 						''
 					)?.toString() ?? '';
 				const handleRemoveArrayItem = () => remove(index);
-				const label = getLabel(language, name, fieldSpec);
+				const placeholder = getPlaceholder(language, name, fieldSpec);
 
 				return (
 					<>
@@ -113,7 +114,7 @@ export const ListField = <
 											'block w-full p-2 border rounded-md bg-white',
 											className,
 										)}
-										placeholder={label}
+										placeholder={placeholder}
 									/>
 								)}
 							/>

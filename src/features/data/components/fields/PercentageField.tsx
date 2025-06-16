@@ -3,7 +3,8 @@ import { FieldValues, useController } from 'react-hook-form';
 import { isFieldRequired } from 'ergonomic';
 import { Input } from '../../../../components/ui/input';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
-import { getGeneralizedFormFieldLabel as getLabel } from '../../utils/getGeneralizedFormFieldLabel';
+// import { getGeneralizedFormFieldLabel as getLabel } from '../../utils/getGeneralizedFormFieldLabel';
+import { getGeneralizedFormFieldPlaceholder as getPlaceholder } from '../../utils/getGeneralizedFormFieldLabel';
 import { handlePercentageFieldKeyUp } from '../../utils/handlePercentageFieldKeyUp';
 import { default as cn } from '../../../../lib/cn';
 import {
@@ -60,7 +61,7 @@ export const PercentageField = <
 	});
 	const required = isFieldRequired({ fieldSpec, operation });
 	const { language } = useLanguage(baseTranslations);
-	const label = getLabel(language, name, fieldSpec);
+	const placeholder = getPlaceholder(language, name, fieldSpec);
 
 	return (
 		<Input
@@ -70,7 +71,7 @@ export const PercentageField = <
 				field: R.pick(['onChange'], field),
 				setError,
 			})}
-			placeholder={label}
+			placeholder={placeholder}
 			required={required}
 		/>
 	);

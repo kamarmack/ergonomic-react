@@ -5,7 +5,8 @@ import { Input } from '../../../../components/ui/input';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
 import { handleIntegerFieldBlur } from '../../utils/handleIntegerFieldBlur';
 import { handleIntegerFieldKeyUp } from '../../utils/handleIntegerFieldKeyUp';
-import { getGeneralizedFormFieldLabel as getLabel } from '../../utils/getGeneralizedFormFieldLabel';
+// import { getGeneralizedFormFieldLabel as getLabel } from '../../utils/getGeneralizedFormFieldLabel';
+import { getGeneralizedFormFieldPlaceholder as getPlaceholder } from '../../utils/getGeneralizedFormFieldLabel';
 import { default as cn } from '../../../../lib/cn';
 import {
 	baseTranslations,
@@ -61,7 +62,7 @@ export const IntegerField = <
 	});
 	const required = isFieldRequired({ fieldSpec, operation });
 	const { language } = useLanguage(baseTranslations);
-	const label = getLabel(language, name, fieldSpec);
+	const placeholder = getPlaceholder(language, name, fieldSpec);
 
 	return (
 		<Input
@@ -75,7 +76,7 @@ export const IntegerField = <
 				field: R.pick(['onChange'], field),
 				setError,
 			})}
-			placeholder={label}
+			placeholder={placeholder}
 			required={required}
 		/>
 	);

@@ -5,7 +5,8 @@ import { Input } from '../../../../components/ui/input';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
 import { handleFloatingPointFieldBlur } from '../../utils/handleFloatingPointFieldBlur';
 import { handleFloatingPointFieldKeyUp } from '../../utils/handleFloatingPointFieldKeyUp';
-import { getGeneralizedFormFieldLabel as getLabel } from '../../utils/getGeneralizedFormFieldLabel';
+// import { getGeneralizedFormFieldLabel as getLabel } from '../../utils/getGeneralizedFormFieldLabel';
+import { getGeneralizedFormFieldPlaceholder as getPlaceholder } from '../../utils/getGeneralizedFormFieldLabel';
 import cn from '../../../../lib/cn';
 import {
 	baseTranslations,
@@ -60,7 +61,7 @@ export const FloatingPointNumberField = <
 	});
 	const required = isFieldRequired({ fieldSpec, operation });
 	const { language } = useLanguage(baseTranslations);
-	const label = getLabel(language, name, fieldSpec);
+	const placeholder = getPlaceholder(language, name, fieldSpec);
 
 	return (
 		<Input
@@ -74,7 +75,7 @@ export const FloatingPointNumberField = <
 				field: R.pick(['onChange'], field),
 				setError,
 			})}
-			placeholder={label}
+			placeholder={placeholder}
 			required={required}
 		/>
 	);
