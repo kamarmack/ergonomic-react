@@ -8,6 +8,10 @@ import { Skeleton } from '../../../../components/ui/skeleton';
 import { default as cn } from '../../../../lib/cn';
 import { FieldValues, useController } from 'react-hook-form';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
+import {
+	baseTranslations,
+	useLanguage,
+} from '../../../../hooks/useLocalization';
 
 /**
  * DocumentIDReferenceField component renders a selector for referencing document IDs for a specific resource,
@@ -169,6 +173,7 @@ export const DocumentIDReferenceField = <
 		disabled,
 		name,
 	});
+	const { language } = useLanguage(baseTranslations);
 
 	// Suspense loading state
 	const isDocumentIDReferenceFieldLoading =
@@ -200,7 +205,7 @@ export const DocumentIDReferenceField = <
 						}
 					>
 						<option disabled value=''>
-							Select one
+							{{ en: 'Select one', es: 'Selecciona una opción' }[language]}
 						</option>
 						{resources.map((option) => {
 							return (

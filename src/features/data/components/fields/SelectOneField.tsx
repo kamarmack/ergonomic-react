@@ -79,7 +79,7 @@ export const SelectOneField = <
 			required={required}
 		>
 			<option disabled value=''>
-				Select one
+				{{ en: 'Select one', es: 'Selecciona una opción' }[language]}
 			</option>
 			{options.map((option) => (
 				<option key={option} value={option}>

@@ -61,7 +61,7 @@ export const AddressField = <
 				required={required}
 			>
 				<option disabled value=''>
-					Select one
+					{{ en: 'Select one', es: 'Selecciona una opción' }[language]}
 				</option>
 				{UsaStateCodeEnum.arr.map((state) => (
 					<option key={state} value={state}>
@@ -80,7 +80,7 @@ export const AddressField = <
 				required={required}
 			>
 				<option disabled value=''>
-					Select one
+					{{ en: 'Select one', es: 'Selecciona una opción' }[language]}
 				</option>
 				{['US'].map((option) => {
 					return (

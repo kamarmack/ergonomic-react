@@ -8,6 +8,10 @@ import { useEffect, useState } from 'react';
 import { FieldValues, useController } from 'react-hook-form';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
 import { default as cn } from '../../../../lib/cn';
+import {
+	baseTranslations,
+	useLanguage,
+} from '../../../../hooks/useLocalization';
 
 /**
  * DurationField component renders a series of dropdown selectors to input a duration, divided into years, months,
@@ -67,6 +71,7 @@ export const DurationField = <
 		disabled,
 		name,
 	});
+	const { language } = useLanguage(baseTranslations);
 
 	// Initialize duration value
 	useEffect(() => {
@@ -188,7 +193,7 @@ export const DurationField = <
 						}}
 					>
 						<option disabled value=''>
-							Select one
+							{{ en: 'Select one', es: 'Selecciona una opción' }[language]}
 						</option>
 						{Array.from({ length }, (_, i) => i.toString()).map((option) => (
 							<option key={option} value={option}>

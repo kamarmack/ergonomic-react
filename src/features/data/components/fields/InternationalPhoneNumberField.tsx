@@ -111,7 +111,10 @@ export const InternationalPhoneNumberField = <
 		<div className='flex items-center space-x-2'>
 			<div>
 				<select
-					className='block w-24 p-2 border rounded-md bg-white text-center'
+					className={cn(
+						'block w-20 p-2 border rounded-md bg-white text-center',
+						'font-light text-sm',
+					)}
 					defaultValue={defaultCountryPhoneNumberRegionDisplayValue}
 					disabled={disabled}
 					onChange={(e) => {
@@ -129,7 +132,7 @@ export const InternationalPhoneNumberField = <
 					}}
 				>
 					<option disabled value=''>
-						Select one
+						{{ en: 'Select one', es: 'Selecciona una opción' }[language]}
 					</option>
 					{countriesSorted.map((country) => {
 						const value = getCountryPhoneNumberRegionDisplayValue(country);

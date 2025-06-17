@@ -79,7 +79,7 @@ export const UnitedStatesPhoneNumberField = <
 					disabled={disabled}
 				>
 					<option disabled value=''>
-						Select one
+						{{ en: 'Select one', es: 'Selecciona una opción' }[language]}
 					</option>
 					{['+1'].map((option) => {
 						return (
