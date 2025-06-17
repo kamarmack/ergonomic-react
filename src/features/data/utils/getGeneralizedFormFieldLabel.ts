@@ -15,7 +15,8 @@ export const getGeneralizedFormFieldPlaceholder = (
 	language: 'en' | 'es',
 	fieldKey: string,
 	fieldSpec: GeneralizedFieldSpec,
+	fallback = '',
 ): string =>
 	fieldSpec.meta?.localized_placeholder
 		? fieldSpec.meta.localized_placeholder[language]
-		: getGeneralizedFormFieldLabel(language, fieldKey, fieldSpec);
+		: fallback || getGeneralizedFormFieldLabel(language, fieldKey, fieldSpec);

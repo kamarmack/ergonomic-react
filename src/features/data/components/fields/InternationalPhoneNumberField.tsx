@@ -19,6 +19,11 @@ import { default as cn } from '../../../../lib/cn';
 import { useEffect, useState } from 'react';
 import { Skeleton } from '../../../../components/ui/skeleton';
 import { baseLocalStorageUtil } from '../../../../lib/localStorage';
+import { getGeneralizedFormFieldPlaceholder as getPlaceholder } from '../../utils/getGeneralizedFormFieldLabel';
+import {
+	baseTranslations,
+	useLanguage,
+} from '../../../../hooks/useLocalization';
 
 /**
  * InternationalPhoneNumberField component renders an input field for handling phone numbers with a country code selector.
@@ -71,6 +76,13 @@ export const InternationalPhoneNumberField = <
 		name,
 	});
 	const required = isFieldRequired({ fieldSpec, operation });
+	const { language } = useLanguage(baseTranslations);
+	const placeholder = getPlaceholder(
+		language,
+		name,
+		fieldSpec,
+		'(813) 555-1234',
+	);
 
 	useEffect(() => {
 		const phoneNumberRegion =
@@ -145,7 +157,7 @@ export const InternationalPhoneNumberField = <
 						setError,
 						phoneNumberRegion: phoneNumberCountry.two_letter_country_code,
 					})}
-					placeholder='(813) 555-1234'
+					placeholder={placeholder}
 					required={required}
 				/>
 			</div>

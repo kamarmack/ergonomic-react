@@ -5,6 +5,11 @@ import { isFieldRequired } from 'ergonomic';
 import { Input } from '../../../../components/ui/input';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
 import { default as cn } from '../../../../lib/cn';
+import { getGeneralizedFormFieldPlaceholder as getPlaceholder } from '../../utils/getGeneralizedFormFieldLabel';
+import {
+	baseTranslations,
+	useLanguage,
+} from '../../../../hooks/useLocalization';
 
 /**
  * UsdField component renders an input field for handling currency values, formatted in USD cents.
@@ -53,6 +58,9 @@ export const UsdField = <
 		name,
 	});
 	const required = isFieldRequired({ fieldSpec, operation });
+	const { language } = useLanguage(baseTranslations);
+	const placeholder = getPlaceholder(language, name, fieldSpec, '$0.00');
+
 	return (
 		<Input
 			{...field}
@@ -61,7 +69,7 @@ export const UsdField = <
 				field: R.pick(['onChange'], field),
 				setError,
 			})}
-			placeholder='$0.00'
+			placeholder={placeholder}
 			required={required}
 		/>
 	);

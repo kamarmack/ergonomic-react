@@ -5,6 +5,11 @@ import { Input } from '../../../../components/ui/input';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
 import { handleDomainFieldBlur } from '../../utils/handleDomainFieldBlur';
 import { default as cn } from '../../../../lib/cn';
+import { getGeneralizedFormFieldPlaceholder as getPlaceholder } from '../../utils/getGeneralizedFormFieldLabel';
+import {
+	baseTranslations,
+	useLanguage,
+} from '../../../../hooks/useLocalization';
 
 /**
  * DomainField component renders an input field for handling web domain values in a form.
@@ -54,6 +59,8 @@ export const DomainField = <
 		name,
 	});
 	const required = isFieldRequired({ fieldSpec, operation });
+	const { language } = useLanguage(baseTranslations);
+	const placeholder = getPlaceholder(language, name, fieldSpec, 'example.com');
 
 	return (
 		<Input
@@ -63,7 +70,7 @@ export const DomainField = <
 				field: R.pick(['onBlur'], field),
 				setError,
 			})}
-			placeholder='example.com'
+			placeholder={placeholder}
 			required={required}
 		/>
 	);

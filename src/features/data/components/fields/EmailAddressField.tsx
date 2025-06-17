@@ -5,6 +5,11 @@ import { Input } from '../../../../components/ui/input';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
 import { handleEmailAddressFieldBlur } from '../../utils/handleEmailAddressFieldBlur';
 import { default as cn } from '../../../../lib/cn';
+import { getGeneralizedFormFieldPlaceholder as getPlaceholder } from '../../utils/getGeneralizedFormFieldLabel';
+import {
+	baseTranslations,
+	useLanguage,
+} from '../../../../hooks/useLocalization';
 
 /**
  * EmailAddressField component renders an input field for handling email address values in a form.
@@ -54,6 +59,13 @@ export const EmailAddressField = <
 		name,
 	});
 	const required = isFieldRequired({ fieldSpec, operation });
+	const { language } = useLanguage(baseTranslations);
+	const placeholder = getPlaceholder(
+		language,
+		name,
+		fieldSpec,
+		'alice@example.com',
+	);
 
 	return (
 		<Input
@@ -63,7 +75,7 @@ export const EmailAddressField = <
 				field: R.pick(['onBlur'], field),
 				setError,
 			})}
-			placeholder='john@example.com'
+			placeholder={placeholder}
 			required={required}
 		/>
 	);

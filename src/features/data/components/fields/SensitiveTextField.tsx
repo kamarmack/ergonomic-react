@@ -3,6 +3,11 @@ import { FieldValues, useController } from 'react-hook-form';
 import { Input } from '../../../../components/ui/input';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
 import { default as cn } from '../../../../lib/cn';
+import { getGeneralizedFormFieldPlaceholder as getPlaceholder } from '../../utils/getGeneralizedFormFieldLabel';
+import {
+	baseTranslations,
+	useLanguage,
+} from '../../../../hooks/useLocalization';
 
 /**
  * SensitiveTextField component renders a password input field for handling sensitive text values.
@@ -44,12 +49,14 @@ export const SensitiveTextField = <
 		name,
 	});
 	const required = isFieldRequired({ fieldSpec, operation });
+	const { language } = useLanguage(baseTranslations);
+	const placeholder = getPlaceholder(language, name, fieldSpec, '•••••••••••');
 
 	return (
 		<Input
 			{...field}
 			className={cn('block w-full p-2 border rounded-md bg-white', className)}
-			placeholder='•••••••••••'
+			placeholder={placeholder}
 			required={required}
 			type='password'
 		/>

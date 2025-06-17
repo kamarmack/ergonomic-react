@@ -3,7 +3,6 @@ import { FieldValues, useController } from 'react-hook-form';
 import { isFieldRequired } from 'ergonomic';
 import { Input } from '../../../../components/ui/input';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
-// import { getGeneralizedFormFieldLabel as getLabel } from '../../utils/getGeneralizedFormFieldLabel';
 import { getGeneralizedFormFieldPlaceholder as getPlaceholder } from '../../utils/getGeneralizedFormFieldLabel';
 import { handlePercentageFieldKeyUp } from '../../utils/handlePercentageFieldKeyUp';
 import { default as cn } from '../../../../lib/cn';

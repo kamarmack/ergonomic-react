@@ -9,7 +9,6 @@ import {
 } from 'react-hook-form';
 import { v4 } from 'uuid';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
-// import { getGeneralizedFormFieldLabel as getLabel } from '../../utils/getGeneralizedFormFieldLabel';
 import { getGeneralizedFormFieldPlaceholder as getPlaceholder } from '../../utils/getGeneralizedFormFieldLabel';
 import { GeneralizedFormFieldError } from '../GeneralizedFormFieldError';
 import { GoPlus, GoXCircle } from 'react-icons/go';

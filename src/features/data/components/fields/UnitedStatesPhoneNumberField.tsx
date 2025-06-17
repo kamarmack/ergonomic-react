@@ -8,6 +8,11 @@ import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps
 import { handleUnitedStatesPhoneNumberFieldBlur } from '../../utils/handleUnitedStatesPhoneNumberFieldBlur';
 import { handleUnitedStatesPhoneNumberFieldKeyUp } from '../../utils/handleUnitedStatesPhoneNumberFieldKeyUp';
 import { default as cn } from '../../../../lib/cn';
+import { getGeneralizedFormFieldPlaceholder as getPlaceholder } from '../../utils/getGeneralizedFormFieldLabel';
+import {
+	baseTranslations,
+	useLanguage,
+} from '../../../../hooks/useLocalization';
 
 /**
  * UnitedStatesPhoneNumberField component renders an input field for handling phone numbers with a country code selector.
@@ -57,6 +62,13 @@ export const UnitedStatesPhoneNumberField = <
 		name,
 	});
 	const required = isFieldRequired({ fieldSpec, operation });
+	const { language } = useLanguage(baseTranslations);
+	const placeholder = getPlaceholder(
+		language,
+		name,
+		fieldSpec,
+		'(813) 555-1234',
+	);
 
 	return (
 		<div className='flex items-center space-x-2'>
@@ -93,7 +105,7 @@ export const UnitedStatesPhoneNumberField = <
 						field: R.pick(['onChange'], field),
 						setError,
 					})}
-					placeholder='(813) 555-1234'
+					placeholder={placeholder}
 					required={required}
 				/>
 			</div>

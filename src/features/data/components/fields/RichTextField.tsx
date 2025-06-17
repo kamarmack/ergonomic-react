@@ -5,6 +5,11 @@ import { FieldValues, useController } from 'react-hook-form';
 import dynamic from 'next/dynamic';
 import { Skeleton } from '../../../../components/ui/skeleton';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
+import { getGeneralizedFormFieldPlaceholder as getPlaceholder } from '../../utils/getGeneralizedFormFieldLabel';
+import {
+	baseTranslations,
+	useLanguage,
+} from '../../../../hooks/useLocalization';
 
 /**
  * RichTextField component renders a rich text editor
@@ -60,6 +65,13 @@ export const RichTextField = <
 		disabled,
 		name,
 	});
+	const { language } = useLanguage(baseTranslations);
+	const placeholder = getPlaceholder(
+		language,
+		name,
+		fieldSpec,
+		'Enter text here...',
+	);
 
 	// Initialize rich text
 	useEffect(() => {
@@ -97,7 +109,7 @@ export const RichTextField = <
 				}
 				setRichText(v);
 			}}
-			placeholder='Enter text here...'
+			placeholder={placeholder}
 			theme='snow'
 			value={richText}
 		/>

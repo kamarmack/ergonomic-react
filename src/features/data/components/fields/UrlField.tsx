@@ -5,6 +5,11 @@ import { Input } from '../../../../components/ui/input';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
 import { handleUrlFieldBlur } from '../../utils/handleUrlFieldBlur';
 import { default as cn } from '../../../../lib/cn';
+import { getGeneralizedFormFieldPlaceholder as getPlaceholder } from '../../utils/getGeneralizedFormFieldLabel';
+import {
+	baseTranslations,
+	useLanguage,
+} from '../../../../hooks/useLocalization';
 
 /**
  * UrlField component renders an input field for handling URL values, with optional guidance for file storage paths.
@@ -55,6 +60,13 @@ export const UrlField = <
 		name,
 	});
 	const required = isFieldRequired({ fieldSpec, operation });
+	const { language } = useLanguage(baseTranslations);
+	const placeholder = getPlaceholder(
+		language,
+		name,
+		fieldSpec,
+		'https://example.com',
+	);
 
 	return (
 		<div>
@@ -73,7 +85,7 @@ export const UrlField = <
 					field: R.pick(['onBlur'], field),
 					setError,
 				})}
-				placeholder='https://example.com'
+				placeholder={placeholder}
 				required={required}
 			/>
 		</div>
