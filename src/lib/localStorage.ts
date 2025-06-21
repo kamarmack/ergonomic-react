@@ -2,6 +2,7 @@ import { EnumMember, getEnum } from 'ergonomic';
 
 export const BaseLocalStorageStaticKeyEnum = getEnum([
 	'firebaseAuthJwt',
+	'hasSignedInBefore',
 	'language',
 	'phoneNumberRegion',
 ]);
@@ -94,10 +95,18 @@ export function getLocalStorageUtil<
 					key.startsWith(dynamicKey);
 				});
 			});
-			const keysToRemove = [...localStorageStaticKey, ...dynamicKeys];
+			const keysToRetain = [
+				'language',
+				'phoneNumberRegion',
+				'hasSignedInBefore',
+			];
+			const keysToRemove = [...localStorageStaticKey, ...dynamicKeys].filter(
+				function (key) {
+					return !keysToRetain.includes(key);
+				},
+			);
 			keysToRemove.forEach(function (key) {
-				if (!['language','phoneNumberRegion'].includes(key))
-					localStorage.removeItem(key);
+				localStorage.removeItem(key);
 			});
 		} catch (_) {
 			// swallow
