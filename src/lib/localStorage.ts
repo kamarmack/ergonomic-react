@@ -96,7 +96,8 @@ export function getLocalStorageUtil<
 			});
 			const keysToRemove = [...localStorageStaticKey, ...dynamicKeys];
 			keysToRemove.forEach(function (key) {
-				localStorage.removeItem(key);
+				if (!['language','phoneNumberRegion'].includes(key))
+					localStorage.removeItem(key);
 			});
 		} catch (_) {
 			// swallow
