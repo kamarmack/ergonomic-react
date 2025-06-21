@@ -12,6 +12,7 @@ import {
 import { ENABLE_GOOGLE_ANALYTICS } from '../../config/enableGoogleAnalytics';
 import cn from '../../lib/cn';
 import { MobileResponsivePageComingSoon } from './MobileResponsivePageComingSoon';
+import { baseTranslations, useLanguage } from '../../hooks/useLocalization';
 
 export type PageStaticProps = BaseComponentWithChildren & {
 	description?: string | React.ReactNode;
@@ -48,6 +49,7 @@ export const Page: React.FC<PageProps> = ({
 		thumbnailWidth: OPEN_GRAPH_CONFIG.siteThumbnailWidth,
 	},
 }) => {
+	const { language } = useLanguage(baseTranslations);
 	const { asPath } = useRouter();
 	const metaTitle = onlyText(title);
 	const fullTitle = `${metaTitle} - ${OPEN_GRAPH_CONFIG.siteName ?? ''}`;
@@ -108,7 +110,10 @@ export const Page: React.FC<PageProps> = ({
 				<meta property='og:image:height' content={`${metaThumbnailHeight}`} />
 				<meta property='og:image:type' content={metaThumbnailType} />
 				<meta property='og:image:width' content={`${metaThumbnailWidth}`} />
-				<meta property='og:locale' content='en_US' />
+				<meta
+					property='og:locale'
+					content={{ en: 'en_US', es: 'es_ES' }[language]}
+				/>
 				<meta property='og:site_name' content={OPEN_GRAPH_CONFIG.siteName} />
 				<meta property='og:title' content={metaTitle} />
 				<meta property='og:type' content='website' />
