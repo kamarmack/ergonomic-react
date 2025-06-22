@@ -1,6 +1,7 @@
 import { FirebaseError, initializeApp, getApps } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { FirestoreError, getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 import { FIREBASE_CONFIG } from '../config/firebaseConfig';
 import { getGeneralizedError } from 'ergonomic';
 
@@ -10,6 +11,7 @@ export const firebaseApp = getApps().length
 
 export const firebaseAuthInstance = getAuth(firebaseApp);
 export const firebaseFirestoreInstance = getFirestore(firebaseApp);
+export const firebaseStorageInstance = getStorage(firebaseApp);
 
 // Helper function to handle Firestore errors and return a standardized error
 export const handleFirestoreOperationError = (error: unknown) => {
