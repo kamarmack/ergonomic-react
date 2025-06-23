@@ -27,6 +27,7 @@ export type GeneralizedFormFieldProps<
 	hideRequiredIndicator?: boolean;
 	idPrefixByResourceName: Record<TResourceName, string>;
 	initialFormData: FieldValues | null;
+	language?: 'en' | 'es';
 	operation: 'create' | 'update';
 	setError: (message: string) => void;
 };

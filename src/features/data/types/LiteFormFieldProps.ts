@@ -12,6 +12,7 @@ export type LiteFormFieldProps<TFieldValues extends FieldValues = FieldValues> =
 		| 'fieldSpec'
 		| 'hideRequiredIndicator'
 		| 'initialFormData'
+		| 'language'
 		| 'operation'
 		| 'setError'
 	> & {
