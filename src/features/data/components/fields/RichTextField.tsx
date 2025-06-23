@@ -40,6 +40,7 @@ export const RichTextField = <
 	fieldKey: name,
 	fieldSpec,
 	initialFormData,
+	language,
 	operation,
 }: Pick<
 	GeneralizedFormFieldProps<TFieldValues, TResourceName>,
@@ -49,6 +50,7 @@ export const RichTextField = <
 	| 'fieldKey'
 	| 'fieldSpec'
 	| 'initialFormData'
+	| 'language'
 	| 'operation'
 >): JSX.Element => {
 	// Rich text editor variables
@@ -65,9 +67,9 @@ export const RichTextField = <
 		disabled,
 		name,
 	});
-	const { language } = useLanguage(baseTranslations);
+	const { language: fallbackLanguage } = useLanguage(baseTranslations);
 	const placeholder = getPlaceholder(
-		language,
+		language || fallbackLanguage,
 		name,
 		fieldSpec,
 		'Enter text here...',

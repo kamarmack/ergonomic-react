@@ -40,6 +40,7 @@ export const UsdField = <
 	disabled,
 	fieldKey: name,
 	fieldSpec,
+	language,
 	operation,
 	setError,
 }: Pick<
@@ -49,6 +50,7 @@ export const UsdField = <
 	| 'disabled'
 	| 'fieldKey'
 	| 'fieldSpec'
+	| 'language'
 	| 'operation'
 	| 'setError'
 >): JSX.Element => {
@@ -58,8 +60,13 @@ export const UsdField = <
 		name,
 	});
 	const required = isFieldRequired({ fieldSpec, operation });
-	const { language } = useLanguage(baseTranslations);
-	const placeholder = getPlaceholder(language, name, fieldSpec, '$0.00');
+	const { language: fallbackLanguage } = useLanguage(baseTranslations);
+	const placeholder = getPlaceholder(
+		language || fallbackLanguage,
+		name,
+		fieldSpec,
+		'$0.00',
+	);
 
 	return (
 		<Input

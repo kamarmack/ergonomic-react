@@ -50,6 +50,7 @@ export const ListField = <
 	fieldErrors,
 	fieldKey,
 	fieldSpec,
+	language,
 }: Pick<
 	GeneralizedFormFieldProps<TFieldValues, TResourceName>,
 	| 'className'
@@ -58,6 +59,7 @@ export const ListField = <
 	| 'fieldErrors'
 	| 'fieldKey'
 	| 'fieldSpec'
+	| 'language'
 >): JSX.Element => {
 	// Field variables
 	const { type } = fieldSpec?.meta || {};
@@ -77,7 +79,7 @@ export const ListField = <
 			TFieldValues,
 			FieldArrayPath<TFieldValues>
 		>);
-	const { language } = useLanguage(baseTranslations);
+	const { language: fallbackLanguage } = useLanguage(baseTranslations);
 
 	return (
 		<div>
@@ -97,7 +99,11 @@ export const ListField = <
 						''
 					)?.toString() ?? '';
 				const handleRemoveArrayItem = () => remove(index);
-				const placeholder = getPlaceholder(language, name, fieldSpec);
+				const placeholder = getPlaceholder(
+					language || fallbackLanguage,
+					name,
+					fieldSpec,
+				);
 
 				return (
 					<>

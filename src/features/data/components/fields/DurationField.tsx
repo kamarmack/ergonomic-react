@@ -45,6 +45,7 @@ export const DurationField = <
 	fieldKey: name,
 	fieldSpec,
 	initialFormData,
+	language,
 	operation,
 }: Pick<
 	GeneralizedFormFieldProps<TFieldValues, TResourceName>,
@@ -54,6 +55,7 @@ export const DurationField = <
 	| 'fieldKey'
 	| 'fieldSpec'
 	| 'initialFormData'
+	| 'language'
 	| 'operation'
 >): JSX.Element => {
 	// Duration computation logic
@@ -71,7 +73,7 @@ export const DurationField = <
 		disabled,
 		name,
 	});
-	const { language } = useLanguage(baseTranslations);
+	const { language: fallbackLanguage } = useLanguage(baseTranslations);
 
 	// Initialize duration value
 	useEffect(() => {
@@ -193,7 +195,11 @@ export const DurationField = <
 						}}
 					>
 						<option disabled value=''>
-							{{ en: 'Select one', es: 'Selecciona una opción' }[language]}
+							{
+								{ en: 'Select one', es: 'Selecciona una opción' }[
+									language || fallbackLanguage
+								]
+							}
 						</option>
 						{Array.from({ length }, (_, i) => i.toString()).map((option) => (
 							<option key={option} value={option}>

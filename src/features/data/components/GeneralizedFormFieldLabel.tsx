@@ -19,15 +19,15 @@ import {
 
 export type GeneralizedFormFieldLabelProps = Pick<
 	GeneralizedFormFieldProps,
-	'fieldKey' | 'fieldSpec' | 'hideRequiredIndicator' | 'operation'
+	'fieldKey' | 'fieldSpec' | 'hideRequiredIndicator' | 'language' | 'operation'
 >;
 export const GeneralizedFormFieldLabel: React.FC<
 	GeneralizedFormFieldLabelProps
-> = ({ fieldKey, fieldSpec, hideRequiredIndicator, operation }) => {
-	const { language } = useLanguage(baseTranslations);
-	const label = getLabel(language, fieldKey, fieldSpec);
+> = ({ fieldKey, fieldSpec, hideRequiredIndicator, language, operation }) => {
+	const { language: fallbackLanguage } = useLanguage(baseTranslations);
+	const label = getLabel(language || fallbackLanguage, fieldKey, fieldSpec);
 	const labelSubtitle = getLabelSubtitle(
-		language,
+		language || fallbackLanguage,
 		fieldSpec.meta?.label_message_admin_text ??
 			fieldSpec.meta?.label_message_user_text,
 	);

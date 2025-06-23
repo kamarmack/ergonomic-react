@@ -21,6 +21,7 @@ export type LiteFormFieldLabelProps = Pick<
 	| 'fieldKey'
 	| 'fieldSpec'
 	| 'hideRequiredIndicator'
+	| 'language'
 	| 'operation'
 	| 'renderTooltipContent'
 >;
@@ -28,13 +29,14 @@ export const LiteFormFieldLabel: React.FC<LiteFormFieldLabelProps> = ({
 	fieldKey,
 	fieldSpec,
 	hideRequiredIndicator = false,
+	language,
 	operation,
 	renderTooltipContent,
 }) => {
-	const { language } = useLanguage(baseTranslations);
-	const label = getLabel(language, fieldKey, fieldSpec);
+	const { language: fallbackLanguage } = useLanguage(baseTranslations);
+	const label = getLabel(language || fallbackLanguage, fieldKey, fieldSpec);
 	const labelSubtitle = getLabelSubtitle(
-		language,
+		language || fallbackLanguage,
 		fieldSpec.meta?.label_message_user_text,
 	);
 	const required = isFieldRequired({ fieldSpec, operation });

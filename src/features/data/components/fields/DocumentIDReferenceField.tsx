@@ -48,6 +48,7 @@ export const DocumentIDReferenceField = <
 	getPageQueryHookForResource,
 	idPrefixByResourceName,
 	initialFormData,
+	language,
 	operation,
 }: Pick<
 	GeneralizedFormFieldProps<TFieldValues, TResourceName>,
@@ -59,6 +60,7 @@ export const DocumentIDReferenceField = <
 	| 'getPageQueryHookForResource'
 	| 'idPrefixByResourceName'
 	| 'initialFormData'
+	| 'language'
 	| 'operation'
 >): JSX.Element => {
 	// Field variables
@@ -173,7 +175,7 @@ export const DocumentIDReferenceField = <
 		disabled,
 		name,
 	});
-	const { language } = useLanguage(baseTranslations);
+	const { language: fallbackLanguage } = useLanguage(baseTranslations);
 
 	// Suspense loading state
 	const isDocumentIDReferenceFieldLoading =
@@ -205,7 +207,11 @@ export const DocumentIDReferenceField = <
 						}
 					>
 						<option disabled value=''>
-							{{ en: 'Select one', es: 'Selecciona una opción' }[language]}
+							{
+								{ en: 'Select one', es: 'Selecciona una opción' }[
+									language || fallbackLanguage
+								]
+							}
 						</option>
 						{resources.map((option) => {
 							return (

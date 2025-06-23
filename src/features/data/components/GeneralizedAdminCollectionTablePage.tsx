@@ -48,7 +48,7 @@ export const GeneralizedAdminResourceTablePage = <
 	const router = useRouter();
 
 	// Localization
-	const { language } = useLanguage(baseTranslations);
+	const { language: fallbackLanguage } = useLanguage(baseTranslations);
 
 	// ==== Constants ==== //
 
@@ -110,7 +110,11 @@ export const GeneralizedAdminResourceTablePage = <
 	const tableHeaderData = !isDocumentPageReady
 		? []
 		: fieldSpecEntries.map(([fieldKey, fieldSpec]) => ({
-				name: getGeneralizedFormFieldLabel(language, fieldKey, fieldSpec),
+				name: getGeneralizedFormFieldLabel(
+					/*language ||*/ fallbackLanguage,
+					fieldKey,
+					fieldSpec,
+				),
 		  }));
 	const tableData = documentPage.map((doc): GeneralizedTableCellProps[] => {
 		const data = !isDocumentPageReady

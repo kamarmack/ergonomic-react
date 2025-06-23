@@ -39,10 +39,17 @@ export const AddressField = <
 	disabled,
 	fieldKey: name,
 	fieldSpec,
+	language,
 	operation,
 }: Pick<
 	GeneralizedFormFieldProps<TFieldValues, TResourceName>,
-	'className' | 'control' | 'disabled' | 'fieldKey' | 'fieldSpec' | 'operation'
+	| 'className'
+	| 'control'
+	| 'disabled'
+	| 'fieldKey'
+	| 'fieldSpec'
+	| 'language'
+	| 'operation'
 >): JSX.Element => {
 	const { field } = useController({
 		control,
@@ -50,8 +57,12 @@ export const AddressField = <
 		name,
 	});
 	const required = isFieldRequired({ fieldSpec, operation });
-	const { language } = useLanguage(baseTranslations);
-	const placeholder = getPlaceholder(language, name, fieldSpec);
+	const { language: fallbackLanguage } = useLanguage(baseTranslations);
+	const placeholder = getPlaceholder(
+		language || fallbackLanguage,
+		name,
+		fieldSpec,
+	);
 
 	if (name.endsWith('state')) {
 		return (
@@ -61,7 +72,11 @@ export const AddressField = <
 				required={required}
 			>
 				<option disabled value=''>
-					{{ en: 'Select one', es: 'Selecciona una opción' }[language]}
+					{
+						{ en: 'Select one', es: 'Selecciona una opción' }[
+							language || fallbackLanguage
+						]
+					}
 				</option>
 				{UsaStateCodeEnum.arr.map((state) => (
 					<option key={state} value={state}>
@@ -80,7 +95,11 @@ export const AddressField = <
 				required={required}
 			>
 				<option disabled value=''>
-					{{ en: 'Select one', es: 'Selecciona una opción' }[language]}
+					{
+						{ en: 'Select one', es: 'Selecciona una opción' }[
+							language || fallbackLanguage
+						]
+					}
 				</option>
 				{['US'].map((option) => {
 					return (

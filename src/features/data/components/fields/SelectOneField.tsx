@@ -41,6 +41,7 @@ export const SelectOneField = <
 	fieldKey: name,
 	fieldSpec,
 	initialFormData,
+	language,
 	operation,
 }: Pick<
 	GeneralizedFormFieldProps<TFieldValues, TResourceName>,
@@ -50,11 +51,15 @@ export const SelectOneField = <
 	| 'fieldKey'
 	| 'fieldSpec'
 	| 'initialFormData'
+	| 'language'
 	| 'operation'
 >): JSX.Element => {
 	const { label_by_enum_option = {} } = fieldSpec?.meta || {};
-	const { language } = useLanguage(baseTranslations);
-	const labelByOption = getLabelByOption(language, label_by_enum_option);
+	const { language: fallbackLanguage } = useLanguage(baseTranslations);
+	const labelByOption = getLabelByOption(
+		language || fallbackLanguage,
+		label_by_enum_option,
+	);
 	const options = fieldSpec.oneOf;
 	const defaultValueFromSpec = fieldSpec.default?.toString();
 	const defaultValue = (
@@ -79,7 +84,11 @@ export const SelectOneField = <
 			required={required}
 		>
 			<option disabled value=''>
-				{{ en: 'Select one', es: 'Selecciona una opción' }[language]}
+				{
+					{ en: 'Select one', es: 'Selecciona una opción' }[
+						language || fallbackLanguage
+					]
+				}
 			</option>
 			{options.map((option) => (
 				<option key={option} value={option}>

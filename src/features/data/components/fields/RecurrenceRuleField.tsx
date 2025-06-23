@@ -24,6 +24,10 @@ import { Skeleton } from '../../../../components/ui/skeleton';
 import { Input } from '../../../../components/ui/input';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
 import cn from '../../../../lib/cn';
+import {
+	baseTranslations,
+	useLanguage,
+} from '../../../../hooks/useLocalization';
 
 const defaultRecurrenceRule: RecurrenceRuleData = {
 	DTSTART: '',
@@ -73,6 +77,7 @@ export const RecurrenceRuleField = <
 	fieldKey: name,
 	fieldSpec,
 	initialFormData,
+	language,
 	operation,
 }: Pick<
 	GeneralizedFormFieldProps<TFieldValues, TResourceName>,
@@ -82,8 +87,10 @@ export const RecurrenceRuleField = <
 	| 'fieldKey'
 	| 'fieldSpec'
 	| 'initialFormData'
+	| 'language'
 	| 'operation'
 >): JSX.Element => {
+	const { language: fallbackLanguage } = useLanguage(baseTranslations);
 	const [recurrenceRule, setRecurrenceRule] =
 		useState<RecurrenceRuleData | null>(null);
 	const [recurrenceRuleEnding, setRecurrenceRuleEnding] =
@@ -165,7 +172,14 @@ export const RecurrenceRuleField = <
 	return (
 		<div className={cn('flex items-start space-x-2', className)}>
 			<div className='flex-1'>
-				<p>Start Date</p>
+				<p>
+					{
+						{
+							en: 'Start Date',
+							es: 'Fecha de Inicio',
+						}[language || fallbackLanguage]
+					}
+				</p>
 				<Input
 					defaultValue={getDateWithMinutePrecision(
 						recurrenceRule?.DTSTART?.slice(0, 8) ?? '',
@@ -196,7 +210,14 @@ export const RecurrenceRuleField = <
 				/>
 			</div>
 			<div className=''>
-				<p>Repeats</p>
+				<p>
+					{
+						{
+							en: 'Repeats',
+							es: 'Repite',
+						}[language || fallbackLanguage]
+					}
+				</p>
 				<select
 					className='block w-full p-2 border rounded-md bg-white'
 					defaultValue={recurrenceRule?.FREQ ?? 'YEARLY'}
@@ -220,7 +241,14 @@ export const RecurrenceRuleField = <
 				</select>
 			</div>
 			<div className=''>
-				<p>Ends</p>
+				<p>
+					{
+						{
+							en: 'Ends',
+							es: 'Termina',
+						}[language || fallbackLanguage]
+					}
+				</p>
 				<select
 					className='block w-full p-2 border rounded-md bg-white'
 					defaultValue={recurrenceRuleEnding}
@@ -280,7 +308,14 @@ export const RecurrenceRuleField = <
 			</div>
 			{recurrenceRuleEnding === 'COUNT' && (
 				<div className=''>
-					<p>Occurrences</p>
+					<p>
+						{
+							{
+								en: 'Occurrences',
+								es: 'Ocurrencias',
+							}[language || fallbackLanguage]
+						}
+					</p>
 					<Input
 						defaultValue={
 							typeof recurrenceRule?.COUNT === 'number'
@@ -303,7 +338,14 @@ export const RecurrenceRuleField = <
 			)}
 			{recurrenceRuleEnding === 'UNTIL' && (
 				<div className=''>
-					<p>End Date</p>
+					<p>
+						{
+							{
+								en: 'End Date',
+								es: 'Fecha de Fin',
+							}[language || fallbackLanguage]
+						}
+					</p>
 					<Input
 						defaultValue={getDateWithMinutePrecision(
 							recurrenceRule?.UNTIL?.slice(0, 8) ?? '',

@@ -40,6 +40,7 @@ export const TimeZoneField = <
 	fieldKey: name,
 	fieldSpec,
 	initialFormData,
+	language,
 	operation,
 }: Pick<
 	GeneralizedFormFieldProps<TFieldValues, TResourceName>,
@@ -49,11 +50,15 @@ export const TimeZoneField = <
 	| 'fieldKey'
 	| 'fieldSpec'
 	| 'initialFormData'
+	| 'language'
 	| 'operation'
 >): JSX.Element => {
 	const { label_by_enum_option = {} } = fieldSpec?.meta || {};
-	const { language } = useLanguage(baseTranslations);
-	const labelByOption = getLabelByOption(language, label_by_enum_option);
+	const { language: fallbackLanguage } = useLanguage(baseTranslations);
+	const labelByOption = getLabelByOption(
+		language || fallbackLanguage,
+		label_by_enum_option,
+	);
 	const options = IanaTimeZoneEnum.arr;
 	const defaultValueFromSpec = fieldSpec.default?.toString();
 	const defaultValue = (
@@ -78,7 +83,11 @@ export const TimeZoneField = <
 			required={required}
 		>
 			<option disabled value=''>
-				{{ en: 'Select one', es: 'Selecciona una opción' }[language]}
+				{
+					{ en: 'Select one', es: 'Selecciona una opción' }[
+						language || fallbackLanguage
+					]
+				}
 			</option>
 			{options.map((option) => (
 				<option key={option} value={option}>

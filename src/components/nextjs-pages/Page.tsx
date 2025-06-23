@@ -28,6 +28,7 @@ export type PageStaticProps = BaseComponentWithChildren & {
 		thumbnailType: string;
 		thumbnailWidth: string;
 	};
+	language?: 'en' | 'es';
 };
 export type PageProps = PageStaticProps & {
 	routeId: string;
@@ -48,8 +49,9 @@ export const Page: React.FC<PageProps> = ({
 		thumbnailType: OPEN_GRAPH_CONFIG.siteThumbnailType,
 		thumbnailWidth: OPEN_GRAPH_CONFIG.siteThumbnailWidth,
 	},
+	language,
 }) => {
-	const { language } = useLanguage(baseTranslations);
+	const { language: fallbackLanguage } = useLanguage(baseTranslations);
 	const { asPath } = useRouter();
 	const metaTitle = onlyText(title);
 	const fullTitle = `${metaTitle} - ${OPEN_GRAPH_CONFIG.siteName ?? ''}`;
@@ -112,7 +114,7 @@ export const Page: React.FC<PageProps> = ({
 				<meta property='og:image:width' content={`${metaThumbnailWidth}`} />
 				<meta
 					property='og:locale'
-					content={{ en: 'en_US', es: 'es_ES' }[language]}
+					content={{ en: 'en_US', es: 'es_ES' }[language || fallbackLanguage]}
 				/>
 				<meta property='og:site_name' content={OPEN_GRAPH_CONFIG.siteName} />
 				<meta property='og:title' content={metaTitle} />

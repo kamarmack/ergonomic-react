@@ -37,10 +37,17 @@ export const LongTextField = <
 	disabled,
 	fieldKey: name,
 	fieldSpec,
+	language,
 	operation,
 }: Pick<
 	GeneralizedFormFieldProps<TFieldValues, TResourceName>,
-	'className' | 'control' | 'disabled' | 'fieldKey' | 'fieldSpec' | 'operation'
+	| 'className'
+	| 'control'
+	| 'disabled'
+	| 'fieldKey'
+	| 'fieldSpec'
+	| 'language'
+	| 'operation'
 >): JSX.Element => {
 	const { field } = useController({
 		control,
@@ -48,8 +55,12 @@ export const LongTextField = <
 		name,
 	});
 	const required = isFieldRequired({ fieldSpec, operation });
-	const { language } = useLanguage(baseTranslations);
-	const placeholder = getPlaceholder(language, name, fieldSpec);
+	const { language: fallbackLanguage } = useLanguage(baseTranslations);
+	const placeholder = getPlaceholder(
+		language || fallbackLanguage,
+		name,
+		fieldSpec,
+	);
 
 	return (
 		<Textarea

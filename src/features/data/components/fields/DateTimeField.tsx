@@ -35,7 +35,13 @@ export const DateTimeField = <
 	operation,
 }: Pick<
 	GeneralizedFormFieldProps<TFieldValues, TResourceName>,
-	'className' | 'control' | 'disabled' | 'fieldKey' | 'fieldSpec' | 'operation'
+	| 'className'
+	| 'control'
+	| 'disabled'
+	| 'fieldKey'
+	| 'fieldSpec'
+	| 'language'
+	| 'operation'
 >): JSX.Element => {
 	const { field } = useController({
 		control,

@@ -41,6 +41,7 @@ export const PercentageField = <
 	disabled,
 	fieldKey: name,
 	fieldSpec,
+	language,
 	operation,
 	setError,
 }: Pick<
@@ -50,6 +51,7 @@ export const PercentageField = <
 	| 'disabled'
 	| 'fieldKey'
 	| 'fieldSpec'
+	| 'language'
 	| 'operation'
 	| 'setError'
 >): JSX.Element => {
@@ -59,8 +61,12 @@ export const PercentageField = <
 		name,
 	});
 	const required = isFieldRequired({ fieldSpec, operation });
-	const { language } = useLanguage(baseTranslations);
-	const placeholder = getPlaceholder(language, name, fieldSpec);
+	const { language: fallbackLanguage } = useLanguage(baseTranslations);
+	const placeholder = getPlaceholder(
+		language || fallbackLanguage,
+		name,
+		fieldSpec,
+	);
 
 	return (
 		<Input

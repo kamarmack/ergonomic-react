@@ -6,6 +6,10 @@ import { Skeleton } from '../../../../components/ui/skeleton';
 import { Input } from '../../../../components/ui/input';
 import { GeneralizedFormFieldProps } from '../../types/GeneralizedFormFieldProps';
 import cn from '../../../../lib/cn';
+import {
+	baseTranslations,
+	useLanguage,
+} from '../../../../hooks/useLocalization';
 
 /**
  * IntervalField component renders a pair of date-time input fields for specifying a start and end date-time,
@@ -39,6 +43,7 @@ export const IntervalField = <
 	fieldKey: name,
 	fieldSpec,
 	initialFormData,
+	language,
 	operation,
 }: Pick<
 	GeneralizedFormFieldProps<TFieldValues, TResourceName>,
@@ -48,8 +53,10 @@ export const IntervalField = <
 	| 'fieldKey'
 	| 'fieldSpec'
 	| 'initialFormData'
+	| 'language'
 	| 'operation'
 >): JSX.Element => {
+	const { language: fallbackLanguage } = useLanguage(baseTranslations);
 	// Interval computation logic
 	const [interval, setInterval] = useState<IntervalLikeObject | null>(null);
 	const isIsoIntervalLoading = interval == null;
@@ -122,7 +129,10 @@ export const IntervalField = <
 		<div className={cn('flex items-center space-x-2', className)}>
 			{[
 				{
-					label: 'Start Date',
+					label: {
+						en: 'Start Date',
+						es: 'Fecha de Inicio',
+					}[language || fallbackLanguage],
 					value: interval?.start ?? '',
 					onBlur: (e: React.FocusEvent<HTMLInputElement>) => {
 						field.onBlur();
@@ -132,7 +142,10 @@ export const IntervalField = <
 					},
 				},
 				{
-					label: 'End Date',
+					label: {
+						en: 'End Date',
+						es: 'Fecha de Fin',
+					}[language || fallbackLanguage],
 					value: interval?.end ?? '',
 					onBlur: (e: React.FocusEvent<HTMLInputElement>) => {
 						field.onBlur();

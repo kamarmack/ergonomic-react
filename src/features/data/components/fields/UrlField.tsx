@@ -41,6 +41,7 @@ export const UrlField = <
 	disabled,
 	fieldKey: name,
 	fieldSpec,
+	language,
 	operation,
 	setError,
 }: Pick<
@@ -50,6 +51,7 @@ export const UrlField = <
 	| 'disabled'
 	| 'fieldKey'
 	| 'fieldSpec'
+	| 'language'
 	| 'operation'
 	| 'setError'
 >): JSX.Element => {
@@ -60,9 +62,9 @@ export const UrlField = <
 		name,
 	});
 	const required = isFieldRequired({ fieldSpec, operation });
-	const { language } = useLanguage(baseTranslations);
+	const { language: fallbackLanguage } = useLanguage(baseTranslations);
 	const placeholder = getPlaceholder(
-		language,
+		language || fallbackLanguage,
 		name,
 		fieldSpec,
 		'https://example.com',

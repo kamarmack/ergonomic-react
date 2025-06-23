@@ -43,6 +43,7 @@ export const MarkdownTextField = <
 	| 'fieldKey'
 	| 'fieldSpec'
 	| 'initialFormData'
+	| 'language'
 	| 'operation'
 >): JSX.Element => {
 	// Markdown editor variables

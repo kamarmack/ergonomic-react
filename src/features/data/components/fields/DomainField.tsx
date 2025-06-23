@@ -41,6 +41,7 @@ export const DomainField = <
 	disabled,
 	fieldKey: name,
 	fieldSpec,
+	language,
 	operation,
 	setError,
 }: Pick<
@@ -50,6 +51,7 @@ export const DomainField = <
 	| 'disabled'
 	| 'fieldKey'
 	| 'fieldSpec'
+	| 'language'
 	| 'operation'
 	| 'setError'
 >): JSX.Element => {
@@ -59,8 +61,13 @@ export const DomainField = <
 		name,
 	});
 	const required = isFieldRequired({ fieldSpec, operation });
-	const { language } = useLanguage(baseTranslations);
-	const placeholder = getPlaceholder(language, name, fieldSpec, 'example.com');
+	const { language: fallbackLanguage } = useLanguage(baseTranslations);
+	const placeholder = getPlaceholder(
+		language || fallbackLanguage,
+		name,
+		fieldSpec,
+		'example.com',
+	);
 
 	return (
 		<Input

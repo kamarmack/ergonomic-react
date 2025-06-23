@@ -44,6 +44,7 @@ export const UnitedStatesPhoneNumberField = <
 	disabled,
 	fieldKey: name,
 	fieldSpec,
+	language,
 	operation,
 	setError,
 }: Pick<
@@ -53,6 +54,7 @@ export const UnitedStatesPhoneNumberField = <
 	| 'disabled'
 	| 'fieldKey'
 	| 'fieldSpec'
+	| 'language'
 	| 'operation'
 	| 'setError'
 >): JSX.Element => {
@@ -62,9 +64,9 @@ export const UnitedStatesPhoneNumberField = <
 		name,
 	});
 	const required = isFieldRequired({ fieldSpec, operation });
-	const { language } = useLanguage(baseTranslations);
+	const { language: fallbackLanguage } = useLanguage(baseTranslations);
 	const placeholder = getPlaceholder(
-		language,
+		language || fallbackLanguage,
 		name,
 		fieldSpec,
 		'(813) 555-1234',
@@ -79,7 +81,11 @@ export const UnitedStatesPhoneNumberField = <
 					disabled={disabled}
 				>
 					<option disabled value=''>
-						{{ en: 'Select one', es: 'Selecciona una opción' }[language]}
+						{
+							{ en: 'Select one', es: 'Selecciona una opción' }[
+								language || fallbackLanguage
+							]
+						}
 					</option>
 					{['+1'].map((option) => {
 						return (

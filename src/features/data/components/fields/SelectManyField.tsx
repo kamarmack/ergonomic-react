@@ -69,6 +69,7 @@ export const SelectManyField = <
 	fieldKey: name,
 	fieldSpec,
 	initialFormData,
+	language,
 	operation,
 }: Pick<
 	GeneralizedFormFieldProps<TFieldValues, TResourceName>,
@@ -78,6 +79,7 @@ export const SelectManyField = <
 	| 'fieldKey'
 	| 'fieldSpec'
 	| 'initialFormData'
+	| 'language'
 	| 'operation'
 >): JSX.Element => {
 	// Field variables
@@ -85,8 +87,10 @@ export const SelectManyField = <
 	const innerOneOf = innerType.oneOf ?? [];
 	const innerMeta = innerType.meta ?? ({} as GeneralizedFieldSpec['meta']);
 	const innerLabelByEnumOption = innerMeta?.label_by_enum_option ?? {};
-	const { language } = useLanguage(baseTranslations);
-	const options = innerOneOf.map(getOption(language, innerLabelByEnumOption));
+	const { language: fallbackLanguage } = useLanguage(baseTranslations);
+	const options = innerOneOf.map(
+		getOption(language || fallbackLanguage, innerLabelByEnumOption),
+	);
 
 	// Selections computation logic
 	const [defaultSelections, setDefaultSelections] = useState<
@@ -123,7 +127,9 @@ export const SelectManyField = <
 				: defaultValueForUpdateOperations.map(({ value }) => value)
 		).filter((s) => innerOneOf.includes(s));
 		setDefaultSelections(() =>
-			selections.map(getOption(language, innerLabelByEnumOption)),
+			selections.map(
+				getOption(language || fallbackLanguage, innerLabelByEnumOption),
+			),
 		);
 	}, [
 		operation,
@@ -132,6 +138,7 @@ export const SelectManyField = <
 		name,
 		initialFormData,
 		language,
+		fallbackLanguage,
 	]);
 
 	// Suspense loading state
