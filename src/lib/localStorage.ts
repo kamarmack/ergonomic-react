@@ -26,15 +26,27 @@ export type BaseLocalStorageDynamicKey = EnumMember<
 >;
 
 export function getLocalStorageUtil<
-	TLocalStorageStaticKey extends BaseLocalStorageStaticKey,
-	TLocalStorageDynamicKey extends BaseLocalStorageDynamicKey,
+	TCustomLocalStorageStaticKey extends string = never,
+	TCustomLocalStorageDynamicKey extends string = never,
 >({
 	localStorageStaticKey,
 	localStorageDynamicKey,
 }: {
-	localStorageStaticKey: TLocalStorageStaticKey[];
-	localStorageDynamicKey: TLocalStorageDynamicKey[];
+	localStorageStaticKey: (
+		| BaseLocalStorageStaticKey
+		| TCustomLocalStorageStaticKey
+	)[];
+	localStorageDynamicKey: (
+		| BaseLocalStorageDynamicKey
+		| TCustomLocalStorageDynamicKey
+	)[];
 }) {
+	type TLocalStorageStaticKey =
+		| BaseLocalStorageStaticKey
+		| TCustomLocalStorageStaticKey;
+	type TLocalStorageDynamicKey =
+		| BaseLocalStorageDynamicKey
+		| TCustomLocalStorageDynamicKey;
 	function saveToLocalStorage<
 		TKey extends TLocalStorageStaticKey | TLocalStorageDynamicKey,
 	>(
