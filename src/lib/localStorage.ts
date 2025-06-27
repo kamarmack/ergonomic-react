@@ -25,21 +25,28 @@ export type BaseLocalStorageDynamicKey = EnumMember<
 	typeof BaseLocalStorageDynamicKeyEnum
 >;
 
+export const defaultKeysToRetainOnWipe = [
+	'language',
+	'phoneNumberRegion',
+	'hasSignedInBefore',
+];
 export function getLocalStorageUtil<
 	TCustomLocalStorageStaticKey extends string = never,
 	TCustomLocalStorageDynamicKey extends string = never,
 >({
-	localStorageStaticKey,
-	localStorageDynamicKey,
+	localStorageStaticKeys,
+	localStorageDynamicKeys,
+	keysToRetainOnWipe = defaultKeysToRetainOnWipe,
 }: {
-	localStorageStaticKey: (
+	localStorageStaticKeys: (
 		| BaseLocalStorageStaticKey
 		| TCustomLocalStorageStaticKey
 	)[];
-	localStorageDynamicKey: (
+	localStorageDynamicKeys: (
 		| BaseLocalStorageDynamicKey
 		| TCustomLocalStorageDynamicKey
 	)[];
+	keysToRetainOnWipe?: string[];
 }) {
 	type TLocalStorageStaticKey =
 		| BaseLocalStorageStaticKey
@@ -103,18 +110,13 @@ export function getLocalStorageUtil<
 				allKeys.push(localStorage.key(i)!);
 			}
 			const dynamicKeys = allKeys.filter(function (key) {
-				return localStorageDynamicKey.some(function (dynamicKey) {
+				return localStorageDynamicKeys.some(function (dynamicKey) {
 					key.startsWith(dynamicKey);
 				});
 			});
-			const keysToRetain = [
-				'language',
-				'phoneNumberRegion',
-				'hasSignedInBefore',
-			];
-			const keysToRemove = [...localStorageStaticKey, ...dynamicKeys].filter(
+			const keysToRemove = [...localStorageStaticKeys, ...dynamicKeys].filter(
 				function (key) {
-					return !keysToRetain.includes(key);
+					return !keysToRetainOnWipe.includes(key);
 				},
 			);
 			keysToRemove.forEach(function (key) {
@@ -134,6 +136,6 @@ export function getLocalStorageUtil<
 }
 
 export const baseLocalStorageUtil = getLocalStorageUtil({
-	localStorageStaticKey: BaseLocalStorageStaticKeyEnum.arr,
-	localStorageDynamicKey: BaseLocalStorageDynamicKeyEnum.arr,
+	localStorageStaticKeys: BaseLocalStorageStaticKeyEnum.arr,
+	localStorageDynamicKeys: BaseLocalStorageDynamicKeyEnum.arr,
 });
