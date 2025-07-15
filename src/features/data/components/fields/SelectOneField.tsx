@@ -54,7 +54,10 @@ export const SelectOneField = <
 	| 'language'
 	| 'operation'
 >): JSX.Element => {
-	const { label_by_enum_option = {} } = fieldSpec?.meta || {};
+	const {
+		label_by_enum_option = {},
+		group_by_enum_option: sectionByOptionPossiblyLocalized = {},
+	} = fieldSpec?.meta || {};
 	const { language: fallbackLanguage } = useLanguage(baseTranslations);
 	const labelByOption = getLabelByOption(
 		language || fallbackLanguage,
@@ -77,6 +80,16 @@ export const SelectOneField = <
 	});
 	const required = isFieldRequired({ fieldSpec, operation });
 
+	// ----- build grouped options when meta provided -----
+	const sectionByOption = getLabelByOption(
+		language || fallbackLanguage,
+		sectionByOptionPossiblyLocalized,
+	);
+	const hasGrouping: boolean = Object.keys(sectionByOption).length > 0;
+	const groupedOptions: Record<string, string[]> = hasGrouping
+		? buildGroupedOptions(options, sectionByOption)
+		: {};
+
 	return (
 		<select
 			{...field}
@@ -90,11 +103,58 @@ export const SelectOneField = <
 					]
 				}
 			</option>
-			{options.map((option) => (
-				<option key={option} value={option}>
-					{labelByOption[option] ?? changeCase.sentenceCase(option)}
-				</option>
-			))}
+			{/* Grouped (<optgroup>) or flat (<option>) list */}
+			{hasGrouping
+				? Object.entries(groupedOptions).map(function ([section, opts]) {
+						// Options without a section are rendered directly
+						if (section === '') {
+							return opts.map(function (opt) {
+								return (
+									<option key={opt} value={opt}>
+										{labelByOption[opt] ?? changeCase.sentenceCase(opt)}
+									</option>
+								);
+							});
+						}
+						return (
+							<optgroup key={section} label={section}>
+								{opts.map(function (opt) {
+									return (
+										<option key={opt} value={opt}>
+											{labelByOption[opt] ?? changeCase.sentenceCase(opt)}
+										</option>
+									);
+								})}
+							</optgroup>
+						);
+				  })
+				: options.map(function (opt) {
+						return (
+							<option key={opt} value={opt}>
+								{labelByOption[opt] ?? changeCase.sentenceCase(opt)}
+							</option>
+						);
+				  })}
 		</select>
 	);
 };
+
+/** Build a (section => options[]) map from a list of options. */
+function buildGroupedOptions(
+	options: string[],
+	sectionByOption: Record<string, string>,
+): Record<string, string[]> {
+	// Start with an empty grouping
+	const grouped: Record<string, string[]> = {};
+	options.forEach(function (opt) {
+		// Determine the section this option belongs to (if any)
+		const section: string | undefined = sectionByOption[opt];
+		// Use empty string as a “no-section” bucket
+		const key: string = section ?? '';
+		if (!grouped[key]) {
+			grouped[key] = [];
+		}
+		grouped[key]?.push(opt);
+	});
+	return grouped;
+}
