@@ -5,7 +5,7 @@ import {
 	getFormDataConversionOptions,
 	FormDataConversionOptions,
 } from 'ergonomic';
-import { convertServerDataToFormData } from '../utils/convertServerDataToFormData';
+import { convertFormDataToServerData } from '../utils/convertFormDataToServerData';
 
 /**
  * Custom hook to use Yup as a resolver for React Hook Form
@@ -38,7 +38,7 @@ export const useYupValidationResolver = <T extends FieldValues>(
 ) =>
 	useCallback(
 		async (formData: FieldValues) => {
-			const serverData = convertServerDataToFormData(formData, options);
+			const serverData = convertFormDataToServerData(formData, options);
 
 			if (!validationSchema) {
 				verbose &&
