@@ -1,3 +1,4 @@
+import * as yup from 'yup';
 import * as R from 'ramda';
 import {
 	FormDataConversionOptions,
@@ -134,9 +135,9 @@ GeneralizedFormProps<TFieldValues, TResourceName> & {
 
 	// Resolver
 	const resolver = apiResourceSpec?.apiResourceJsonSchema
-		? useYupValidationResolver(
+		? useYupValidationResolver<TFieldValues>(
 				// writeOperationSchema,
-				apiResourceSpec.apiResourceJsonSchema,
+				apiResourceSpec.apiResourceJsonSchema as yup.ObjectSchema<TFieldValues>,
 				dataTransformationOptions,
 		  )
 		: undefined;

@@ -1,5 +1,10 @@
 import * as yup from 'yup';
-import { FieldValues } from 'react-hook-form';
+import {
+	FieldErrors,
+	FieldValues,
+	Resolver,
+	ResolverResult,
+} from 'react-hook-form';
 import { useCallback } from 'react';
 import {
 	getFormDataConversionOptions,
@@ -35,9 +40,9 @@ export const useYupValidationResolver = <T extends FieldValues>(
 	validationSchema: yup.ObjectSchema<T> | null,
 	options: FormDataConversionOptions = getFormDataConversionOptions(),
 	verbose = false,
-) =>
+): Resolver<T> =>
 	useCallback(
-		async (formData: FieldValues) => {
+		async (formData: T): Promise<ResolverResult<T>> => {
 			const serverData = convertFormDataToServerData(formData, options);
 
 			if (!validationSchema) {
@@ -46,20 +51,20 @@ export const useYupValidationResolver = <T extends FieldValues>(
 
 				return {
 					values: serverData,
-					errors: {},
+					errors: {} as Record<string, never>,
 				};
 			}
 
 			try {
-				const values = await validationSchema.validate(serverData, {
+				const values = (await validationSchema.validate(serverData, {
 					abortEarly: false,
-				});
+				})) as T;
 
 				verbose && console.log('Validation success:', values);
 
 				return {
 					values,
-					errors: {},
+					errors: {} as Record<string, never>,
 				};
 			} catch (err) {
 				const errors = err as yup.ValidationError;
@@ -72,7 +77,7 @@ export const useYupValidationResolver = <T extends FieldValues>(
 					});
 
 				return {
-					values: {},
+					values: {} as Record<string, never>,
 					errors: errors.inner.reduce(
 						(allErrors, currentError) => ({
 							...allErrors,
@@ -81,7 +86,7 @@ export const useYupValidationResolver = <T extends FieldValues>(
 								message: currentError.message,
 							},
 						}),
-						{},
+						{} as FieldErrors<T>,
 					),
 				};
 			}
