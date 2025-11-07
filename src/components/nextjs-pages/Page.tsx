@@ -13,6 +13,7 @@ import { ENABLE_GOOGLE_ANALYTICS } from '../../config/enableGoogleAnalytics';
 import cn from '../../lib/cn';
 import { MobileResponsivePageComingSoon } from './MobileResponsivePageComingSoon';
 import { baseTranslations, useLanguage } from '../../hooks/useLocalization';
+import { useIsMounted } from '../../hooks/useIsMounted';
 
 export type PageStaticProps = BaseComponentWithChildren & {
 	description?: string | React.ReactNode;
@@ -95,6 +96,8 @@ export const Page: React.FC<PageProps> = ({
 		googleAnalytics.event.pageView(pageViewParams);
 	}, [ENABLE_GOOGLE_ANALYTICS, metaUrl, metaTitle]);
 
+	const isMounted = useIsMounted();
+
 	return (
 		<>
 			<Head>
@@ -132,7 +135,7 @@ export const Page: React.FC<PageProps> = ({
 					hideMobileResponsiveVersion ? 'hidden xl:block' : 'block',
 				)}
 			>
-				{children}
+				{isMounted ? children : null}
 			</div>
 		</>
 	);
