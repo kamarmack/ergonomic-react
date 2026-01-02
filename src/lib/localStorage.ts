@@ -111,7 +111,7 @@ export function getLocalStorageUtil<
 			}
 			const dynamicKeys = allKeys.filter(function (key) {
 				return localStorageDynamicKeys.some(function (dynamicKey) {
-					key.startsWith(dynamicKey);
+					return key.startsWith(dynamicKey);
 				});
 			});
 			const keysToRemove = [...localStorageStaticKeys, ...dynamicKeys].filter(
